@@ -1,0 +1,121 @@
+﻿Build started 2016/1/29 17:57:52.
+     1>Project "D:\Creator0.10\Creator0.10\build\Creator-win32.vc2013\Creator-win32.vc2013.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _CR_DEBUG /D _MBCS /Gm /EHsc /RTC1 /MDd /Zp16 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"D:\Creator0.10\Creator0.10\build\../temp\\" /Fd"D:\Creator0.10\Creator0.10\build\../temp\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\code\core\Component\CrMaterial.cpp ..\..\code\core\Component\CrMesh.cpp ..\..\code\core\Component\CrMeshFilter.cpp ..\..\code\core\Component\CrMeshRender.cpp ..\..\code\core\Component\CrSkinMeshRender.cpp ..\..\code\core\Component\CrTransform.cpp ..\..\code\core\CrCamera.cpp ..\..\code\core\CrComponent.cpp ..\..\code\core\CrDirector.cpp ..\..\code\core\CrEngine.cpp ..\..\code\core\CrEngineInterface.cpp ..\..\code\core\CrEngineInterfaceLua.cpp ..\..\code\core\CrEvent.cpp ..\..\code\core\CrGameObject.cpp ..\..\code\core\CrMain.cpp ..\..\code\core\CrMemoryPool.cpp ..\..\code\core\CrMeshChunk.cpp ..\..\code\core\CrMeshPool.cpp ..\..\code\core\CrModel.cpp ..\..\code\core\CrObject.cpp ..\..\code\core\CrRender.cpp ..\..\code\core\CrScene.cpp ..\..\code\core\CrShader.cpp ..\..\code\core\CrShaderUtility.cpp ..\..\code\core\CrTextureChunk.cpp ..\..\code\core\CrTexturePool.cpp
+         CrGameObject.cpp
+     1>d:\creator0.10\creator0.10\code\core\crgameobject.cpp(270): warning C4316: 'CrGameObject' : object allocated on the heap may not be aligned 16
+     1>d:\creator0.10\creator0.10\code\core\crgameobject.cpp(278): warning C4316: 'CrGameObject' : object allocated on the heap may not be aligned 16
+         Generating Code...
+         Compiling...
+         CrTexturePool.cpp
+         CrTextureChunk.cpp
+         CrShaderUtility.cpp
+         CrShader.cpp
+         CrScene.cpp
+     1>d:\creator0.10\creator0.10\code\core\crscene.cpp(5): warning C4316: 'CrScene' : object allocated on the heap may not be aligned 16
+     1>d:\creator0.10\creator0.10\code\core\crscene.cpp(16): warning C4316: 'CrScene' : object allocated on the heap may not be aligned 16
+         CrRender.cpp
+         CrObject.cpp
+         CrModel.cpp
+     1>d:\creator0.10\creator0.10\code\core\crmodel.cpp(29): warning C4316: 'CrModel' : object allocated on the heap may not be aligned 16
+     1>d:\creator0.10\creator0.10\code\core\crmodel.cpp(39): warning C4316: 'CrModel' : object allocated on the heap may not be aligned 16
+         CrMeshPool.cpp
+         CrMeshChunk.cpp
+         CrMemoryPool.cpp
+         CrMain.cpp
+         CrEvent.cpp
+     1>d:\creator0.10\creator0.10\code\core\crevent.cpp(13): warning C4244: 'argument' : conversion from 'double' to 'unsigned __int64', possible loss of data
+         CrEngineInterfaceLua.cpp
+         CrEngineInterface.cpp
+         CrEngine.cpp
+     1>d:\creator0.10\creator0.10\code\core\crengine.cpp(184): warning C4316: 'CrRender' : object allocated on the heap may not be aligned 16
+         CrDirector.cpp
+         CrComponent.cpp
+         CrCamera.cpp
+     1>d:\creator0.10\creator0.10\code\core\crcamera.cpp(6): warning C4316: 'CrCamera' : object allocated on the heap may not be aligned 16
+         CrTransform.cpp
+     1>d:\creator0.10\creator0.10\code\core\component\crtransform.cpp(155): warning C4800: 'uint64_t' : forcing value to bool 'true' or 'false' (performance warning)
+         Generating Code...
+         Compiling...
+         CrSkinMeshRender.cpp
+         CrMeshRender.cpp
+         CrMeshFilter.cpp
+         CrMesh.cpp
+         CrMaterial.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Creator0.10\Creator0.10\build\../bin_debug\Creator-win32.vc2013.exe" /INCREMENTAL /NOLOGO glfw3.lib glfw3dll.lib glew32.lib OpenGL32.Lib libpng.lib zlib.lib "libfbxsdk-md.lib" PhysX3_x86.lib PhysX3Common_x86.lib Lua5.3.2.lib freetype.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Creator0.10\Creator0.10\build\../bin_debug\Creator-win32.vc2013.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Creator0.10\Creator0.10\build\../bin_debug\Creator-win32.vc2013.lib" /MACHINE:X86 D:\Creator0.10\Creator0.10\build\../temp\CrFontLab.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrMaterial.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrMesh.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrMeshFilter.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrMeshRender.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrSkinMeshRender.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrTransform.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrCamera.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrComponent.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrDirector.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrConfig.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrEngineInterface.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrEngineInterfaceLua.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrRender.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrEngine.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrEvent.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrMain.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrObject.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrMemoryPool.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrMeshChunk.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrMeshPool.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrModel.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrGameObject.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrScene.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrShader.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrShaderUtility.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrTextureChunk.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrTexturePool.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrTime.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrWindow.obj
+         D:\Creator0.10\Creator0.10\build\../temp\CrLuaState.obj
+         Lua5.3.2.lib(lapi.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
+     1>LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
+     1>CrFontLab.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
+     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+         Generating code
+         Finished generating code
+     1>Lua5.3.2.lib(lapi.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lapi.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lstate.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lstate.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(linit.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(linit.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lauxlib.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lauxlib.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(ldebug.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(ldebug.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lvm.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lvm.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(ldump.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(ldump.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(ltable.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(ltable.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lstring.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lstring.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lfunc.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lfunc.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lobject.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lobject.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(ldo.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(ldo.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lgc.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lgc.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(ltm.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(ltm.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lzio.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lzio.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(llex.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(llex.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lmem.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lmem.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(ldblib.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(ldblib.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lutf8lib.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lutf8lib.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lcorolib.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lcorolib.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lmathlib.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lmathlib.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lstrlib.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lstrlib.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lbaselib.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lbaselib.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(liolib.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(liolib.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(loslib.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(loslib.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(loadlib.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(loadlib.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(ltablib.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(ltablib.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lopcodes.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lopcodes.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lctype.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lctype.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lparser.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lparser.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lundump.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lundump.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+     1>Lua5.3.2.lib(lcode.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'Lua5.3.2.lib(lcode.obj)' or at 'D:\Creator0.10\Creator0.10\bin_debug\vc120.pdb'; linking object as if no debug info
+         Creator-win32.vc2013.vcxproj -> D:\Creator0.10\Creator0.10\build\../bin_debug\Creator-win32.vc2013.exe
+     1>Done Building Project "D:\Creator0.10\Creator0.10\build\Creator-win32.vc2013\Creator-win32.vc2013.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:31.53

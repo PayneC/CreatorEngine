@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8AF7F930-F795-4A43-83E7-3E6C891501C5}</ProjectGuid>
+    <RootNamespace>Creator-win32.vc2013</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)../bin_debug\</OutDir>
+    <IntDir>$(SolutionDir)../temp\</IntDir>
+    <IncludePath>$(SolutionDir)../code\thirdLib\include;$(SolutionDir)../code\thirdLib\include\physX;$(SolutionDir)../code/core/Component;$(SolutionDir)../code/core/Lua;$(SolutionDir)../code/core;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)../code\thirdLib\lib\x86;$(SolutionDir)../code\thirdLib\lib\x86\vc11win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_CR_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StructMemberAlignment>16Bytes</StructMemberAlignment>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;glew32.lib;OpenGL32.Lib;libpng.lib;zlib.lib;libfbxsdk-md.lib;PhysX3_x86.lib;PhysX3Common_x86.lib;Lua5.3.2.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\code\core\Common\CrFontLab.cpp" />
+    <ClCompile Include="..\..\code\core\Component\CrMaterial.cpp" />
+    <ClCompile Include="..\..\code\core\Component\CrMesh.cpp" />
+    <ClCompile Include="..\..\code\core\Component\CrMeshFilter.cpp" />
+    <ClCompile Include="..\..\code\core\Component\CrMeshRender.cpp" />
+    <ClCompile Include="..\..\code\core\Component\CrSkinMeshRender.cpp" />
+    <ClCompile Include="..\..\code\core\Component\CrTransform.cpp" />
+    <ClCompile Include="..\..\code\core\CrCamera.cpp" />
+    <ClCompile Include="..\..\code\core\CrComponent.cpp" />
+    <ClCompile Include="..\..\code\core\CrDirector.cpp" />
+    <ClCompile Include="..\..\code\core\CrConfig.cpp" />
+    <ClCompile Include="..\..\code\core\CrEngineInterface.cpp" />
+    <ClCompile Include="..\..\code\core\CrEngineInterfaceLua.cpp" />
+    <ClCompile Include="..\..\code\core\CrRender.cpp" />
+    <ClCompile Include="..\..\code\core\CrEngine.cpp" />
+    <ClCompile Include="..\..\code\core\CrEvent.cpp" />
+    <ClCompile Include="..\..\code\core\CrMain.cpp" />
+    <ClCompile Include="..\..\code\core\CrObject.cpp" />
+    <ClCompile Include="..\..\code\core\CrMemoryPool.cpp" />
+    <ClCompile Include="..\..\code\core\CrMeshChunk.cpp" />
+    <ClCompile Include="..\..\code\core\CrMeshPool.cpp" />
+    <ClCompile Include="..\..\code\core\CrModel.cpp" />
+    <ClCompile Include="..\..\code\core\CrGameObject.cpp" />
+    <ClCompile Include="..\..\code\core\CrScene.cpp" />
+    <ClCompile Include="..\..\code\core\CrShader.cpp" />
+    <ClCompile Include="..\..\code\core\CrShaderUtility.cpp" />
+    <ClCompile Include="..\..\code\core\CrTextureChunk.cpp" />
+    <ClCompile Include="..\..\code\core\CrTexturePool.cpp" />
+    <ClCompile Include="..\..\code\core\CrTime.cpp" />
+    <ClCompile Include="..\..\code\core\CrWindow.cpp" />
+    <ClCompile Include="..\..\code\core\Lua\CrLuaState.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\code\core\Common\CrFontLab.h" />
+    <ClInclude Include="..\..\code\core\Component\CrComponent.h" />
+    <ClInclude Include="..\..\code\core\Component\CrMaterial.h" />
+    <ClInclude Include="..\..\code\core\Component\CrMesh.h" />
+    <ClInclude Include="..\..\code\core\Component\CrMeshFilter.h" />
+    <ClInclude Include="..\..\code\core\Component\CrMeshRender.h" />
+    <ClInclude Include="..\..\code\core\Component\CrSkinMeshRender.h" />
+    <ClInclude Include="..\..\code\core\Component\CrTransform.h" />
+    <ClInclude Include="..\..\code\core\CrCamera.h" />
+    <ClInclude Include="..\..\code\core\CrDefine.h" />
+    <ClInclude Include="..\..\code\core\CrDirector.h" />
+    <ClInclude Include="..\..\code\core\CrEngineInterface.h" />
+    <ClInclude Include="..\..\code\core\CrRender.h" />
+    <ClInclude Include="..\..\code\core\CrConfig.h" />
+    <ClInclude Include="..\..\code\core\CrEngine.h" />
+    <ClInclude Include="..\..\code\core\CrEvent.h" />
+    <ClInclude Include="..\..\code\core\CrObject.h" />
+    <ClInclude Include="..\..\code\core\CrMemoryPool.h" />
+    <ClInclude Include="..\..\code\core\CrMeshChunk.h" />
+    <ClInclude Include="..\..\code\core\CrMeshPool.h" />
+    <ClInclude Include="..\..\code\core\CrModel.h" />
+    <ClInclude Include="..\..\code\core\CrGameObject.h" />
+    <ClInclude Include="..\..\code\core\CrScene.h" />
+    <ClInclude Include="..\..\code\core\CrShader.h" />
+    <ClInclude Include="..\..\code\core\CrShaderUtility.h" />
+    <ClInclude Include="..\..\code\core\CrSingleton.h" />
+    <ClInclude Include="..\..\code\core\CrTextureChunk.h" />
+    <ClInclude Include="..\..\code\core\CrTexturePool.h" />
+    <ClInclude Include="..\..\code\core\CrTime.h" />
+    <ClInclude Include="..\..\code\core\CrWindow.h" />
+    <ClInclude Include="..\..\code\core\Lua\CrLuaState.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\bin_debug\testShader.frag" />
+    <None Include="..\..\bin_debug\testShader.vert" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
