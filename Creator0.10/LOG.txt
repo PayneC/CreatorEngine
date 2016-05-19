@@ -12,3 +12,5 @@ glew32.lib glfw3.lib glfw3dll.lib(32 vs2013) -> C:\Program Files (x86)\Microsoft
 GL(glew.h glxew.h wglew.h)->C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include
 GLFW(glfw3.h glfw3native.h) ->C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include
 glm ->C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include
+
+github
