@@ -23,10 +23,8 @@ private:
 	void Destory();
 	void Update();
 	void RenderCamera(CrCamera * pCamera);
-
 	void AddCamera(CrCamera * pCamera);
-	void AddDrawTarget(CrModel * pModel);
-
+	void RemoveCamera(CrCamera * pCamera);
 public:
 	~CrDirector();
 
@@ -47,7 +45,6 @@ private:
 	CrScene * m_pRunScene;
 
 	std::list<CrCamera*> m_pCameraList;
-	//std::list<CrCamera*>::iterator m_itorCamera;
 };
 
 #endif

@@ -2,7 +2,7 @@
 
 CrWindow::CrWindow()
 : m_pEngineWindow(NULL)
-, m_v2WindowSize(800,600)
+, m_v2WindowSize(1366,768)
 , m_strWindowName("CreatorEngine")
 {
 }

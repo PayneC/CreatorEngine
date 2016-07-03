@@ -4,6 +4,7 @@
 wchar_t * wcstr = NULL;
 
 
+
 //参考地址： http://blog.bitfly.cn/post/mbstowcs-func/
 wchar_t * AnsiToUnicode(char * mbstr)
 {
@@ -19,24 +20,22 @@ wchar_t * AnsiToUnicode(char * mbstr)
 	return wcstr;
 }
 
-bool CrEngine::CreatorAwake()
+int CrEngine::Initialization()
 { 
-	if (NULL == CrEngine::Instance())
-		return false;
-
-	if (false == m_pInstance->Init())
+	if (false == Init())
 	{
-		m_pInstance->Destory();
-		return false;
+		return -1;
 	}
 
 	wcstr = AnsiToUnicode("ddddddd");
 
-	return true;
+	return 0;
 }
 
-int CrEngine::Launch()
+int CrEngine::Start(CrScene * pScene)
 {
+	CrEngine::Director()->InsertScene(pScene);
+	CrEngine::Director()->RunScene(pScene);
 	m_pInstance->m_isRun = true;
 	return m_pInstance->MainLoop(); 
 }
@@ -119,18 +118,6 @@ bool CrEngine::Init()
 	}
 
 #ifdef _CR_DEBUG
-	printf("log: Initializing MeshPool ...\n");
-#endif
-	m_pMeshPool = new CrMeshPool();
-	if (!(m_pMeshPool && m_pMeshPool->Init()))
-	{
-#ifdef _CR_DEBUG
-		printf("error: MeshPool initialize fail\n");
-#endif
-		return false;
-	}
-
-#ifdef _CR_DEBUG
 	printf("log: Initializing Director ...\n");
 #endif
 	m_pDirector = new CrDirector();
@@ -157,8 +144,8 @@ bool CrEngine::Init()
 #ifdef _CR_DEBUG
 	printf("log: Initialize Shader ...\n");
 #endif
-	m_pShaderFactory = new CrShaderUtility();
-	if (!(m_pShaderFactory && m_pShaderFactory->Init()))
+	
+	if (!CrShaderUtility::Instance()->Init())
 	{
 #ifdef _CR_DEBUG
 		printf("error: Shader initialize fail\n");
@@ -174,18 +161,6 @@ bool CrEngine::Init()
 	{
 #ifdef _CR_DEBUG
 		printf("error: Event initialize fail\n");
-#endif
-		return false;
-	}
-
-#ifdef _CR_DEBUG
-	printf("log: Initialize Render ...\n");
-#endif
-	m_pRender = new CrRender();
-	if (!(m_pRender && m_pRender->Init()))
-	{
-#ifdef _CR_DEBUG
-		printf("error: Render initialize fail\n");
 #endif
 		return false;
 	}
@@ -230,6 +205,21 @@ bool CrEngine::Init()
 	r = 15;
 	*/
 
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	//点大小
+	glPointSize(1.f);
+	//线宽
+	glLineWidth(2.f);
+	//正反面
+	glFrontFace(GL_CCW);
+	//裁剪
+	glCullFace(GL_BACK);
+	//开启
+	glEnable(GL_CULL_FACE);
+	//渲染模式
+	glPolygonMode(GL_FRONT, GL_LINE);
 	m_isInit = true;
 
 	return true;
@@ -240,19 +230,13 @@ void CrEngine::OnEnter()
 
 }
 
-
-
-
 int CrEngine::MainLoop()
 {
-	//m_pTime->ZeroDelay();
-	//TestInit();
 	while (m_isRun)
 	{
 		m_pTime->Update();
 		if (m_pTime->IsMeetInterval())
 		{
-			//TestUpdate();
 			m_pDirector->Update();
 
 			CrFontLab::Instance()->Render(wcstr, 50, 50, 900, 25);
@@ -284,73 +268,4 @@ void CrEngine::Destory()
 
 	delete[] wcstr;
 	wcstr = NULL;
-}
-
-void CrEngine::TestInit()
-{
-	static const GLfloat g_vertex_buffer_data[] = {
-		-1.0f, -1.0f, 0.0f, 
-		 1.0f, -1.0f, 0.0f,
-		 0.0f,  1.0f, 0.0f,
-	};
-	// This will identify our vertex buffer
-	// Generate 1 buffer, put the resulting identifier in vertexbuffer
-	glGenBuffers(1, &vertexbuffer);
-	// The following commands will talk about our 'vertexbuffer' buffer
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	// Give our vertices to OpenGL.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-
-	static const GLfloat g_color_buffer_data[] = {
-		-1.0f, -1.0f, 0.0f, 1.0f,
-		1.0f, -1.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 0.0f, 1.0f,
-	};
-	// This will identify our vertex buffer
-	// Generate 1 buffer, put the resulting identifier in vertexbuffer
-	glGenBuffers(1, &colorbuffer);
-	// The following commands will talk about our 'vertexbuffer' buffer
-	glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-	// Give our vertices to OpenGL.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
-
-	shaderId = CrEngine::ShaderFactory()->CompileShader("testShader.vert", "testShader.frag");
-	glUseProgram(shaderId);
-
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	glVertexAttribPointer(
-		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		3,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)0            // array buffer offset
-		);
-
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-	glVertexAttribPointer(
-		1,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		4,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)0            // array buffer offset
-		);
-
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-
-}
-
-void CrEngine::TestUpdate()
-{	
-	glClear(GL_COLOR_BUFFER_BIT);
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-
-	glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
 }

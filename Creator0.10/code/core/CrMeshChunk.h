@@ -18,6 +18,8 @@ public:
 	CrMeshChunk();
 	~CrMeshChunk();
 
+	EasyGet(GLuint, m_dVertexId, VertexId);
+
 	EasyGet(GLuint, m_dVertexBufferId, VertexBufferId);
 	EasyGet(GLuint, m_dNormalBufferId, NormalBufferId);
 	EasyGet(GLuint, m_dElementBufferId, ElementBufferId);

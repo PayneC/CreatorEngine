@@ -13,17 +13,8 @@ Payne
 class CrScene : public CrGameObject
 {
 public:
-	static CrScene * Create();
-	static CrScene * Create(std::string name);
-	
-protected:
 	CrScene();
-
-public:
 	~CrScene();
-
-	virtual void Awake();
-	virtual void Awake(std::string name);
 protected:
 	
 };

@@ -8,34 +8,35 @@ CrComponent::CrComponent()
 CrComponent::~CrComponent()
 {
 }
-// void CrComponent::Awake()
-// {
-// 
-// }
-// void CrComponent::OnEnable()
-// {
-// 
-// }
-// void CrComponent::OnDisable()
-// {
-// 
-// }
-// void CrComponent::Update(float dt)
-// {
-// 
-// }
-// void CrComponent::LateUpdate(float dt)
-// {
-// 
-// }
-// void CrComponent::FixedUpdate(float dt)
-// {
-// 
-// }
-// void CrComponent::Destroy()
-// {
-// 
-// }
+
+void CrComponent::Awake()
+{
+
+}
+void CrComponent::Start()
+{
+
+}
+void CrComponent::Update()
+{
+
+}
+void CrComponent::LateUpdate()
+{
+
+}
+void CrComponent::Enable()
+{
+
+}
+void CrComponent::Disabled()
+{
+
+}
+void CrComponent::Destroy()
+{
+
+}
 
 void CrComponent::SetGameObject(CrGameObject * pointer)
 {

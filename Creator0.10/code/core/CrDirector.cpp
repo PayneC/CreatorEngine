@@ -24,34 +24,16 @@ void CrDirector::Destory()
 
 void CrDirector::Update()
 {
-	m_pCameraList.clear();
 	if (m_pRunScene)
 	{
-		m_pRunScene->Update(CrEngine::Time()->GetDelateTime());//执行 变化并且 遍历所有相机
-		for each (CrCamera * var in m_pCameraList)
-		{
-			var->m_pDrawTargets.clear();
-		}
-		m_pRunScene->Render();		//挑选需要渲染的部分
+		m_pRunScene->Update();
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		//绘制逻辑
 		for each (CrCamera * var in m_pCameraList)
 		{
-			RenderCamera(var);
+			m_pRunScene->Render(var->GetVP());
 		}
 	}
-}
-
-void CrDirector::RenderCamera(CrCamera * pCamera)
-{
-	CrEngine::Render()->SetViewMatrix(&pCamera->m_m4ViewMatrix);
-	for each (CrModel * var in pCamera->m_pDrawTargets)
-	{
-		CrEngine::Render()->Draw(var);
-	}
-	
 }
 
 void CrDirector::InsertScene(CrScene * pScene)
@@ -131,14 +113,7 @@ void CrDirector::AddCamera(CrCamera * pCamera)
 	m_pCameraList.push_back(pCamera);
 }
 
-void CrDirector::AddDrawTarget(CrModel * pModel)
+void CrDirector::RemoveCamera(CrCamera * pCamera)
 {
-	for each (CrCamera * var in m_pCameraList)
-	{
-		if (true)//检测 是否在视锥体内
-			var->m_pDrawTargets.push_back(pModel);
-	}
+	m_pCameraList.remove(pCamera);
 }
-
-//遍历所有的场景物件
-//判断需要绘制的物件

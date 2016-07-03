@@ -5,7 +5,7 @@ function
 Payne
 */
 
-#include "CrEngineInterface.h"
+#include "CreatorEngine.h"
 #include "CrTransform.h"
 #include <iostream>
 
@@ -20,6 +20,9 @@ Payne
 
 #include <thread>
 
+#include "CrMeshUtility.h"
+#include "CrShaderUtility.h"
+#include "test.h"
 using std::vector;
 using std::string;
 using namespace CreatorEngine;
@@ -71,7 +74,7 @@ void DebugThread()
 
 int main(int argc, char **argv)
 {
-	if (!CrEngine::CreatorAwake())
+	if (Initialization() != 0)
 		return 0;
 
 	m_isRun = true;
@@ -81,28 +84,46 @@ int main(int argc, char **argv)
 	std::thread _DebugThread(DebugThread);
 	_DebugThread.detach();
 
-	GLuint d = CrEngine::ShaderFactory()->Find("testShader");
+	CrScene * pScene = CrGameObject::CreateGameObject<CrScene>("test01");
+	
+	CrGameObject * go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_CUBE, "center");
+	pScene->AddChild(go);
 
-	CrScene * pScene = CrScene::Create("test01");
-	CrEngine::Director()->InsertScene(pScene);
-	CrEngine::Director()->RunScene(pScene);
+	go->AddComponent<test>();
 
-	CrCamera * pCamera = CrCamera::Create();
-	CrModel * pModel01 = CrModel::CreateCube();
-	pModel01->SetName("model01");
+	go->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	go->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
+	go->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
+	CrMeshRender * meshRender = go->GetComponent<CrMeshRender>();
+	meshRender->GetMaterial()->SetColor(glm::vec4(1, 1, 1, 1));
 
-	pModel01->SetPosition(glm::vec3(0,0,0));
-
-	pCamera->SetPosition(glm::fvec3(0.f, 0.0f, -2.0f));
-	pCamera->LookAt(pModel01);
-
-	pModel01->SetRotation(glm::vec3(45, 45, 45));
-	pModel01->SetShader(d);
-
+	CrCamera * pCamera = CrGameObject::CreateGameObject<CrCamera>("Camera");
 	pScene->AddChild(pCamera);
-	pScene->AddChild(pModel01);
+	pCamera->GetTransform()->SetPosition(glm::fvec3(0.f, 0.f, 80.0f));
 
-	CrEngine::Launch();
+	pCamera->GetTransform()->LookAt(go);
+
+	CrGameObject * go2 = NULL;
+	for (int i = 0; i < 10; ++i)
+	{
+		for (int j = 0; j < 10; ++j)
+		{
+			for (int k = 0; k < 10; ++k)
+			{
+				go2 = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_CUBE, "cube");
+				go->AddChild(go2);
+				go2->AddComponent<test>();
+				go2->GetTransform()->SetPosition(glm::vec3(-20 + i * 4, -20 + j * 4, -20 + k * 4));
+				meshRender = go2->GetComponent<CrMeshRender>();
+				meshRender->GetMaterial()->SetColor(glm::vec4((float)i / 10.f, (float)j / 10.f, (float)k / 10.f, 1.f));
+			}
+		}
+	}
+	
+	Start(pScene);
+	m_isRun = false;
+
+	return 0;
 }
 
 #define fonttest

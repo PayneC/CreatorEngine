@@ -11,8 +11,8 @@ Payne
 #include "CrDefine.h"
 #include <CrObject.h>
 #include <string>
-#include <CrTextureChunk.h>
 
+/*
 enum CrShaderPropertiesType
 {
 	INVALID = 0,
@@ -47,19 +47,22 @@ public:
 	std::string m_sAssetsPath;
 	CrTextureChunk * m_pTextur2D;
 };
-
+*/
 class CrShader : CrObject
 {
 public:
 	CrShader();
 	~CrShader();
-	
+
+public:
+	void UseShader();
 public:
 	EasyGetSet(GLuint, m_uId, ID);
+	EasyGetSet(GLuint, m_uShaderID, ShaderID);
 	//void SetUniformMatrix4fv(GLuint location, glm::fmat4x4 * var);
 private:	
 	std::string m_sShaderName;
-	GLuint m_uShaderID;
+	//GLuint m_uShaderID;
 };
 
 #endif

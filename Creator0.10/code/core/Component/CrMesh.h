@@ -14,18 +14,25 @@ Payne
 
 class CrMesh : public CrObject
 {
-	friend class CrMeshFilter;
+	friend class CrMeshUtility;
 public:
 	CrMesh();
 	~CrMesh();
 
 public:
-	EasyGet(std::string, m_sName, Name);
+	EasyGetSet(std::string, m_sName, Name);
 	
-	EasyGet(GLuint, m_uVertexBufferId, VertexBufferID);
-	EasyGet(GLuint, m_uIndexBufferId, IndexBufferID);
-	EasyGet(size_t, m_uVertexSize, VertexSize);
-	EasyGet(size_t, m_uIndexSize, IndexSize);
+	EasyGetSet(GLuint, m_uVertexId, VertexID);
+
+	EasyGetSet(GLuint, m_uPositionBufferId, PositionBufferID);
+	EasyGetSet(GLuint, m_dElementBufferId, ElementBufferID);
+	EasyGetSet(GLuint, m_dNormalBufferId, NormalBufferID);
+	EasyGetSet(GLuint, m_dUVBufferId, UVBufferID);
+
+	EasyGetSet(size_t, m_uPositionSize, PositionSize);
+	EasyGetSet(size_t, m_uElementSize, ElementSize);
+	EasyGetSet(size_t, m_dNormalSize, NormalSize);
+	EasyGetSet(size_t, m_dUVSize, UVSize);
 private:
 	
 

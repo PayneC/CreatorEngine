@@ -4,6 +4,11 @@
 #include <string>
 #include <fstream>
 
+CrShader * CrShaderUtility::CreateShader(const char * vertexFile, const char * fragmentFile)
+{
+	return Instance()->_CreateShader(vertexFile, fragmentFile);
+}
+
 CrShaderUtility::CrShaderUtility()
 {
 }
@@ -121,13 +126,18 @@ bool CrShaderUtility::Init()
 	return true;
 }
 
-GLuint CrShaderUtility::Find(std::string name)
+bool CrShaderUtility::Find(std::string name, GLuint * id)
 {
 	m_iterShader = m_shaders.find(name);
 	if (m_iterShader != m_shaders.end())
-		return m_iterShader->second;
+	{
+		*id = m_iterShader->second;
+		return true;
+	}		
 	else
-		return 0;
+	{
+		return false;
+	}	
 }
 
 GLuint CrShaderUtility::Insert(std::string name, const char * vertexFile, const char * fragmentFile)
@@ -147,12 +157,16 @@ void CrShaderUtility::RemoveAll()
 	m_shaders.clear();
 }
 
-CrShader * CrShaderUtility::CreateShader(const char * vertexFile, const char * fragmentFile)
+CrShader * CrShaderUtility::_CreateShader(const char * vertexFile, const char * fragmentFile)
 {
-	GLuint id = CompileShader(vertexFile, fragmentFile);
+	GLuint id = 0;
+
+	if (!Find(vertexFile, &id))
+		id = Insert(vertexFile, vertexFile, fragmentFile);
 
 	CrShader * ptr = new CrShader();
 	ptr->SetID(id);
+	ptr->SetShaderID(id);
 
 	return ptr;
 }

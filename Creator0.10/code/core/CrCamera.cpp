@@ -1,41 +1,21 @@
 #include "CrCamera.h"
 #include "CrEngine.h"
 
-CrCamera * CrCamera::Create()
-{
-	CrCamera * pRef = new CrCamera();
-	if (!pRef)
-	{
-		CR_SAFE_DELETE(pRef);
-	}
-	pRef->Awake();
-	return pRef;
-}
-
 CrCamera::CrCamera()
-:m_m4ViewMatrix(1.f)
+	:m_m4Projection(1.f)
 {
-	m_pDrawTargets = std::list<CrModel*>();
 	m_sName = "Camera";
+	m_m4Projection = glm::perspective(45.f, 16.f / 9.f, 0.1f, 100.f);
+	CrEngine::Director()->AddCamera(this);
 }
 
 CrCamera::~CrCamera()
 {
-
+	CrEngine::Director()->RemoveCamera(this);
 }
 
-void CrCamera::Update(float delay)
+glm::mat4 CrCamera::GetVP()
 {
-	CrGameObject::Update(delay);
-
-	if (!m_isActive) 
-		return;
-
-	CrEngine::Director()->AddCamera(this);
+	m_m4VP = m_m4Projection * GetTransform()->GetWorldToLocalMatrix();
+	return m_m4VP;
 }
-
-void CrCamera::LookAt(CrGameObject * node)
-{
-	m_m4ViewMatrix = glm::lookAt(GetGlobalPosition(), node->GetGlobalPosition(), glm::fvec3(0.f, 1.f, 0.f));
-}
-

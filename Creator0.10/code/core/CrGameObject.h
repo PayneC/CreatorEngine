@@ -21,36 +21,24 @@ Payne
 class CrGameObject : public CrObject
 {
 public:
-	static CrGameObject * CreateGameObject();
-	static CrGameObject * CreateGameObject(std::string name);
+	template<typename TReturnType>
+	static TReturnType * CreateGameObject(std::string name = "gameobject");
+
+	template<typename TReturnType>
+	static TReturnType * CreateGameObject(EPresetMeshType type, std::string name = "gameobject");
+
 public:
 	CrGameObject();
 	~CrGameObject();
 	
-	void SetPosition(const glm::fvec3 & var);
-	void SetRotation(const glm::fvec3 & var);
-	void SetScaling(const glm::fvec3 & var);
-	EasyGet(glm::fvec3, m_v3Position, Position);
-	EasyGet(glm::fvec3, m_v3Rotation, Rotation);
-	EasyGet(glm::fvec3, m_v3Scaling, Scaling);
-
-	void SetGlobalPosition(const glm::fvec3 & var);
-	void SetGlobalRotation(const glm::fvec3 & var);
-	void SetGlobalScaling(const glm::fvec3 & var);
-
-	glm::fvec3 GetGlobalPosition();
-	glm::fvec3 GetGlobalRotation();
-	glm::fvec3 GetGlobalScaling();
-
-	virtual void ExecuteTranslate();						//实施变化
-
 	virtual void Awake();
+	virtual void Begin();
 	virtual void Destroy();
-	virtual void Update(float delay);
-
-	virtual void OnEnter();
-	virtual void Render();
-	virtual void OnExit();
+	virtual void Update();
+	virtual void Enable();
+	virtual void Disabled();
+	
+	virtual void Render(glm::fmat4 & mv);
 	
 	void AddChild(CrGameObject * pNode);
 	void RemoveChild(CrGameObject * pNode);
@@ -59,10 +47,8 @@ public:
 	EasyGetSetFuncOnly(CrGameObject *, m_pParent, Parent);
 	EasyGetSet(int32_t, m_iTag, Tag);
 	EasyGetSetFuncOnly(std::string, m_sName, Name);
-	EasyGetSetFuncOnly(glm::fvec3, m_v3AnchorPoint, AnchorPoint);
 	EasyGetSet(bool, m_isActive, Active);
-
-	void LookAt(CrGameObject * node);
+	EasyGetSet(uint64_t, m_ulLayer, Layer);
 
 	template<typename TReturnType>
 	TReturnType * AddComponent();
@@ -70,52 +56,23 @@ public:
 	template<typename TReturnType>
 	TReturnType * GetComponent();
 
-	EasyGet(CrTransform *, m_pTransform, Transform);
+	EasyGet(CrTransform *, m_kTransform, Transform);
 	EasyGet(CrMeshRender *, m_pMeshRender, MeshRender);
+
+	const std::vector<CrGameObject *> GetChildren() const { return m_pChildren; }
+
 private:
 	void AddComponent(CrComponent * Pointer);
 
 private:
-	std::vector<CrComponent*> m_pComponents;
-
-protected:
-	
-	std::multimap<std::string, CrGameObject *> m_pChildren;
-	std::multimap<std::string, CrGameObject *>::iterator m_itorChild;
-
-// 	std::multimap<std::string, CrNode *> m_pChildren;
-// 	std::multimap<std::string, CrNode *>::iterator m_itorChild;
-
-	std::hash<size_t> m_pHash;
-
-	//glm::vec3 m_v3Position;
-	//glm::vec3 m_v3Rotation;
-	//glm::vec3 m_v3Scaling;
-
-	//glm::vec3 m_v3Position;
-	//glm::vec3 m_v3Rotation;
-	//glm::vec3 m_v3Scaling;
-
-	glm::fvec4 m_v4AnchorPoint;
-	bool m_isModified;
-	
-	//glm::mat4 m_m4Position;
-	//glm::mat4 m_m4Rotation;
-	//glm::mat4 m_m4Scaling;
-	//glm::mat4 m_m4Transform;
-	glm::fmat4 m_m4Transform;
-	glm::fmat4 m_m4AnchorOffset;
-
-	glm::fvec3 m_v3LocalCoordinate;
-
-
+	std::vector<CrComponent *> m_pComponents;
+	std::vector<CrGameObject *> m_pChildren;
 };
 
 template<typename TReturnType>
 TReturnType * CrGameObject::AddComponent()
 {
-	//static_assert(std::is_base_of<CrComponent, TReturnType>::value, "'T' template parameter to FindComponentByClass must be derived from UActorComponent");
-	static_assert(std::is_base_of<CrComponent, TReturnType>::value, "'T' template parameter to FindComponentByClass must be derived from UActorComponent");
+	static_assert(std::is_base_of<CrComponent, TReturnType>::value, "'T' template parameter to FindComponentByClass must be derived from CrComponent");
 	
 	TReturnType* _instance = new TReturnType();
 	AddComponent(_instance);
@@ -130,11 +87,47 @@ TReturnType * CrGameObject::GetComponent()
 	{
 		if (component &&  typeid(*component) == typeid(TReturnType))
 		{
-			_instance = component;
+			_instance = (TReturnType * )component;
 			break;
 		}	
 	}
 	return _instance;
+}
+
+
+template<typename TReturnType>
+TReturnType * CrGameObject::CreateGameObject(std::string name)
+{
+	static_assert(std::is_base_of<CrGameObject, TReturnType>::value, "'T' template parameter to FindComponentByClass must be derived from CrGameObject");
+
+	TReturnType * pRef = new TReturnType();//CrObject::Instance<CrGameObject>();
+	if (pRef)
+	{
+		pRef->SetName(name);
+		pRef->Awake();
+	}
+	return pRef;
+}
+
+template<typename TReturnType>
+TReturnType * CrGameObject::CreateGameObject(EPresetMeshType type, std::string name)
+{
+	static_assert(std::is_base_of<CrGameObject, TReturnType>::value, "'T' template parameter to FindComponentByClass must be derived from CrGameObject");
+
+	TReturnType * pRef = new TReturnType();//CrObject::Instance<CrGameObject>();
+	if (pRef)
+	{
+		pRef->SetName(name);
+		pRef->Awake();
+		CrMeshRender * meshRender = pRef->AddComponent<CrMeshRender>();
+		CrMaterial * material = CrMaterial::CreateCrMaterial();
+		CrMesh * mesh = CrMeshUtility::CreateMesh(EPresetMeshType::CR_MESH_TYPE_CUBE);
+		CrShader * shader = CrShaderUtility::CreateShader("testShader.vert", "testShader.frag");
+		material->SetShader(shader);
+		meshRender->SetMaterial(material);
+		meshRender->SetMesh(mesh);
+	}
+	return pRef;
 }
 
 #endif

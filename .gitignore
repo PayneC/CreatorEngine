@@ -24,3 +24,12 @@
 *.exe
 *.out
 *.app
+*.dll
+*.lib
+*.tlog
+*.log
+*.idb
+*.pdb
+*.opensdf
+*.sdf
+*.suo

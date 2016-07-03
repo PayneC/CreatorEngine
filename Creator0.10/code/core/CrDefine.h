@@ -62,5 +62,12 @@ public: virtual void Set##funName(varType var);
 #define CR_EVENT_MOUSE_MOVE					3
 #define CR_EVENT_JOYSTICK					4
 
-#define LuaAPI_Register(l,f) lua_register(l, #f, f);			
+#define LuaAPI_Register(l,f) lua_register(l, #f, f);	
+
+enum EPresetMeshType
+{
+	CR_MESH_TYPE_CUBE = 0,
+};
+#define CR_MESH_TYPE_COUNT					1	
+
 #endif

@@ -1,19 +1,19 @@
-#include "CrEngineInterface.h"
+#include "CreatorEngine.h"
 
 using namespace CreatorEngine;
 
-int LCloseEngine(lua_State * L)
+int LStop(lua_State * L)
 {
-	int rlt = CloseEngine();
+	Stop();
 
-	lua_pushnumber(L, rlt);
+	lua_pushnumber(L, 0);
 
 	return 1;
 }
 
-int LInitEngine(lua_State * L)
+int LInitialization(lua_State * L)
 {
-	int rlt = InitEngine();
+	int rlt = Initialization();
 
 	lua_pushnumber(L, rlt);
 
@@ -22,6 +22,6 @@ int LInitEngine(lua_State * L)
 
 void CreatorEngine::RegisterLuaAPI(lua_State * _L)
 {
-	LuaAPI_Register(_L, LInitEngine)
-	LuaAPI_Register(_L, LCloseEngine)
+	LuaAPI_Register(_L, LStop);
+	LuaAPI_Register(_L, LInitialization);
 }

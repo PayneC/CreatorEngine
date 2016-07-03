@@ -2,6 +2,8 @@
 #include <CrGameObject.h>
 
 CrTransform::CrTransform()
+	:m_isDirty(true)
+	, m_v3Scale(1.f, 1.f, 1.f)
 {
 }
 
@@ -9,237 +11,274 @@ CrTransform::~CrTransform()
 {
 }
 
-glm::vec3 CrTransform::GetPostion()
+glm::vec3 CrTransform::GetPosition()
 {
-	_ExecutePostion();
-	return m_v3Postion;
+	if (m_isPositionDirty)
+	{
+		CrTransform * parentTransform = GetGameObject() && GetGameObject()->GetParent() ? GetGameObject()->GetParent()->GetTransform() : NULL;
+		if (parentTransform)
+		{
+			m_v3Position = glm::vec3(parentTransform->GetLocalToWorldMatrix() * glm::vec4(m_v3LocalPosition, 1.f));
+		}
+		else
+		{
+			m_v3Position = m_v3LocalPosition;
+		}
+
+		m_isPositionDirty = false;
+	}
+	return m_v3Position;
 }
 
 glm::vec3 CrTransform::GetRotation()
 {
-	_ExecutePostion();
+	if (m_isRotationDirty)
+	{
+		CrTransform * parentTransform = GetGameObject() && GetGameObject()->GetParent() ? GetGameObject()->GetParent()->GetTransform() : NULL;
+		if (parentTransform)
+		{
+			m_v3Rotation = parentTransform->GetRotation() + m_v3LocalRotation;
+		}
+		else
+		{
+			m_v3Rotation = m_v3LocalRotation;
+		}
+
+		m_isRotationDirty = false;
+	}
+
 	return m_v3Rotation;
 }
 
 glm::vec3 CrTransform::GetScale()
 {
-	_ExecutePostion();
+	if (m_isScaleDirty)
+	{
+		CrTransform * parentTransform = GetGameObject() && GetGameObject()->GetParent() ? GetGameObject()->GetParent()->GetTransform() : NULL;
+		if (parentTransform)
+		{
+			m_v3Scale = parentTransform->GetScale() + m_v3LocalScale;
+		}
+		else
+		{
+			m_v3Scale = m_v3LocalScale;
+		}
+		m_isScaleDirty = false;
+	}
 	return m_v3Scale;
 }
 
-glm::vec3 CrTransform::GetLocalPostion()
+glm::vec3 CrTransform::GetLocalPosition()
 {
-	_ExecutePostion();
-	return m_v3LocalPostion;
+	return m_v3LocalPosition;
 }
 
 glm::vec3 CrTransform::GetLocalRotation()
 {
-	_ExecutePostion();
 	return m_v3LocalRotation;
 }
 
 glm::vec3 CrTransform::GetLocalScale()
 {
-	_ExecutePostion();
 	return m_v3LocalScale;
 }
 glm::vec3 CrTransform::GetForword()
 {
-	_ExecutePostion();
+	_ExecuteMatrix();
 	return m_v3Forword;
 }
 
-glm::vec3 CrTransform::GetLeft()
+glm::vec3 CrTransform::GetRight()
 {
-	_ExecutePostion();
-	return m_v3Left;
+	_ExecuteMatrix();
+	return m_v3Right;
 }
 
 glm::vec3 CrTransform::GetUp()
 {
-	_ExecutePostion();
+	_ExecuteMatrix();
 	return m_v3Up;
 }
 
 glm::mat4 CrTransform::GetLocalToWorldMatrix()
 {
-	_ExecutePostion();
+	_ExecuteMatrix();
 	return m_m4LocalToWorld;
 }
 
 glm::mat4 CrTransform::GetWorldToLocalMatrix()
 {
-	_ExecutePostion();
+	_ExecuteMatrix();
 	return m_m4WorldToLocal;
 }
 
-void CrTransform::SetPostion(glm::vec3 var)
+void CrTransform::SetPosition(glm::vec3 var)
 {
-	if (_CheckDirtyFlag(TDF_LP) || m_v3Postion != var)
-	{
-		_RemoveDirtyFlag(TDF_LP);
+	if (m_v3Position == var)
+		return;
+	m_v3Position = var;
 
-		m_v3Postion = var;
-		_AddDirtyFlag(TDF_GP);		
+	CrTransform * parentTransform = GetGameObject() && GetGameObject()->GetParent() ? GetGameObject()->GetParent()->GetTransform() : NULL;
+	if (parentTransform)
+	{
+		m_v3LocalPosition = glm::vec3(parentTransform->GetWorldToLocalMatrix() * glm::vec4(m_v3Position, 1.f));
 	}
+	else
+	{
+		m_v3LocalPosition = m_v3Position;
+	}
+
+	SetChildrenPositionDirty();
+	m_isPositionDirty = false;
 }
 
 void CrTransform::SetRotation(glm::vec3 var)
 {
-	if (_CheckDirtyFlag(TDF_LR) || m_v3Rotation != var)
-	{
-		_RemoveDirtyFlag(TDF_LR);
+	if (m_v3Rotation == var)
+		return;
 
-		m_v3Rotation = var;
-		_AddDirtyFlag(TDF_GR);		
+	m_v3Rotation = var;
+
+	CrTransform * parentTransform = GetGameObject() && GetGameObject()->GetParent() ? GetGameObject()->GetParent()->GetTransform() : NULL;
+	if (parentTransform)
+	{
+		m_v3LocalRotation = m_v3Rotation - parentTransform->GetRotation();
 	}
+	else
+	{
+		m_v3LocalRotation = m_v3Rotation;
+	}
+
+	SetChildrenRotationDirty();
+	m_isRotationDirty = false;
 }
 
-void CrTransform::SetScale(glm::vec3 var)
+void CrTransform::SetLocalPosition(glm::vec3 var)
 {
-	if (_CheckDirtyFlag(TDF_LS) || m_v3Scale != var)
-	{
-		_RemoveDirtyFlag(TDF_LS);
-		
-		m_v3Scale = var;
-		_AddDirtyFlag(TDF_GS);
-	}	
-}
+	if (m_v3LocalPosition == var)
+		return;
 
-void CrTransform::SetLocalPostion(glm::vec3 var)
-{
-	if (_CheckDirtyFlag(TDF_GP) || m_v3LocalPostion != var)
-	{
-		_RemoveDirtyFlag(TDF_GP);
-
-		m_v3LocalPostion = var;
-		_AddDirtyFlag(TDF_LP);
-	}
+	m_v3LocalPosition = var;
+	SetChildrenPositionDirty();
+	m_isScaleDirty = false;
 }
 
 void CrTransform::SetLocalRotation(glm::vec3 var)
 {
-	if (_CheckDirtyFlag(TDF_GR) || m_v3LocalRotation != var)
-	{
-		_RemoveDirtyFlag(TDF_GR);
+	if (m_v3LocalRotation == var)
+		return;
 
-		m_v3LocalRotation = var;
-		_AddDirtyFlag(TDF_LR);	
-	}
+	m_v3LocalRotation = var;
+	SetChildrenRotationDirty();
 }
 
 void CrTransform::SetLocalScale(glm::vec3 var)
 {
-	if (_CheckDirtyFlag(TDF_GS) || m_v3LocalScale != var)
-	{
-		_RemoveDirtyFlag(TDF_GS);
+	if (m_v3LocalScale == var)
+		return;
 
-		m_v3LocalScale = var;
-		_AddDirtyFlag(TDF_LS);		
-	}
-}
-
-void CrTransform::_AddDirtyFlag(uint64_t flag)
-{
-	m_uDirtyFlags |= flag;
-}
-
-void CrTransform::_RemoveDirtyFlag(uint64_t flag)
-{
-	m_uDirtyFlags &= (~flag);
-}
-
-bool CrTransform::_CheckDirtyFlag(uint64_t flag)
-{
-	return m_uDirtyFlags & flag;
-}
-
-void CrTransform::_ExecuteTranslate()
-{
-	if (m_uDirtyFlags != 0)
-	{		
-		_ExecuteRotation();
-		_ExecuteScale();
-		_ExecutePostion();
-	}
-}
-
-void CrTransform::_ExecutePostion()
-{
-	if (_CheckDirtyFlag(TDF_LP) || _CheckDirtyFlag(TDF_GP))
-	{
-		if (_CheckDirtyFlag(TDF_LP))
-		{
-			if (GetGameObject() && GetGameObject()->GetParent() && GetGameObject()->GetParent()->GetTransform())
-			{
-				m_v3Postion = glm::vec3(GetGameObject()->GetTransform()->GetWorldToLocalMatrix() * glm::vec4(m_v3LocalPostion, 1.0f));
-			}
-			else
-			{
-				m_v3Postion = m_v3LocalPostion;
-			}
-			_RemoveDirtyFlag(TDF_LP);
-		}
-		else
-		{
-			if (GetGameObject() && GetGameObject()->GetParent() && GetGameObject()->GetParent()->GetTransform())
-			{
-				m_v3LocalPostion = glm::vec3(GetGameObject()->GetTransform()->GetWorldToLocalMatrix() * glm::vec4(m_v3Postion, 1.0f));
-			}
-			else
-			{
-				m_v3LocalPostion = m_v3Postion;
-			}
-			_RemoveDirtyFlag(TDF_GP);
-		}
-	}
-}
-
-void CrTransform::_ExecuteRotation()
-{
-	if (_CheckDirtyFlag(TDF_LR) || _CheckDirtyFlag(TDF_GR))
-	{
-		if (_CheckDirtyFlag(TDF_LR))
-		{
-			if (GetGameObject() && GetGameObject()->GetParent() && GetGameObject()->GetParent()->GetTransform())
-			{
-				m_v3Rotation = glm::vec3(GetGameObject()->GetTransform()->GetQuaternion() * glm::vec4(m_v3LocalRotation, 1.0f));
-			}
-			else
-			{
-				m_v3Rotation = m_v3LocalRotation;
-			}
-			_RemoveDirtyFlag(TDF_LR);
-		}
-		else
-		{
-			if (GetGameObject() && GetGameObject()->GetParent() && GetGameObject()->GetParent()->GetTransform())
-			{
-				//m_v3LocalRotation = glm::vec3(GetGameObject()->GetTransform()->GetQuaternion() * glm::vec4(m_v3Rotation, 1.0f));
-			}
-			else
-			{
-				m_v3LocalRotation = m_v3Rotation;
-			}
-			_RemoveDirtyFlag(TDF_GR);
-		}
-	}
-}
-
-void CrTransform::_ExecuteScale()
-{
-	
+	m_v3LocalScale = var;
+	SetChildrenScaleDirty();
 }
 
 void CrTransform::_ExecuteMatrix()
 {
-	m_m4LocalToWorld = glm::mat4(GetQuaternion());
-	m_m4LocalToWorld = glm::scale(m_m4LocalToWorld, m_v3Scale);
-	m_m4LocalToWorld = glm::translate(m_m4LocalToWorld, m_v3Postion);
+	if (m_isDirty)
+	{
+		glm::mat4 rm = glm::mat4(GetQuaternion());
+		glm::mat4 sm = glm::scale(glm::mat4(1.f), GetScale());
+		glm::mat4 tm = glm::translate(glm::mat4(1.f), GetPosition());
+
+		m_m4LocalToWorld = tm * sm * rm;
+		m_m4WorldToLocal = glm::inverse(m_m4LocalToWorld);
+		m_v3Forword = glm::vec3(m_m4LocalToWorld * glm::vec4(0.f, 0.f, 1.f, 1.f));
+		m_v3Up = glm::vec3(m_m4LocalToWorld * glm::vec4(0.f, 1.f, 0.f, 1.f));
+		m_v3Right = glm::vec3(m_m4LocalToWorld * glm::vec4(1.f, 0.f, 0.f, 1.f));
+
+		m_isDirty = false;
+	}
 }
 
 glm::quat CrTransform::GetQuaternion()
 {
-	return glm::quat(m_v3Rotation);
+	return glm::quat(GetRotation());
+}
+
+void CrTransform::LookAt(CrGameObject * gameobject)
+{
+	if (gameobject == NULL)
+		return;
+
+	LookAt(gameobject->GetTransform()->GetPosition());
+}
+void CrTransform::LookAt(CrTransform * transform)
+{
+	if (transform == NULL)
+		return;
+	LookAt(transform->GetPosition());
+}
+void CrTransform::LookAt(glm::vec3 position)
+{
+	m_m4LocalToWorld = glm::lookAt(GetPosition(), position, glm::vec3(0.f, 1.f, 0.f));
+	glm::quat quat = glm::quat(m_m4LocalToWorld);
+	
+	glm::vec3 r = glm::eulerAngles(quat) * 360.f;
+
+	SetRotation(r);
+}
+
+void CrTransform::SetChildrenPositionDirty()
+{
+	m_isPositionDirty = true;
+	m_isDirty = true;
+
+	if (GetGameObject() == NULL)
+		return;
+
+	std::vector<CrGameObject*> children = GetGameObject()->GetChildren();
+	std::vector<CrGameObject*>::iterator itor = children.begin();
+	std::vector<CrGameObject*>::iterator itorEnd = children.end();
+
+	for (; itor != itorEnd; ++itor)
+	{
+		(*itor)->GetTransform()->SetChildrenPositionDirty();
+	}
+}
+
+void CrTransform::SetChildrenRotationDirty()
+{
+	m_isPositionDirty = true;
+	m_isRotationDirty = true;
+	m_isDirty = true;
+
+	if (GetGameObject() == NULL)
+		return;
+
+	std::vector<CrGameObject*> children = GetGameObject()->GetChildren();
+	std::vector<CrGameObject*>::iterator itor = children.begin();
+	std::vector<CrGameObject*>::iterator itorEnd = children.end();
+
+	for (; itor != itorEnd; ++itor)
+	{
+		(*itor)->GetTransform()->SetChildrenRotationDirty();
+	}
+}
+
+void CrTransform::SetChildrenScaleDirty()
+{
+	m_isPositionDirty = true;
+	m_isScaleDirty = true;
+	m_isDirty = true;
+
+	if (GetGameObject() == NULL)
+		return;
+
+	std::vector<CrGameObject*> children = GetGameObject()->GetChildren();
+	std::vector<CrGameObject*>::iterator itor = children.begin();
+	std::vector<CrGameObject*>::iterator itorEnd = children.end();
+
+	for (; itor != itorEnd; ++itor)
+	{
+		(*itor)->GetTransform()->SetChildrenScaleDirty();
+	}
 }

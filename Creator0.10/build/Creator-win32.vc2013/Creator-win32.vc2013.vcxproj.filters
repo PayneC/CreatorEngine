@@ -33,12 +33,6 @@
     <ClCompile Include="..\..\code\core\CrMeshChunk.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\code\core\CrMeshPool.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\code\core\CrModel.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\code\core\CrTextureChunk.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -66,9 +60,6 @@
     <ClCompile Include="..\..\code\core\CrShader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\code\core\CrRender.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\code\core\CrEvent.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -82,9 +73,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\core\CrComponent.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\code\core\Component\CrMeshFilter.cpp">
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="..\..\code\core\CrShaderUtility.cpp">
@@ -105,9 +93,6 @@
     <ClCompile Include="..\..\code\core\Common\CrFontLab.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\code\core\CrEngineInterface.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\code\core\CrEngineInterfaceLua.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -116,6 +101,21 @@
     </ClCompile>
     <ClCompile Include="..\..\code\core\Component\CrSkinMeshRender.cpp">
       <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\core\CreatorEngine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\core\CrTexture.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\core\CrTextureUtility.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\core\CrMeshUtility.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\core\test.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -126,12 +126,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\code\core\CrMeshChunk.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\code\core\CrMeshPool.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\code\core\CrModel.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\code\core\CrSingleton.h">
@@ -164,9 +158,6 @@
     <ClInclude Include="..\..\code\core\CrShader.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\code\core\CrRender.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\code\core\CrEvent.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -178,9 +169,6 @@
     </ClInclude>
     <ClInclude Include="..\..\code\core\CrGameObject.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\code\core\Component\CrMeshFilter.h">
-      <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="..\..\code\core\CrShaderUtility.h">
       <Filter>头文件</Filter>
@@ -200,9 +188,6 @@
     <ClInclude Include="..\..\code\core\Common\CrFontLab.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\code\core\CrEngineInterface.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\code\core\Lua\CrLuaState.h">
       <Filter>Lua</Filter>
     </ClInclude>
@@ -211,6 +196,21 @@
     </ClInclude>
     <ClInclude Include="..\..\code\core\Component\CrComponent.h">
       <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\core\CreatorEngine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\core\CrTexture.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\core\CrTextureUtility.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\core\CrMeshUtility.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\core\test.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

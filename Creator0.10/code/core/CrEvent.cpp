@@ -43,7 +43,7 @@ void CrEvent::ProMessage(GLint64 msg, GLint64 wParam, GLint64 lParam)
 {
 	if (msg == CR_EVENT_KEY && wParam == GLFW_RELEASE, lParam == GLFW_KEY_ESCAPE)
 	{
-		CrEngine::Stop();
+		
 	}
 }
 
