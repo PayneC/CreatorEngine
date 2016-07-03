@@ -31,7 +31,7 @@ CrEvent::~CrEvent()
 
 bool CrEvent::Init()
 {
-	GLFWwindow * pWindow = CrEngine::Window()->GetEngineWindow();
+	GLFWwindow * pWindow = CrWindow::Instance()->GetEngineWindow();
 	glfwSetInputMode(pWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	glfwSetKeyCallback(pWindow, KeyCallBack);
 	glfwSetCursorPosCallback(pWindow, CursorPosCallback);

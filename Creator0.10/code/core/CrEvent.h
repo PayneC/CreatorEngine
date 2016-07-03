@@ -11,10 +11,10 @@ Payne
 #include <stdio.h>
 #include <stdlib.h>
 #include <map>
+#include <CrSingleton.h>
 
-class CrEvent
+class CrEvent : public CrSingleton<CrEvent>
 {
-	friend class CrEngine;
 public:
 	CrEvent();
 	~CrEvent();

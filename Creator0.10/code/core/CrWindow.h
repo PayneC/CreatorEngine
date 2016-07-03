@@ -9,24 +9,24 @@ Payne
 
 #include <string>
 #include "CrDefine.h"
+#include <CrSingleton.h>
 
-class CrWindow
+class CrWindow : public CrSingleton<CrWindow>
 {
-	friend class CrEngine;
-
 public:
 	CrWindow();
 	~CrWindow();
 
 public:
 	bool Init();
+	void Update();
 
 	EasyGet(GLFWwindow*, m_pEngineWindow, EngineWindow);
 	EasyGetSetFuncOnly(glm::uvec2, m_v2WindowSize, WindowSize);
 	EasyGetSetFuncOnly(std::string, m_strWindowName, WindowName);
 
 private:
-	void Update();
+	
 
 };
 

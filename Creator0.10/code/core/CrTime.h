@@ -8,13 +8,12 @@ Payne
 #define _CREATOR_TIME_H
 
 #include "CrDefine.h"
+#include <CrSingleton.h>
 
-class CrTime
+class CrTime : public CrSingleton<CrTime>
 {
-	friend class CrEngine;
-private:
-	CrTime();
 public:
+	CrTime();
 	~CrTime();
 	
 	float GetCurrentTime();
@@ -29,10 +28,11 @@ public:
 	void SetFrameInterval(double frameInterval);
 	void SetFramesPerSecond(unsigned int FPS);
 
-private:
 	bool Init();
 	void Update();
 	bool IsMeetInterval();
+private:
+
 };
 
 #endif

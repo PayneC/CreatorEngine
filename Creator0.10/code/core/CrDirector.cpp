@@ -102,7 +102,7 @@ void CrDirector::RunScene(CrScene * pScene)
 
 void CrDirector::SetFps(unsigned int FPS)
 {
-	CrEngine::Time()->SetFramesPerSecond(FPS);
+	CrTime::Instance()->SetFramesPerSecond(FPS);
 }
 
 //相机由导演管理

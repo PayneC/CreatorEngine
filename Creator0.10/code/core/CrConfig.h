@@ -9,11 +9,10 @@ Payne
 
 #include <string>
 #include "CrDefine.h"
+#include <CrSingleton.h>
 
-class CrConfig
+class CrConfig : public CrSingleton<CrConfig>
 {
-	friend class CrEngine;
-
 public:
 	CrConfig();
 	~CrConfig();

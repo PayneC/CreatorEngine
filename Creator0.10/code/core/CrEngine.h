@@ -32,12 +32,7 @@ public:
 	void Stop();
 
 public:
-	static CrConfig * Config(){ return m_pInstance->m_pConfig; }
-	static CrTime * Time(){ return m_pInstance->m_pTime; }
-	static CrEvent * Event() { return m_pInstance->m_pEvent; }
 	static CrMemoryPool * MemoryPool() { return m_pInstance->m_pMemoryPool; }
-	static CrDirector * Director() { return m_pInstance->m_pDirector; }
-	static CrWindow * Window() { return m_pInstance->m_pWindow; }
 private:
 	bool m_isRun;
 
@@ -57,12 +52,7 @@ private:
 private:
 	bool m_isInit;
 
-	CrConfig * m_pConfig;
-	CrTime * m_pTime;
-	CrEvent * m_pEvent;
 	CrMemoryPool * m_pMemoryPool;
-	CrDirector * m_pDirector;
-	CrWindow * m_pWindow;
 
 	double m_lfTotalDelay;
 

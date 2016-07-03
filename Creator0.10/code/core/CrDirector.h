@@ -11,23 +11,24 @@ Payne
 #include <string>
 #include "CrCamera.h"
 #include "CrScene.h"
+#include <CrSingleton.h>
 
-class CrDirector
+class CrDirector : public CrSingleton<CrDirector>
 {
-	friend class CrEngine;
 	friend class CrCamera;
 	friend class CrModel;
-private:
+
+public:
 	CrDirector();
-	bool Init();
+	~CrDirector();
+
 	void Destory();
-	void Update();
 	void RenderCamera(CrCamera * pCamera);
 	void AddCamera(CrCamera * pCamera);
 	void RemoveCamera(CrCamera * pCamera);
-public:
-	~CrDirector();
 
+	bool Init();
+	void Update();
 	void InsertScene(CrScene * pScene);
 
 	void Remove(std::string name);

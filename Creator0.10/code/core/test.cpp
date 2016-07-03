@@ -15,7 +15,7 @@ test::~test()
 
 void test::Update()
 {
-	float t = CrEngine::Time()->GetDelateTime();
+	float t = CrTime::Instance()->GetDelateTime();
 	a += t * 1.f;
 
 	if (a > 360.f)
