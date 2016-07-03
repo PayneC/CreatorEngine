@@ -100,7 +100,7 @@ TReturnType * CrGameObject::CreateGameObject(std::string name)
 {
 	static_assert(std::is_base_of<CrGameObject, TReturnType>::value, "'T' template parameter to FindComponentByClass must be derived from CrGameObject");
 
-	TReturnType * pRef = new TReturnType();//CrObject::Instance<CrGameObject>();
+	TReturnType * pRef = new TReturnType();
 	if (pRef)
 	{
 		pRef->SetName(name);
@@ -114,7 +114,7 @@ TReturnType * CrGameObject::CreateGameObject(EPresetMeshType type, std::string n
 {
 	static_assert(std::is_base_of<CrGameObject, TReturnType>::value, "'T' template parameter to FindComponentByClass must be derived from CrGameObject");
 
-	TReturnType * pRef = new TReturnType();//CrObject::Instance<CrGameObject>();
+	TReturnType * pRef = new TReturnType();
 	if (pRef)
 	{
 		pRef->SetName(name);

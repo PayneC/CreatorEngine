@@ -34,8 +34,7 @@ int CrEngine::Initialization()
 
 int CrEngine::Start(CrScene * pScene)
 {
-	CrDirector::Instance()->InsertScene(pScene);
-	CrDirector::Instance()->RunScene(pScene);
+	m_pRunScene = pScene;
 	m_pInstance->m_isRun = true;
 	return m_pInstance->MainLoop(); 
 }
@@ -118,14 +117,6 @@ bool CrEngine::Init()
 #ifdef _CR_DEBUG
 	printf("log: Initializing Director ...\n");
 #endif
-
-	if (!(CrDirector::Instance()->Init()))
-	{
-#ifdef _CR_DEBUG
-		printf("error: Director initialize fail\n");
-#endif
-		return false;
-	}
 	
 #ifdef _CR_DEBUG
 	printf("log: Initialize Time ...\n");
@@ -196,7 +187,15 @@ int CrEngine::MainLoop()
 		CrTime::Instance()->Update();
 		if (CrTime::Instance()->IsMeetInterval())
 		{
-			CrDirector::Instance()->Update();
+			if (m_pRunScene)
+			{
+				m_pRunScene->Update();
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+				for each (CrCamera * var in m_pCameraList)
+				{
+					m_pRunScene->Render(var->GetVP());
+				}
+			}
 
 			CrFontLab::Instance()->Render(wcstr, 50, 50, 900, 25);
 
@@ -221,10 +220,19 @@ void CrEngine::ProMessage(GLFWwindow* window, GLuint64 msg, unsigned __int64 wPa
 
 void CrEngine::Destory()
 {
-	//m_pModel->Release();//payne
 	m_pMemoryPool->ClearUpMemory();//payne
 	glfwTerminate(); 
 
 	delete[] wcstr;
 	wcstr = NULL;
+}
+
+void CrEngine::AddCamera(CrCamera * pCamera)
+{
+	m_pCameraList.push_back(pCamera);
+}
+
+void CrEngine::RemoveCamera(CrCamera * pCamera)
+{
+	m_pCameraList.remove(pCamera);
 }

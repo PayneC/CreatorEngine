@@ -5,18 +5,18 @@
 void KeyCallBack(GLFWwindow* pWindow, int keyCode, int scanCode, int action, int Crds)
 {
 	printf("%d-%d-%d-%d \n", keyCode, scanCode, action, Crds);
-	CrEngine::m_pInstance->ProMessage(pWindow, CR_EVENT_KEY, action, keyCode);
+	CrEngine::Instance()->ProMessage(pWindow, CR_EVENT_KEY, action, keyCode);
 }
 void CursorPosCallback(GLFWwindow* pWindow, double xPos, double yPos)
 {
 	//printf("%lf-%lf \n", xPos, yPos);
-	CrEngine::m_pInstance->ProMessage(pWindow, CR_EVENT_MOUSE_MOVE, xPos, yPos);
+	CrEngine::Instance()->ProMessage(pWindow, CR_EVENT_MOUSE_MOVE, xPos, yPos);
 }
 
 void CruseButtonCallback(GLFWwindow* pWindow, int keyCode, int action, int Crds)
 {
 	printf("%d-%d-%d \n", keyCode, action, Crds);
-	CrEngine::m_pInstance->ProMessage(pWindow, CR_EVENT_MOUSE_BUTTON, action, keyCode);
+	CrEngine::Instance()->ProMessage(pWindow, CR_EVENT_MOUSE_BUTTON, action, keyCode);
 }
 
 CrEvent::CrEvent()

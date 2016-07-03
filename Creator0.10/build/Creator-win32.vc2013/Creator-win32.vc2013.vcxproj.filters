@@ -36,9 +36,6 @@
     <ClCompile Include="..\..\code\core\CrCamera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\code\core\CrDirector.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\code\core\CrScene.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -126,9 +123,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\code\core\CrCamera.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\code\core\CrDirector.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\code\core\CrScene.h">

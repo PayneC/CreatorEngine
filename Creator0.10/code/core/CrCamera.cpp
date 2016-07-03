@@ -6,12 +6,12 @@ CrCamera::CrCamera()
 {
 	m_sName = "Camera";
 	m_m4Projection = glm::perspective(45.f, 16.f / 9.f, 0.1f, 100.f);
-	CrDirector::Instance()->AddCamera(this);
+	CrEngine::Instance()->AddCamera(this);
 }
 
 CrCamera::~CrCamera()
 {
-	CrDirector::Instance()->RemoveCamera(this);
+	CrEngine::Instance()->RemoveCamera(this);
 }
 
 glm::mat4 CrCamera::GetVP()

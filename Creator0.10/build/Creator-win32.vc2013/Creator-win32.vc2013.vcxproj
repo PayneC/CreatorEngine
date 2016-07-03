@@ -81,7 +81,6 @@
     <ClCompile Include="..\..\code\core\Component\CrTransform.cpp" />
     <ClCompile Include="..\..\code\core\CrCamera.cpp" />
     <ClCompile Include="..\..\code\core\CrComponent.cpp" />
-    <ClCompile Include="..\..\code\core\CrDirector.cpp" />
     <ClCompile Include="..\..\code\core\CrConfig.cpp" />
     <ClCompile Include="..\..\code\core\CreatorEngine.cpp" />
     <ClCompile Include="..\..\code\core\CrEngineInterfaceLua.cpp" />
@@ -113,7 +112,6 @@
     <ClInclude Include="..\..\code\core\Component\CrTransform.h" />
     <ClInclude Include="..\..\code\core\CrCamera.h" />
     <ClInclude Include="..\..\code\core\CrDefine.h" />
-    <ClInclude Include="..\..\code\core\CrDirector.h" />
     <ClInclude Include="..\..\code\core\CreatorEngine.h" />
     <ClInclude Include="..\..\code\core\CrMeshUtility.h" />
     <ClInclude Include="..\..\code\core\CrConfig.h" />
