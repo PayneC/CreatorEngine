@@ -11,6 +11,6 @@ private:
 public:
 	test();
 	~test();
-	virtual void Update();
+	void Update();
 
 };

@@ -92,10 +92,10 @@ int main(int argc, char **argv)
 	go->AddComponent<test>();
 
 	go->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	go->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
+	go->GetTransform()->SetLocalScale(glm::vec3(2, 1, 1));
 	go->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
 	CrMeshRender * meshRender = go->GetComponent<CrMeshRender>();
-	meshRender->GetMaterial()->SetColor(glm::vec4(1, 1, 1, 1));
+	meshRender->GetMaterial()->SetColor(glm::vec4(1, 0, 0, 1));
 
 	CrCamera * pCamera = CrGameObject::CreateGameObject<CrCamera>("Camera");
 	pScene->AddChild(pCamera);
@@ -104,18 +104,19 @@ int main(int argc, char **argv)
 	pCamera->GetTransform()->LookAt(go);
 
 	CrGameObject * go2 = NULL;
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 40; ++i)
 	{
-		for (int j = 0; j < 10; ++j)
+		for (int j = 0; j < 1; ++j)
 		{
-			for (int k = 0; k < 10; ++k)
+			for (int k = 0; k < 1; ++k)
 			{
 				go2 = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_CUBE, "cube");
 				go->AddChild(go2);
-				go2->AddComponent<test>();
-				go2->GetTransform()->SetPosition(glm::vec3(-20 + i * 4, -20 + j * 4, -20 + k * 4));
+				//go2->AddComponent<test>();
+				go2->GetTransform()->SetLocalPosition(glm::vec3(-18 + i * 4, 0.f, 0.f));
+				//go2->GetTransform()->SetLocalScale(glm::vec3(1.f, 1.f, 1.f));
 				meshRender = go2->GetComponent<CrMeshRender>();
-				meshRender->GetMaterial()->SetColor(glm::vec4((float)i / 10.f, (float)j / 10.f, (float)k / 10.f, 1.f));
+				meshRender->GetMaterial()->SetColor(glm::vec4((float)i / 10.f, (float)i / 10.f, (float)i / 10.f, 1.f));
 			}
 		}
 	}

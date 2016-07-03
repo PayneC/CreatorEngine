@@ -57,7 +57,7 @@ glm::vec3 CrTransform::GetScale()
 		CrTransform * parentTransform = GetGameObject() && GetGameObject()->GetParent() ? GetGameObject()->GetParent()->GetTransform() : NULL;
 		if (parentTransform)
 		{
-			m_v3Scale = parentTransform->GetScale() + m_v3LocalScale;
+			m_v3Scale = parentTransform->GetScale() * m_v3LocalScale;
 		}
 		else
 		{
@@ -201,7 +201,7 @@ void CrTransform::_ExecuteMatrix()
 
 glm::quat CrTransform::GetQuaternion()
 {
-	return glm::quat(GetRotation());
+	return glm::quat(GetRotation() * glm::pi<float>() / 180.f);
 }
 
 void CrTransform::LookAt(CrGameObject * gameobject)

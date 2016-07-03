@@ -1,4 +1,5 @@
 #include "test.h"
+#include <glm\glm.hpp>
 
 test::test()
 	: a(0.f)
@@ -16,10 +17,10 @@ test::~test()
 void test::Update()
 {
 	float t = CrTime::Instance()->GetDelateTime();
-	a += t * 1.f;
+	a -= t * 6;
 
-	if (a > 360.f)
-		a = 0.f;
+	if (a < 0.f)
+		a = 360.f;
 
 	b += t * bb;
 	if (b > 2.f)
@@ -33,6 +34,6 @@ void test::Update()
 		bb = -bb;
 	}
 
-	m_pGameObject->GetTransform()->SetLocalRotation(glm::vec3(a));
-	m_pGameObject->GetTransform()->SetLocalScale(glm::vec3(b));
+	m_pGameObject->GetTransform()->SetLocalRotation(glm::vec3(a, a, a));
+	//m_pGameObject->GetTransform()->SetLocalScale(glm::vec3(b));
 }
