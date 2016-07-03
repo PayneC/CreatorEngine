@@ -11,7 +11,6 @@ Payne
 #include <string>
 
 #include "CrDefine.h"
-#include "CrTextureChunk.h"
 
 class CrTexturePool
 {
@@ -19,11 +18,11 @@ public:
 	CrTexturePool();
 	~CrTexturePool();
 
-	CrTextureChunk * CreateTexture(const char* filename);
+	//CrTextureChunk * CreateTexture(const char* filename);
 private:
-	CrTextureChunk * ReadPng(const char* filename);
+	//CrTextureChunk * ReadPng(const char* filename);
 
-	std::map<std::string, CrTextureChunk*> m_mapTexture;
+	//std::map<std::string, CrTextureChunk*> m_mapTexture;
 	
 };
 

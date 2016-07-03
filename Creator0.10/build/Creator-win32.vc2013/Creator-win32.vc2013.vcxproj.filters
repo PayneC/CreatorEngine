@@ -30,12 +30,6 @@
     <ClCompile Include="..\..\code\core\CrMemoryPool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\code\core\CrMeshChunk.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\code\core\CrTextureChunk.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\code\core\CrTexturePool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -125,13 +119,7 @@
     <ClInclude Include="..\..\code\core\CrMemoryPool.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\code\core\CrMeshChunk.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\code\core\CrSingleton.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\code\core\CrTextureChunk.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\code\core\CrTexturePool.h">
