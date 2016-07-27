@@ -24,8 +24,6 @@
 *.exe
 *.out
 *.app
-*.dll
-*.lib
 *.tlog
 *.log
 *.idb
