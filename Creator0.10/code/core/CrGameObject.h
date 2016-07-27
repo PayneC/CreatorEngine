@@ -10,8 +10,6 @@ Payne
 #include <map>
 #include <list>
 #include <vector>
-#include <physX/PxPhysicsAPI.h>
-#include <physX/vehicle/PxVehicleSDK.h>
 #include <typeinfo.h>
 
 #include <CrTransform.h>

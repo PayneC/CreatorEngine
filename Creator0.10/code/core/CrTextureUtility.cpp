@@ -10,6 +10,12 @@ CrTextureUtility::~CrTextureUtility()
 
 CrTexture * CrTextureUtility::LoadTexture(const char* filename, unsigned int hashCode, GLenum image_format, GLint internal_format, GLint level, GLint border)
 {
+	return NULL;
+}
+
+/*
+CrTexture * CrTextureUtility::LoadTexture(const char* filename, unsigned int hashCode, GLenum image_format, GLint internal_format, GLint level, GLint border)
+{
 	std::map<unsigned int, CrTexture*>::iterator iter = m_mapTexture.find(hashCode);
 	//if this texture ID is in use, unload the current texture
 	if (iter != m_mapTexture.end())
@@ -77,3 +83,4 @@ CrTexture * CrTextureUtility::LoadTexture(const char* filename, unsigned int has
 	//return success
 	return texture;
 }
+*/

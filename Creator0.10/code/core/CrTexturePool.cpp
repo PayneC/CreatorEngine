@@ -1,6 +1,4 @@
 #include "CrTexturePool.h"
-#include <libpng\png.h>
-#include <fbxsdk.h>
 
 CrTexturePool::CrTexturePool()
 {

@@ -7,9 +7,6 @@ Payne
 #ifndef _CREATOR_TEXTURE_H
 #define _CREATOR_TEXTURE_H
 
-#include"FreeImage.h"
-#pragma comment(lib, "FreeImage.lib") 
-
 #include "CrDefine.h"
 #include "CrObject.h"
 #include <string>

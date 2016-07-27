@@ -41,8 +41,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)../bin_debug\</OutDir>
     <IntDir>$(SolutionDir)../temp\</IntDir>
-    <IncludePath>$(SolutionDir)../code\thirdLib\include;$(SolutionDir)../code\thirdLib\include\physX;$(SolutionDir)../code/core/Component;$(SolutionDir)../code/core/Lua;$(SolutionDir)../code/core;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)../code\thirdLib\lib\x86;$(SolutionDir)../code\thirdLib\lib\x86\vc11win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)../code\thirdLib\include;$(SolutionDir)../code/core/Component;$(SolutionDir)../code/core/Lua;$(SolutionDir)../code/core;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)../code\thirdLib\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -54,7 +54,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;glew32.lib;OpenGL32.Lib;libpng.lib;zlib.lib;libfbxsdk-md.lib;PhysX3_x86.lib;PhysX3Common_x86.lib;Lua5.3.2.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;glew32.lib;OpenGL32.Lib;Lua5.3.2.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
