@@ -28,7 +28,7 @@ public:
 public:
 	EasyGetSet(CrShader *, m_pShader, Shader);
 	EasyGet(glm::vec4 , m_dColor, Color);
-	EasyGetSet(CrTexture *, m_pMainTextur, pMainTextur);
+	EasyGetSet(CrTexture *, m_pMainTexture, pMainTexture);
 	EasyGetSet(glm::vec2, m_v2mainTextureOffset, mainTextureOffset);
 	EasyGetSet(glm::vec2, m_v2mainTextureScale, mainTextureScale);
 	void SetColor(glm::vec4 & color);

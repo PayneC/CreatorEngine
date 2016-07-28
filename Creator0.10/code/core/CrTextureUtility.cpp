@@ -1,4 +1,5 @@
 #include "CrTextureUtility.h"
+#include <SOIL.h>
 
 CrTextureUtility::CrTextureUtility()
 {
@@ -11,6 +12,24 @@ CrTextureUtility::~CrTextureUtility()
 CrTexture * CrTextureUtility::LoadTexture(const char* filename, unsigned int hashCode, GLenum image_format, GLint internal_format, GLint level, GLint border)
 {
 	return NULL;
+}
+
+CrTexture * CrTextureUtility::LoadTexture(const char* filename)
+{
+	int width, height;
+	unsigned char * image = SOIL_load_image(filename, &width, &height, 0, SOIL_LOAD_AUTO);
+	CrTexture * instance = new CrTexture();
+	instance->m_dWidth = width;
+	instance->m_dHeight = height;
+	instance->m_dTextureId;
+
+	glGenTextures(1, &(instance->m_dTextureId));
+	glBindTexture(GL_TEXTURE_2D, instance->m_dTextureId);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	SOIL_free_image_data(image);
+	glBindTexture(GL_TEXTURE, 0);
+
+	return instance;
 }
 
 /*

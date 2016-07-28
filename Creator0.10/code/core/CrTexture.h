@@ -20,8 +20,11 @@ public:
 	CrTexture();
 	~CrTexture();
 
+public:
+	//EasyGet(GLuint, m_dTextureId, TextureId)
+		GLuint m_dTextureId;
 private:
-	GLuint m_dTextureId;
+	
 	int m_dAnisoLevel;
 	int m_dWidth;
 	int m_dHeight;

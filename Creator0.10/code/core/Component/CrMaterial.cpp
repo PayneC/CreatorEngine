@@ -9,7 +9,7 @@ CrMaterial * CrMaterial::CreateCrMaterial()
 CrMaterial::CrMaterial()
 	:m_pShader(0)
 	, m_dColor(1.f)
-	, m_pMainTextur(NULL)
+	, m_pMainTexture(NULL)
 	, m_v2mainTextureOffset(0.f)
 	, m_v2mainTextureScale(0.f)
 {

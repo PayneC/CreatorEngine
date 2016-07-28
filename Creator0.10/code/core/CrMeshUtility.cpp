@@ -30,70 +30,183 @@ CrMesh* CrMeshUtility::CreateMeshCube()
 
 	m_BuiltinMeshs[CR_MESH_TYPE_CUBE] = new CrMesh();
 
-	GLuint vertexId = 0;
-
-	GLuint buffIds[4];
-
-	size_t positionSize = 0;
-	size_t normalSize = 0;
-	size_t UVSize = 0;
-	size_t elementSize = 0;
-
-	GLfloat positions[] =
+	GLfloat vertices[] =
 	{
-		-0.5f, -0.5f, -0.5f, 1.0f,
-		-0.5f, -0.5f, 0.5f, 1.0f,
-		-0.5f, 0.5f, -0.5f, 1.0f,
-		-0.5f, 0.5f, 0.5f, 1.0f,
-		0.5f, -0.5f, -0.5f, 1.0f,
-		0.5f, -0.5f, 0.5f, 1.0f,
-		0.5f, 0.5f, -0.5f, 1.0f,
-		0.5f, 0.5f, 0.5f, 1.0f,
-	};
-	positionSize = sizeof(positions);
+		0.5f, -0.5f, 0.5f,
+		-0.5f, -0.5f, 0.5f,
+		0.5f, 0.5f, 0.5f,
+		-0.5f, 0.5f, 0.5f,
 
-	GLushort elements[] =
+		0.5f, 0.5f, -0.5f,
+		-0.5f, 0.5f, -0.5f,
+		0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+
+		0.5f, 0.5f, 0.5f,
+		-0.5f, 0.5f, 0.5f,
+		0.5f, 0.5f, -0.5f,
+		-0.5f, 0.5f, -0.5f,
+
+		0.5f, -0.5f, -0.5f,
+		0.5f, -0.5f, 0.5f,
+		-0.5f, -0.5f, 0.5f,
+		-0.5f, -0.5f, -0.5f,
+
+		-0.5f, -0.5f, 0.5f,
+		-0.5f, 0.5f, 0.5f,
+		-0.5f, 0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+
+		0.5f, -0.5f, -0.5f,
+		0.5f, 0.5f, -0.5f,
+		0.5f, 0.5f, 0.5f,
+		0.5f, -0.5f, 0.5f,
+	};
+
+	GLfloat normals[] =
 	{
-		0, 1, 2, 3, 6, 7, 4, 5,
-		0xffff,
-		2, 6, 0, 4, 1, 5, 3, 7,
+		0.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f,
+
+		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, -1.0f,
+		0.0f, 0.0f, -1.0f,
+
+		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, -1.0f,
+		0.0f, 0.0f, -1.0f,
+
+		0.0f, -1.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+
+		-1.0f, -0.0f, 0.0f,
+		-1.0f, -0.0f, 0.0f,
+		-1.0f, -0.0f, 0.0f,
+		-1.0f, -0.0f, 0.0f,
+
+		1.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
 	};
-	elementSize = sizeof(elements);
 
-	glGenBuffers(4, buffIds);
+	GLfloat uvs[] =
+	{
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		0.0f, 1.0f,
+		1.0f, 1.0f,
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffIds[3]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementSize, elements, GL_STATIC_DRAW);
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		1.0f, 1.0f,
 
-	glBindBuffer(GL_ARRAY_BUFFER, buffIds[0]);
-	glBufferData(GL_ARRAY_BUFFER, positionSize, positions, GL_STATIC_DRAW);
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		0.0f, 0.0f,
+		1.0f, 0.0f,
 
-	glGenVertexArrays(1, &vertexId);
-	glBindVertexArray(vertexId);
+		0.0f, 0.0f,
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		1.0f, 0.0f,
+
+		0.0f, 0.0f,
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		1.0f, 0.0f,
+
+		0.0f, 0.0f,
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		1.0f, 0.0f,
+	};
+
+	GLushort triangles[] =
+	{
+		0, 2, 3, 
+		0, 3, 1, 
+		8, 4, 5,
+		8, 5, 9,
+		10, 6, 7,
+		10, 7, 11,
+		12, 13, 14,
+		12, 14, 15,
+		16, 17, 18,
+		16, 18, 19,
+		20, 21, 22,
+		20, 22, 23,
+	};
+
+	GLuint VAO = 0;
+	GLuint VBO = 0;
+	GLuint EBO = 0;
+
+	size_t verticeSize = sizeof(vertices);
+	size_t normalSize = sizeof(normals);
+	size_t uvSize = sizeof(uvs);
+
+	size_t triangleSize = sizeof(triangles);
+
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
+
+	glBindVertexArray(VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, verticeSize + normalSize + uvSize, NULL, GL_STATIC_DRAW);
+
+	glBufferSubData(GL_ARRAY_BUFFER, 0, verticeSize, vertices);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, normalSize, normals);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, uvSize, uvs);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, triangleSize, triangles, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0); //attribute 0. No particular reason for 0, but must match the layout in the shader.
-	//glEnableVertexAttribArray(1); //attribute 1. No particular reason for 1, but must match the layout in the shader.
-
-	glBindBuffer(GL_ARRAY_BUFFER, buffIds[0]);
 	glVertexAttribPointer(
 		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		4,                  // size
+		3,                  // size
 		GL_FLOAT,           // type
 		GL_FALSE,           // normalized?
 		0,                  // stride
 		(void*)0			// array buffer offset
 		);
 
-	m_BuiltinMeshs[CR_MESH_TYPE_CUBE]->SetPositionBufferID(buffIds[0]);
-	m_BuiltinMeshs[CR_MESH_TYPE_CUBE]->SetNormalBufferID(buffIds[1]);
-	m_BuiltinMeshs[CR_MESH_TYPE_CUBE]->SetUVBufferID(buffIds[2]);
-	m_BuiltinMeshs[CR_MESH_TYPE_CUBE]->SetElementBufferID(buffIds[3]);
+	glEnableVertexAttribArray(1); //attribute 0. No particular reason for 0, but must match the layout in the shader.
+	glVertexAttribPointer(
+		1,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+		3,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		0,                  // stride
+		(void*)verticeSize	// array buffer offset
+		);
 
-	m_BuiltinMeshs[CR_MESH_TYPE_CUBE]->SetPositionSize(positionSize);
-	m_BuiltinMeshs[CR_MESH_TYPE_CUBE]->SetNormalSize(normalSize);
-	m_BuiltinMeshs[CR_MESH_TYPE_CUBE]->SetUVSize(UVSize);
-	m_BuiltinMeshs[CR_MESH_TYPE_CUBE]->SetElementSize(elementSize);
+	glEnableVertexAttribArray(2); //attribute 0. No particular reason for 0, but must match the layout in the shader.
+	glVertexAttribPointer(
+		2,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+		2,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		0,                  // stride
+		(void*)(verticeSize + normalSize)			// array buffer offset
+		);
 
+	glBindVertexArray(0);
+
+	m_BuiltinMeshs[CR_MESH_TYPE_CUBE]->SetVAO(VAO);
+	m_BuiltinMeshs[CR_MESH_TYPE_CUBE]->SetVBO(VBO);
+	m_BuiltinMeshs[CR_MESH_TYPE_CUBE]->SetEBO(EBO);
+	m_BuiltinMeshs[CR_MESH_TYPE_CUBE]->SetElementCount(triangleSize);
 	m_BuiltinMeshs[CR_MESH_TYPE_CUBE]->SetName("cube");
 
 	return m_BuiltinMeshs[CR_MESH_TYPE_CUBE];

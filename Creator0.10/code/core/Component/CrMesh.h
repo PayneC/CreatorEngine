@@ -22,17 +22,10 @@ public:
 public:
 	EasyGetSet(std::string, m_sName, Name);
 	
-	EasyGetSet(GLuint, m_uVertexId, VertexID);
-
-	EasyGetSet(GLuint, m_uPositionBufferId, PositionBufferID);
-	EasyGetSet(GLuint, m_dElementBufferId, ElementBufferID);
-	EasyGetSet(GLuint, m_dNormalBufferId, NormalBufferID);
-	EasyGetSet(GLuint, m_dUVBufferId, UVBufferID);
-
-	EasyGetSet(size_t, m_uPositionSize, PositionSize);
-	EasyGetSet(size_t, m_uElementSize, ElementSize);
-	EasyGetSet(size_t, m_dNormalSize, NormalSize);
-	EasyGetSet(size_t, m_dUVSize, UVSize);
+	EasyGetSet(GLuint, m_uVAO, VAO);
+	EasyGetSet(GLuint, m_uVBO, VBO);
+	EasyGetSet(GLuint, m_uEBO, EBO);
+	EasyGetSet(GLuint, m_uElementCount, ElementCount);
 private:
 	
 

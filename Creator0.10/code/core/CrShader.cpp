@@ -12,8 +12,3 @@ CrShader::~CrShader()
 {
 }
 
-void CrShader::UseShader()
-{
-	glUseProgram(m_uShaderID);
-}
-

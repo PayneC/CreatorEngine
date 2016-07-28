@@ -22,6 +22,7 @@ Payne
 
 #include "CrMeshUtility.h"
 #include "CrShaderUtility.h"
+#include "CrTextureUtility.h"
 #include "test.h"
 using std::vector;
 using std::string;
@@ -84,6 +85,8 @@ int main(int argc, char **argv)
 	std::thread _DebugThread(DebugThread);
 	_DebugThread.detach();
 
+	CrTexture * texture = CrTextureUtility::Instance()->LoadTexture("TexMagic01.png");
+
 	CrScene * pScene = CrGameObject::CreateGameObject<CrScene>("test01");
 	
 	CrGameObject * go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_CUBE, "center");
@@ -95,7 +98,8 @@ int main(int argc, char **argv)
 	go->GetTransform()->SetLocalScale(glm::vec3(2, 1, 1));
 	go->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
 	CrMeshRender * meshRender = go->GetComponent<CrMeshRender>();
-	meshRender->GetMaterial()->SetColor(glm::vec4(1, 0, 0, 1));
+	meshRender->GetMaterial()->SetColor(glm::vec4(1, 1, 1, 1));
+	meshRender->GetMaterial()->SetpMainTexture(texture);
 
 	CrCamera * pCamera = CrGameObject::CreateGameObject<CrCamera>("Camera");
 	pScene->AddChild(pCamera);
@@ -117,6 +121,7 @@ int main(int argc, char **argv)
 				//go2->GetTransform()->SetLocalScale(glm::vec3(1.f, 1.f, 1.f));
 				meshRender = go2->GetComponent<CrMeshRender>();
 				meshRender->GetMaterial()->SetColor(glm::vec4((float)i / 10.f, (float)i / 10.f, (float)i / 10.f, 1.f));
+				meshRender->GetMaterial()->SetpMainTexture(texture);
 			}
 		}
 	}

@@ -1,17 +1,17 @@
 #version 430 core
 
-layout(location = 0) in vec4 vVertex;
-layout(location = 3) in vec4 vNormal;
-layout(location = 2) in vec4 vUV;
-layout(location = 1) in vec4 vColor;
+layout(location = 0) in vec3 position;
+layout(location = 1) in vec4 normal;
+layout(location = 2) in vec4 texCoord;
 
 uniform mat4 MVP;
 uniform vec4 BaseColor;
 
-out vec4 color;
+out vec4 Color;
+out vec2 TexCoord;
 
 void main()
 {
-	gl_Position = MVP * vVertex;
-	color = BaseColor;
+	gl_Position = MVP * vec4(position, 1);
+	Color = BaseColor;
 }
