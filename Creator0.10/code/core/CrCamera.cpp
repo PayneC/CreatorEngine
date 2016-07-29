@@ -3,6 +3,7 @@
 
 CrCamera::CrCamera()
 	:m_m4Projection(1.f)
+	, m_sProjection(CAMERA_PROJECTION_PERSPECTIVE)
 {
 	m_sName = "Camera";
 	m_m4Projection = glm::perspective(45.f, 16.f / 9.f, 0.1f, 200.f);

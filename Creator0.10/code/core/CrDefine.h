@@ -67,7 +67,10 @@ public: virtual void Set##funName(varType var);
 enum EPresetMeshType
 {
 	CR_MESH_TYPE_CUBE = 0,
+	CR_MESH_TYPE_QUAD = 1,
 };
-#define CR_MESH_TYPE_COUNT					1	
+#define CR_MESH_TYPE_COUNT					2	
 
+#define CAMERA_PROJECTION_PERSPECTIVE		1
+#define CAMERA_PROJECTION_ORTHOGRAPHIC		2
 #endif

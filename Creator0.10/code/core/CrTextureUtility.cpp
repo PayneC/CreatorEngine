@@ -16,16 +16,31 @@ CrTexture * CrTextureUtility::LoadTexture(const char* filename, unsigned int has
 
 CrTexture * CrTextureUtility::LoadTexture(const char* filename)
 {
-	int width, height;
-	unsigned char * image = SOIL_load_image(filename, &width, &height, 0, SOIL_LOAD_AUTO);
+	int width, height, channels;
+	unsigned char * image = SOIL_load_image(filename, &width, &height, &channels, SOIL_LOAD_AUTO);
 	CrTexture * instance = new CrTexture();
 	instance->m_dWidth = width;
 	instance->m_dHeight = height;
 	instance->m_dTextureId;
 
+	size_t s = strlen(filename);
+	size_t s2 = strlen((char *)image);
+
 	glGenTextures(1, &(instance->m_dTextureId));
 	glBindTexture(GL_TEXTURE_2D, instance->m_dTextureId);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	if (channels == SOIL_LOAD_RGBA)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	}
+	else if (channels == SOIL_LOAD_RGB)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	}
+	glGenerateMipmap(GL_TEXTURE_2D);
+
 	SOIL_free_image_data(image);
 	glBindTexture(GL_TEXTURE, 0);
 

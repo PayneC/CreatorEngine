@@ -157,19 +157,20 @@ bool CrEngine::Init()
 	CrFontLab::Instance()->Init();
 
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);
 	glDepthFunc(GL_LESS);
 	//点大小
 	glPointSize(1.f);
 	//线宽
 	glLineWidth(2.f);
 	//正反面
-	glFrontFace(GL_CCW);
+	//glFrontFace(GL_CCW);
 	//裁剪
-	glCullFace(GL_BACK);
+	//glCullFace(GL_BACK);
 	//开启
 	glEnable(GL_CULL_FACE);
 	//渲染模式
-	glPolygonMode(GL_FRONT, GL_LINE);
+	//glPolygonMode(GL_FRONT, GL_LINE);
 	m_isInit = true;
 
 	return true;
@@ -191,6 +192,7 @@ int CrEngine::MainLoop()
 			{
 				m_pRunScene->Update();
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+				glClearColor(0, 0, 0, 1);
 				for each (CrCamera * var in m_pCameraList)
 				{
 					m_pRunScene->Render(var->GetVP());

@@ -85,11 +85,11 @@ int main(int argc, char **argv)
 	std::thread _DebugThread(DebugThread);
 	_DebugThread.detach();
 
-	CrTexture * texture = CrTextureUtility::Instance()->LoadTexture("TexMagic01.png");
+	CrTexture * texture = CrTextureUtility::Instance()->LoadTexture("001.png");
 
 	CrScene * pScene = CrGameObject::CreateGameObject<CrScene>("test01");
 	
-	CrGameObject * go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_CUBE, "center");
+	CrGameObject * go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_QUAD, "center");
 	pScene->AddChild(go);
 
 	go->AddComponent<test>();
@@ -103,9 +103,11 @@ int main(int argc, char **argv)
 
 	CrCamera * pCamera = CrGameObject::CreateGameObject<CrCamera>("Camera");
 	pScene->AddChild(pCamera);
-	pCamera->GetTransform()->SetPosition(glm::fvec3(0.f, 0.f, 80.0f));
+	pCamera->GetTransform()->SetPosition(glm::fvec3(0.f, 0.f, 20.0f));
 
 	pCamera->GetTransform()->LookAt(go);
+
+	CrTexture * texture2 = CrTextureUtility::Instance()->LoadTexture("TexMagic01.png");
 
 	CrGameObject * go2 = NULL;
 	for (int i = 0; i < 40; ++i)
@@ -121,11 +123,21 @@ int main(int argc, char **argv)
 				//go2->GetTransform()->SetLocalScale(glm::vec3(1.f, 1.f, 1.f));
 				meshRender = go2->GetComponent<CrMeshRender>();
 				meshRender->GetMaterial()->SetColor(glm::vec4((float)i / 10.f, (float)i / 10.f, (float)i / 10.f, 1.f));
-				meshRender->GetMaterial()->SetpMainTexture(texture);
+				meshRender->GetMaterial()->SetpMainTexture(texture2);
 			}
 		}
 	}
 	
+
+	go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_QUAD, "center");
+	pScene->AddChild(go);
+	go->GetTransform()->SetPosition(glm::vec3(5, -5, 5));
+	go->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
+	go->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
+	meshRender = go->GetComponent<CrMeshRender>();
+	meshRender->GetMaterial()->SetColor(glm::vec4(1, 1, 1, 1));
+	meshRender->GetMaterial()->SetpMainTexture(texture);
+
 	Start(pScene);
 	m_isRun = false;
 

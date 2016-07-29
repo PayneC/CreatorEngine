@@ -25,6 +25,7 @@ public:
 	static CrMesh* CreateMesh(EPresetMeshType meshType);
 private:
 	CrMesh* CreateMeshCube();
+	CrMesh* CreateMeshQuad();
 	CrMesh* m_BuiltinMeshs[CR_MESH_TYPE_COUNT];
 };
 
