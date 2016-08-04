@@ -36,8 +36,6 @@ public:
 	virtual void Enable();
 	virtual void Disabled();
 	
-	virtual void Render(glm::fmat4 & mv);
-	
 	void AddChild(CrGameObject * pNode);
 	void RemoveChild(CrGameObject * pNode);
 	void RemoveAllChild();
@@ -60,9 +58,9 @@ public:
 	const std::vector<CrGameObject *> GetChildren() const { return m_pChildren; }
 
 private:
-	void AddComponent(CrComponent * Pointer);
+	void _AddComponent(CrComponent * Pointer);
 
-private:
+protected:
 	std::vector<CrComponent *> m_pComponents;
 	std::vector<CrGameObject *> m_pChildren;
 };
@@ -73,7 +71,8 @@ TReturnType * CrGameObject::AddComponent()
 	static_assert(std::is_base_of<CrComponent, TReturnType>::value, "'T' template parameter to FindComponentByClass must be derived from CrComponent");
 	
 	TReturnType* _instance = new TReturnType();
-	AddComponent(_instance);
+	_instance->Awake();
+	_AddComponent(_instance);
 	return _instance;
 }
 

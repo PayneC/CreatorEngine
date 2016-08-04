@@ -73,4 +73,10 @@ enum EPresetMeshType
 
 #define CAMERA_PROJECTION_PERSPECTIVE		1
 #define CAMERA_PROJECTION_ORTHOGRAPHIC		2
+
+#define Vector2 glm::vec2
+#define Vector3 glm::vec3
+
+
+
 #endif

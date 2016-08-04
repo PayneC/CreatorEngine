@@ -193,10 +193,26 @@ int CrEngine::MainLoop()
 				m_pRunScene->Update();
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 				glClearColor(0, 0, 0, 1);
-				for each (CrCamera * var in m_pCameraList)
+
+				std::list<CrCamera*>::iterator cameraIter= m_pCameraList.begin();
+				std::list<CrCamera*>::iterator cameraIterEnd = m_pCameraList.end();
+				CrCamera * camera = NULL;
+
+				for (; cameraIter != cameraIterEnd; ++cameraIter)
 				{
-					m_pRunScene->Render(var->GetVP());
+					camera = (*cameraIter);
+					camera->Render(m_pRunScene);
 				}
+
+//				std::list<CrCanvas*>::iterator canvasIter = m_pCanvasList.begin();
+//				std::list<CrCanvas*>::iterator canvasIterEnd = m_pCanvasList.end();
+//				CrCanvas * canvas = NULL;
+//
+//				for (; canvasIter != canvasIterEnd; ++canvasIter)
+//				{
+//					canvas = (*canvasIter);
+//					canvas->Render(camera->GetVP());
+//				}
 			}
 
 			CrFontLab::Instance()->Render(wcstr, 50, 50, 900, 25);
@@ -237,4 +253,14 @@ void CrEngine::AddCamera(CrCamera * pCamera)
 void CrEngine::RemoveCamera(CrCamera * pCamera)
 {
 	m_pCameraList.remove(pCamera);
+}
+
+void CrEngine::AddCanvas(CrCanvas * pCanvas)
+{
+	m_pCanvasList.push_back(pCanvas);
+}
+
+void CrEngine::RemoveCanvas(CrCanvas * pCanvas)
+{
+	m_pCanvasList.remove(pCanvas);
 }

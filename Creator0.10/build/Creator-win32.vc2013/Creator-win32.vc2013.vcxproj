@@ -80,6 +80,7 @@
     <ClCompile Include="..\..\code\core\Component\CrSkinMeshRender.cpp" />
     <ClCompile Include="..\..\code\core\Component\CrTransform.cpp" />
     <ClCompile Include="..\..\code\core\CrCamera.cpp" />
+    <ClCompile Include="..\..\code\core\CrCanvas.cpp" />
     <ClCompile Include="..\..\code\core\CrComponent.cpp" />
     <ClCompile Include="..\..\code\core\CrConfig.cpp" />
     <ClCompile Include="..\..\code\core\CreatorEngine.cpp" />
@@ -101,6 +102,9 @@
     <ClCompile Include="..\..\code\core\CrWindow.cpp" />
     <ClCompile Include="..\..\code\core\Lua\CrLuaState.cpp" />
     <ClCompile Include="..\..\code\core\test.cpp" />
+    <ClCompile Include="..\..\code\core\testCamera.cpp" />
+    <ClCompile Include="..\..\code\core\UI\UISprite.cpp" />
+    <ClCompile Include="..\..\code\core\UI\UIWidget.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\code\core\Common\CrFontLab.h" />
@@ -111,6 +115,7 @@
     <ClInclude Include="..\..\code\core\Component\CrSkinMeshRender.h" />
     <ClInclude Include="..\..\code\core\Component\CrTransform.h" />
     <ClInclude Include="..\..\code\core\CrCamera.h" />
+    <ClInclude Include="..\..\code\core\CrCanvas.h" />
     <ClInclude Include="..\..\code\core\CrDefine.h" />
     <ClInclude Include="..\..\code\core\CreatorEngine.h" />
     <ClInclude Include="..\..\code\core\CrMeshUtility.h" />
@@ -131,6 +136,9 @@
     <ClInclude Include="..\..\code\core\CrWindow.h" />
     <ClInclude Include="..\..\code\core\Lua\CrLuaState.h" />
     <ClInclude Include="..\..\code\core\test.h" />
+    <ClInclude Include="..\..\code\core\testCamera.h" />
+    <ClInclude Include="..\..\code\core\UI\UISprite.h" />
+    <ClInclude Include="..\..\code\core\UI\UIWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\bin_debug\testShader.frag" />

@@ -9,6 +9,17 @@ Payne
 
 #include "CrDefine.h"
 
+class CrObject;
+
+typedef void(CrObject::*EventFunc)(GLint64 msg, GLint64 wParam, GLint64 lParam);
+struct EventListenEntry
+{
+public:
+	EventFunc func;
+	CrObject * object;
+};
+#define Func_Event(FUN) (EventFunc)(&FUN)
+
 class CrObject
 {
 	friend class CrMemoryPool;
@@ -27,6 +38,10 @@ public:
 	void Retain();
 	
 	unsigned short GetUserNumber(){ return m_sUserNumber; }
+
+	void AddEventListen(EventFunc func);
+	void RemoveEventListen(EventFunc func);
+
 protected:
 	unsigned short m_sUserNumber;
 };

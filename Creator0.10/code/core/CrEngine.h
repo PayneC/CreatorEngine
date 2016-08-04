@@ -20,6 +20,7 @@ Payne
 #include "CrWindow.h"
 
 #include <CrCamera.h>
+#include <CrCanvas.h>
 #include <CrScene.h>
 
 class CrEngine : public CrSingleton<CrEngine>
@@ -52,6 +53,9 @@ public:
 
 	void AddCamera(CrCamera * pCamera);
 	void RemoveCamera(CrCamera * pCamera);
+
+	void AddCanvas(CrCanvas * pCanvas);
+	void RemoveCanvas(CrCanvas * pCanvas);
 private:
 	bool m_isInit;
 	CrMemoryPool * m_pMemoryPool;
@@ -59,6 +63,7 @@ private:
 
 	CrScene * m_pRunScene;
 	std::list<CrCamera*> m_pCameraList;
+	std::list<CrCanvas*> m_pCanvasList;
 };
 
 #endif

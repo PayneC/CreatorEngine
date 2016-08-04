@@ -24,6 +24,7 @@ Payne
 #include "CrShaderUtility.h"
 #include "CrTextureUtility.h"
 #include "test.h"
+#include "testCamera.h"
 using std::vector;
 using std::string;
 using namespace CreatorEngine;
@@ -95,7 +96,7 @@ int main(int argc, char **argv)
 	go->AddComponent<test>();
 
 	go->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	go->GetTransform()->SetLocalScale(glm::vec3(2, 1, 1));
+	go->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
 	go->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
 	CrMeshRender * meshRender = go->GetComponent<CrMeshRender>();
 	meshRender->GetMaterial()->SetColor(glm::vec4(1, 1, 1, 1));
@@ -106,6 +107,7 @@ int main(int argc, char **argv)
 	pCamera->GetTransform()->SetPosition(glm::fvec3(0.f, 0.f, 20.0f));
 
 	pCamera->GetTransform()->LookAt(go);
+	pCamera->AddComponent<testCamera>();
 
 	CrTexture * texture2 = CrTextureUtility::Instance()->LoadTexture("TexMagic01.png");
 

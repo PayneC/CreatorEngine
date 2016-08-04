@@ -60,40 +60,6 @@ void CrGameObject::Disabled()
 
 }
 
-void CrGameObject::Render(glm::fmat4 & vp)
-{
-#ifdef OLD
-	if (!m_isActive) return;
-
-	m_itorChild = m_pChildren.begin();
-	for (; m_itorChild != m_pChildren.end(); ++m_itorChild)
-	{
-		m_itorChild->second->Render();
-	}
-#else
-	if (!m_isActive) return;
-
-	std::vector<CrGameObject * >::iterator itor = m_pChildren.begin();
-	std::vector<CrGameObject * >::iterator itorEnd = m_pChildren.end();
-	for (; itor != itorEnd; ++itor)
-	{
-		(*itor)->Render(vp);
-	}
-
-	if (m_pMeshRender == NULL)
-	{
-		m_pMeshRender = GetComponent<CrMeshRender>();
-	}
-	if (m_pMeshRender)
-	{
-		glm::mat4 mvp = vp * m_kTransform->GetLocalToWorldMatrix();
-		glm::vec4 p = mvp * glm::vec4(0.f, 0.f, 1.f, 1.f);
-		m_pMeshRender->Draw(mvp);
-	}
-		
-#endif
-}
-
 void CrGameObject::AddChild(CrGameObject * pNode)
 {
 	if (NULL == pNode || pNode->m_pParent == this)
@@ -167,7 +133,7 @@ CrGameObject * CrGameObject::GetParent()
 	return m_pParent;
 }
 
-void CrGameObject::AddComponent(CrComponent * Pointer)
+void CrGameObject::_AddComponent(CrComponent * Pointer)
 {
 	m_pComponents.push_back(Pointer);
 	Pointer->SetGameObject(this);

@@ -22,6 +22,9 @@
     <Filter Include="Common">
       <UniqueIdentifier>{9910f89a-7a8a-45bc-83a5-d664439bce11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{461e01a6-d5f0-49c4-bcbf-90fd6006ffb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\code\core\CrMain.cpp">
@@ -108,6 +111,18 @@
     <ClCompile Include="..\..\code\core\test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\code\core\CrCanvas.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\core\UI\UIWidget.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\core\UI\UISprite.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\code\core\testCamera.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\code\core\CrDefine.h">
@@ -192,6 +207,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\code\core\test.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\core\CrCanvas.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\core\UI\UIWidget.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\core\UI\UISprite.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\code\core\testCamera.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

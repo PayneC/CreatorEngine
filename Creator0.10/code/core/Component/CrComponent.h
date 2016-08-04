@@ -46,9 +46,11 @@ public:
 
 	virtual int GetInstanceCountLimit();
 
+
+	//void AddListen();
+
 protected:
-	CrGameObject * m_pGameObject;
-	
+	CrGameObject * m_pGameObject;	
 };
 
 #endif

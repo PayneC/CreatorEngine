@@ -27,3 +27,13 @@ void CrObject::AutoRelease()
 	CrEngine::MemoryPool()->AddChunkToReleasePool(this);
 
 }
+
+void CrObject::AddEventListen(EventFunc func)
+{
+	CrEvent::Instance()->AddListen(this, func);
+}
+
+void CrObject::RemoveEventListen(EventFunc func)
+{
+	CrEvent::Instance()->RemoveListen(this, func);
+}
