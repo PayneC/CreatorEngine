@@ -77,7 +77,7 @@ void DebugThread()
 	m_cBuffer = new char[64];
 	_L = luaL_newstate();
 	luaL_openlibs(_L);
-	RegistemerLuaAPI(_L);
+	RegisterLuaAPI(_L);
 	while (true)
 	{
 		std::cin.getline(m_cBuffer, 64);
