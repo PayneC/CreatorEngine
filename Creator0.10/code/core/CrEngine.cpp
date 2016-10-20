@@ -59,95 +59,94 @@ bool CrEngine::Init()
 	if (m_isInit)
 		return true;
 
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 	printf("log: Initializing GLFW ...\n");
 #endif
 	if (GL_FALSE == glfwInit()){
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 		printf("error: GLFW initialization fail\n");	
 #endif
 		return false;
 	}
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 	printf("log: Initializing Config ...\n");
 #endif
 	if (!(CrConfig::Instance()->Init()))
 	{
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 		printf("error: Config initialize fail\n");
 #endif
 		return false;
 	}
 
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 	printf("log: Initializing Window ...\n");
 #endif
 	if (!(CrWindow::Instance()->Init()))
 	{
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 		printf("error: Window initializing fail\n");
 #endif
 		return false;
 	}
 
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 	printf("log: Initializing GLEW ...\n");
 #endif
 	
 	if (glewInit() != GLEW_OK)
 	{
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 		printf("error: GLEW Initializing fail\n");
 #endif
 		return false;
 	}
 	
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 	printf("log: Initializing MemoryPool ...\n");
-#endif
-	m_pMemoryPool = new CrMemoryPool();
-	if (!(m_pMemoryPool && m_pMemoryPool->Init()))
+#endif	
+	if (!CrMemoryPool::Instance()->Init())
 	{
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 		printf("error: MemoryPool initialize fail\n");
 #endif
 		return false;
 	}
 
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 	printf("log: Initializing Director ...\n");
 #endif
 	
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 	printf("log: Initialize Time ...\n");
 #endif
 
 	if (!(CrTime::Instance()->Init()))
 	{
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 		printf("error: Time initialize fail\n");
 #endif
 		return false;
 	}
 	
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 	printf("log: Initialize Shader ...\n");
 #endif
 	
 	if (!CrShaderUtility::Instance()->Init())
 	{
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 		printf("error: Shader initialize fail\n");
 #endif
 		return false;
 	}
 	
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 	printf("log: Initialize Event ...\n");
 #endif
 	if (!(CrEvent::Instance()->Init()))
 	{
-#ifdef _CR_DEBUG
+#ifdef _DEBUG
 		printf("error: Event initialize fail\n");
 #endif
 		return false;
@@ -172,6 +171,8 @@ bool CrEngine::Init()
 	//äÖÈ¾Ä£Ê½
 	//glPolygonMode(GL_FRONT, GL_LINE);
 	m_isInit = true;
+
+	//Destory();
 
 	return true;
 }
@@ -238,7 +239,7 @@ void CrEngine::ProMessage(GLFWwindow* window, GLuint64 msg, unsigned __int64 wPa
 
 void CrEngine::Destory()
 {
-	m_pMemoryPool->ClearUpMemory();//payne
+	CrMemoryPool::Instance()->FreeMemory();//payne
 	glfwTerminate(); 
 
 	delete[] wcstr;

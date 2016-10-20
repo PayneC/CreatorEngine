@@ -31,8 +31,6 @@ public:
 	int Start(CrScene * pScene);
 	void Stop();
 
-public:
-	static CrMemoryPool * MemoryPool() { return m_pInstance->m_pMemoryPool; }
 private:
 	bool m_isRun;
 
@@ -58,7 +56,6 @@ public:
 	void RemoveCanvas(CrCanvas * pCanvas);
 private:
 	bool m_isInit;
-	CrMemoryPool * m_pMemoryPool;
 	double m_lfTotalDelay;
 
 	CrScene * m_pRunScene;

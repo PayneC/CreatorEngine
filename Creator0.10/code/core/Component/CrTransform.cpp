@@ -219,6 +219,11 @@ void CrTransform::LookAt(CrTransform * transform)
 }
 void CrTransform::LookAt(glm::vec3 position)
 {
+	//glm::vec3 worldUp = glm::vec3(0.f, 1.f, 0.f);
+	//m_zAxis = glm::normalize(GetPosition() - position);
+	//m_xAxis = glm::normalize(glm::cross(worldUp, -m_zAxis));
+	//m_yAxis = glm::cross(m_zAxis, m_xAxis);
+
 	m_m4LocalToWorld = glm::lookAt(GetPosition(), position, glm::vec3(0.f, 1.f, 0.f));
 	glm::quat quat = glm::quat(m_m4LocalToWorld);
 	

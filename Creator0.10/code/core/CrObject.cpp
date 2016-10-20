@@ -24,7 +24,7 @@ void CrObject::Retain()
 void CrObject::AutoRelease()
 {
 	
-	CrEngine::MemoryPool()->AddChunkToReleasePool(this);
+	CrMemoryPool::Instance()->AddChunkToReleasePool(this);
 
 }
 

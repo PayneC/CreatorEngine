@@ -5,6 +5,11 @@
 CrGameObject::CrGameObject()
 : m_isActive(true)
 , m_sName("GameObject")
+, m_pParent(NULL)
+, m_iTag(0)
+, m_ulLayer(0L)
+, m_kTransform(NULL)
+, m_pMeshRender(NULL)
 {
 	m_kTransform = AddComponent<CrTransform>();
 }
@@ -29,6 +34,7 @@ void CrGameObject::Destroy()
 		m_pParent->RemoveChild(this);
 
 	RemoveAllChild();
+	RemoveAllComponent();
 }
 
 void CrGameObject::Update()
@@ -108,9 +114,9 @@ void CrGameObject::SetName(std::string var)
 {
 	if (m_pParent)
 	{
-		m_pParent->RemoveChild(this);
+//		m_pParent->RemoveChild(this);
 		m_sName = var;
-		m_pParent->AddChild(this);
+//		m_pParent->AddChild(this);
 	}
 	else
 	{
@@ -143,4 +149,26 @@ void CrGameObject::_AddComponent(CrComponent * Pointer)
 	{
 		m_pMeshRender = (CrMeshRender * )Pointer;
 	}
+}
+
+void CrGameObject::RemoveComponent(CrComponent * Pointer)
+{
+	if (!Pointer)
+		return;
+	std::vector<CrComponent*>::iterator iter = std::find(m_pComponents.begin(), m_pComponents.end(), Pointer);
+	m_pComponents.erase(iter);
+	Pointer->Release();
+}
+
+void CrGameObject::RemoveAllComponent()
+{
+	std::vector<CrComponent*>::iterator iter = m_pComponents.begin();
+	std::vector<CrComponent*>::iterator iterEnd = m_pComponents.end();
+
+	for (; iter != iterEnd; ++iter)
+	{
+		(*iter)->Release();
+	}
+
+	m_pComponents.clear();
 }

@@ -54,6 +54,10 @@ private:
 	bool m_isRotationDirty;
 	bool m_isScaleDirty;
 	bool m_isDirty;
+
+	glm::vec3 m_xAxis;
+	glm::vec3 m_yAxis;
+	glm::vec3 m_zAxis;
 };
 
 #endif

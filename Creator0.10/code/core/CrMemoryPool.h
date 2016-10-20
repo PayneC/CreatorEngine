@@ -7,20 +7,20 @@ Payne
 #ifndef _CREATOR_MEMORYPOOL_H
 #define _CREATOR_MEMORYPOOL_H
 
-#include "CrObject.h"
+#include <CrObject.h>
 #include <list>
+#include <CrSingleton.h>
 
-class CrMemoryPool
+class CrMemoryPool : public CrSingleton<CrMemoryPool>
 {
 	friend class CrEngine;
 private:
-	CrMemoryPool();
-
 	bool Init();
 	void Destory();
 	void ClearUpMemory();
-
+	void FreeMemory();
 public:
+	CrMemoryPool();
 	~CrMemoryPool();
 
 	void AddChunkToReleasePool(CrObject * pChunk);

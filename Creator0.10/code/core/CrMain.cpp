@@ -5,6 +5,20 @@ function
 Payne
 */
 
+#ifdef _DEBUG
+#define DEBUG_CLIENTBLOCK new(_CLIENT_BLOCK,__FILE__,__LINE__)
+#else
+#define DEBUG_CLIENTBLOCK
+#endif
+
+#define _CRTDBG_MAP_ALLOC
+
+#include <crtdbg.h>
+
+#ifdef _DEBUG
+#define new DEBUG_CLIENTBLOCK
+#endif
+
 #include "CreatorEngine.h"
 #include "CrTransform.h"
 #include <iostream>
@@ -25,11 +39,11 @@ Payne
 #include "CrTextureUtility.h"
 #include "test.h"
 #include "testCamera.h"
+
+
 using std::vector;
 using std::string;
 using namespace CreatorEngine;
-
-bool m_isRun;
 
 void LuaTest()
 {
@@ -55,31 +69,29 @@ void LuaTest()
 	lua_close(_L);
 }
 
+lua_State * _L = NULL;
 char * m_cBuffer;
 
 void DebugThread()
 {
 	m_cBuffer = new char[64];
-	lua_State * _L = luaL_newstate();
+	_L = luaL_newstate();
 	luaL_openlibs(_L);
-	RegisterLuaAPI(_L);
-	while (m_isRun)
+	RegistemerLuaAPI(_L);
+	while (true)
 	{
 		std::cin.getline(m_cBuffer, 64);
 		luaL_dostring(_L, m_cBuffer);
 	}
-	lua_close(_L);
-	delete[] m_cBuffer;
-	m_cBuffer = NULL;
 }
-
 
 int main(int argc, char **argv)
 {
+
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	if (Initialization() != 0)
 		return 0;
-
-	m_isRun = true;
 
 	LuaTest();
 
@@ -87,30 +99,30 @@ int main(int argc, char **argv)
 	_DebugThread.detach();
 
 	CrTexture * texture = CrTextureUtility::Instance()->LoadTexture("001.png");
-
+	
 	CrScene * pScene = CrGameObject::CreateGameObject<CrScene>("test01");
 	
 	CrGameObject * go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_QUAD, "center");
 	pScene->AddChild(go);
-
+	
 	go->AddComponent<test>();
-
+	
 	go->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	go->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
 	go->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
 	CrMeshRender * meshRender = go->GetComponent<CrMeshRender>();
 	meshRender->GetMaterial()->SetColor(glm::vec4(1, 1, 1, 1));
 	meshRender->GetMaterial()->SetpMainTexture(texture);
-
+	
 	CrCamera * pCamera = CrGameObject::CreateGameObject<CrCamera>("Camera");
 	pScene->AddChild(pCamera);
 	pCamera->GetTransform()->SetPosition(glm::fvec3(0.f, 0.f, 20.0f));
-
+	
 	pCamera->GetTransform()->LookAt(go);
 	pCamera->AddComponent<testCamera>();
-
+	
 	CrTexture * texture2 = CrTextureUtility::Instance()->LoadTexture("TexMagic01.png");
-
+	
 	CrGameObject * go2 = NULL;
 	for (int i = 0; i < 40; ++i)
 	{
@@ -130,7 +142,7 @@ int main(int argc, char **argv)
 		}
 	}
 	
-
+	
 	go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_QUAD, "center");
 	pScene->AddChild(go);
 	go->GetTransform()->SetPosition(glm::vec3(5, -5, 5));
@@ -139,10 +151,14 @@ int main(int argc, char **argv)
 	meshRender = go->GetComponent<CrMeshRender>();
 	meshRender->GetMaterial()->SetColor(glm::vec4(1, 1, 1, 1));
 	meshRender->GetMaterial()->SetpMainTexture(texture);
-
+	
 	Start(pScene);
-	m_isRun = false;
 
+	lua_close(_L);
+	delete[] m_cBuffer;
+	m_cBuffer = NULL;
+
+	_CrtDumpMemoryLeaks();
 	return 0;
 }
 

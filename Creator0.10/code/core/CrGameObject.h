@@ -52,6 +52,9 @@ public:
 	template<typename TReturnType>
 	TReturnType * GetComponent();
 
+	void RemoveComponent(CrComponent * Pointer);
+	void RemoveAllComponent();
+
 	EasyGet(CrTransform *, m_kTransform, Transform);
 	EasyGet(CrMeshRender *, m_pMeshRender, MeshRender);
 
@@ -59,7 +62,7 @@ public:
 
 private:
 	void _AddComponent(CrComponent * Pointer);
-
+	
 protected:
 	std::vector<CrComponent *> m_pComponents;
 	std::vector<CrGameObject *> m_pChildren;

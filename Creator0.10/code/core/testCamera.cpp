@@ -36,10 +36,10 @@ void testCamera::EventCallback(GLint64 msg, GLint64 wParam, GLint64 lParam)
 		switch (lParam)
 		{
 		case GLFW_KEY_W:
-			GetGameObject()->GetTransform()->SetPosition(GetGameObject()->GetTransform()->GetPosition() + GetGameObject()->GetTransform()->GetForword() * CrTime::Instance()->GetDelateTime());
+			GetGameObject()->GetTransform()->SetPosition(GetGameObject()->GetTransform()->GetPosition() - GetGameObject()->GetTransform()->GetForword() * CrTime::Instance()->GetDelateTime());
 			break;
 		case GLFW_KEY_S:
-			GetGameObject()->GetTransform()->SetPosition(GetGameObject()->GetTransform()->GetPosition() - GetGameObject()->GetTransform()->GetForword() * CrTime::Instance()->GetDelateTime());
+			GetGameObject()->GetTransform()->SetPosition(GetGameObject()->GetTransform()->GetPosition() + GetGameObject()->GetTransform()->GetForword() * CrTime::Instance()->GetDelateTime());
 			break;
 		case GLFW_KEY_A:
 			GetGameObject()->GetTransform()->SetPosition(GetGameObject()->GetTransform()->GetPosition() - GetGameObject()->GetTransform()->GetRight() * CrTime::Instance()->GetDelateTime());
