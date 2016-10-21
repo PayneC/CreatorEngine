@@ -85,43 +85,46 @@ void DebugThread()
 	}
 }
 
-int main(int argc, char **argv)
+void OpenDebugThread()
 {
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
-	if (Initialization() != 0)
-		return 0;
-
-	LuaTest();
-
 	std::thread _DebugThread(DebugThread);
 	_DebugThread.detach();
+}
 
+void CloseDebugThread()
+{
+	lua_close(_L);
+	delete[] m_cBuffer;
+	m_cBuffer = NULL;
+}
+
+void Application()
+{
 	CrTexture * texture = CrTextureUtility::Instance()->LoadTexture("001.png");
-	
+
 	CrScene * pScene = CrGameObject::CreateGameObject<CrScene>("test01");
-	
+
 	CrGameObject * go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_QUAD, "center");
 	pScene->AddChild(go);
-	
+
 	go->AddComponent<test>();
-	
+
 	go->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	go->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
 	go->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
 	CrMeshRender * meshRender = go->GetComponent<CrMeshRender>();
 	meshRender->GetMaterial()->SetColor(glm::vec4(1, 1, 1, 1));
 	meshRender->GetMaterial()->SetpMainTexture(texture);
-	
+
 	CrCamera * pCamera = CrGameObject::CreateGameObject<CrCamera>("Camera");
 	pScene->AddChild(pCamera);
 	pCamera->GetTransform()->SetPosition(glm::fvec3(0.f, 0.f, 20.0f));
-	
+
 	pCamera->GetTransform()->LookAt(go);
 	pCamera->AddComponent<testCamera>();
-	
+
 	CrTexture * texture2 = CrTextureUtility::Instance()->LoadTexture("TexMagic01.png");
-	
+
 	CrGameObject * go2 = NULL;
 	for (int i = 0; i < 40; ++i)
 	{
@@ -140,8 +143,8 @@ int main(int argc, char **argv)
 			}
 		}
 	}
-	
-	
+
+
 	go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_QUAD, "center");
 	pScene->AddChild(go);
 	go->GetTransform()->SetPosition(glm::vec3(5, -5, 5));
@@ -150,14 +153,44 @@ int main(int argc, char **argv)
 	meshRender = go->GetComponent<CrMeshRender>();
 	meshRender->GetMaterial()->SetColor(glm::vec4(1, 1, 1, 1));
 	meshRender->GetMaterial()->SetpMainTexture(texture);
-	
-	Start(pScene);
 
-	lua_close(_L);
-	delete[] m_cBuffer;
-	m_cBuffer = NULL;
+	UICanvas * canvas = CrGameObject::CreateGameObject<UICanvas>("canvas");
+	canvas->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	canvas->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
+	canvas->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
+
+	CrTexture * texture3 = CrTextureUtility::Instance()->LoadTexture("zhongxin.png");
+
+	UISprite * sprite = CrGameObject::CreateGameObject<UISprite>(EPresetMeshType::CR_MESH_TYPE_QUAD, "sprite");
+	canvas->AddChild(sprite);
+
+	sprite->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	sprite->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
+	sprite->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
+	meshRender = sprite->GetComponent<CrMeshRender>();
+	meshRender->GetMaterial()->SetpMainTexture(texture3);
+	
+
+	Start(pScene);
+}
+
+int main(int argc, char **argv)
+{
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+	if (Initialization() != 0)
+		return 0;
+
+	LuaTest();
+
+	OpenDebugThread();
+
+	Application();
+
+	CloseDebugThread();
 
 	_CrtDumpMemoryLeaks();
+
 	return 0;
 }
 

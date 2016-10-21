@@ -48,11 +48,11 @@ void CrGameObject::Update()
 		(*icom)->Update();
 	}
 
-	std::vector<CrGameObject * >::iterator itor = m_pChildren.begin();
-	std::vector<CrGameObject * >::iterator itorEnd = m_pChildren.end();
-	for (; itor != itorEnd; ++itor)
+	std::vector<CrGameObject * >::iterator iter = m_pChildren.begin();
+	std::vector<CrGameObject * >::iterator iterEnd = m_pChildren.end();
+	for (; iter != iterEnd; ++iter)
 	{
-		(*itor)->Update();
+		(*iter)->Update();
 	}
 }
 
@@ -84,27 +84,27 @@ void CrGameObject::RemoveChild(CrGameObject * pNode)
 	if (!pNode)
 		return;
 
-	std::vector<CrGameObject * >::iterator itor = m_pChildren.begin();
-	std::vector<CrGameObject * >::iterator itorEnd = m_pChildren.end();
-	for (; itor != itorEnd; ++itor)
+	std::vector<CrGameObject * >::iterator iter = m_pChildren.begin();
+	std::vector<CrGameObject * >::iterator iterEnd = m_pChildren.end();
+	for (; iter != iterEnd; ++iter)
 	{
-		if ((*itor) == pNode)
+		if ((*iter) == pNode)
 			break;
 	}
-	if (itor != itorEnd)
+	if (iter != iterEnd)
 	{
-		m_pChildren.erase(itor);
+		m_pChildren.erase(iter);
 		pNode->Release();
 	}
 }
 
 void CrGameObject::RemoveAllChild()
 {
-	std::vector<CrGameObject * >::iterator itor = m_pChildren.begin();
-	std::vector<CrGameObject * >::iterator itorEnd = m_pChildren.end();
-	for (; itor != itorEnd; ++itor)
+	std::vector<CrGameObject * >::iterator iter = m_pChildren.begin();
+	std::vector<CrGameObject * >::iterator iterEnd = m_pChildren.end();
+	for (; iter != iterEnd; ++iter)
 	{
-		(*itor)->Release();
+		(*iter)->Release();
 	}
 
 	m_pChildren.clear();

@@ -155,7 +155,6 @@ bool CrEngine::Init()
 
 	CrFontLab::Instance()->Init();
 
-	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
 	glDepthFunc(GL_LESS);
 	//µ„¥Û–°
@@ -195,25 +194,35 @@ int CrEngine::MainLoop()
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 				glClearColor(0, 0, 0, 1);
 
-				std::list<CrCamera*>::iterator cameraIter= m_pCameraList.begin();
-				std::list<CrCamera*>::iterator cameraIterEnd = m_pCameraList.end();
-				CrCamera * camera = NULL;
+				glEnable(GL_DEPTH_TEST);
 
-				for (; cameraIter != cameraIterEnd; ++cameraIter)
+				if (m_pCameraList.size() > 0)
 				{
-					camera = (*cameraIter);
-					camera->Render(m_pRunScene);
+					std::list<CrCamera*>::iterator cameraIter = m_pCameraList.begin();
+					std::list<CrCamera*>::iterator cameraIterEnd = m_pCameraList.end();
+					CrCamera * camera = NULL;
+
+					for (; cameraIter != cameraIterEnd; ++cameraIter)
+					{
+						camera = (*cameraIter);
+						camera->Render(m_pRunScene);
+					}
 				}
 
-//				std::list<CrCanvas*>::iterator canvasIter = m_pCanvasList.begin();
-//				std::list<CrCanvas*>::iterator canvasIterEnd = m_pCanvasList.end();
-//				CrCanvas * canvas = NULL;
-//
-//				for (; canvasIter != canvasIterEnd; ++canvasIter)
-//				{
-//					canvas = (*canvasIter);
-//					canvas->Render(camera->GetVP());
-//				}
+				glDisable(GL_DEPTH_TEST);
+
+				if (m_pCanvasList.size() > 0)
+				{
+					std::list<UICanvas*>::iterator canvasIter = m_pCanvasList.begin();
+					std::list<UICanvas*>::iterator canvasIterEnd = m_pCanvasList.end();
+					UICanvas * canvas = NULL;
+
+					for (; canvasIter != canvasIterEnd; ++canvasIter)
+					{
+						canvas = (*canvasIter);
+						canvas->Render();
+					}
+				}
 			}
 
 			CrFontLab::Instance()->Render(wcstr, 50, 50, 900, 25);
@@ -256,12 +265,12 @@ void CrEngine::RemoveCamera(CrCamera * pCamera)
 	m_pCameraList.remove(pCamera);
 }
 
-void CrEngine::AddCanvas(CrCanvas * pCanvas)
+void CrEngine::AddCanvas(UICanvas * pCanvas)
 {
 	m_pCanvasList.push_back(pCanvas);
 }
 
-void CrEngine::RemoveCanvas(CrCanvas * pCanvas)
+void CrEngine::RemoveCanvas(UICanvas * pCanvas)
 {
 	m_pCanvasList.remove(pCanvas);
 }

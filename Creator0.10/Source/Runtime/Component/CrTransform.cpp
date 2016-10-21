@@ -241,12 +241,12 @@ void CrTransform::SetChildrenPositionDirty()
 		return;
 
 	std::vector<CrGameObject*> children = GetGameObject()->GetChildren();
-	std::vector<CrGameObject*>::iterator itor = children.begin();
-	std::vector<CrGameObject*>::iterator itorEnd = children.end();
+	std::vector<CrGameObject*>::iterator iter = children.begin();
+	std::vector<CrGameObject*>::iterator iterEnd = children.end();
 
-	for (; itor != itorEnd; ++itor)
+	for (; iter != iterEnd; ++iter)
 	{
-		(*itor)->GetTransform()->SetChildrenPositionDirty();
+		(*iter)->GetTransform()->SetChildrenPositionDirty();
 	}
 }
 
@@ -260,12 +260,12 @@ void CrTransform::SetChildrenRotationDirty()
 		return;
 
 	std::vector<CrGameObject*> children = GetGameObject()->GetChildren();
-	std::vector<CrGameObject*>::iterator itor = children.begin();
-	std::vector<CrGameObject*>::iterator itorEnd = children.end();
+	std::vector<CrGameObject*>::iterator iter = children.begin();
+	std::vector<CrGameObject*>::iterator iterEnd = children.end();
 
-	for (; itor != itorEnd; ++itor)
+	for (; iter != iterEnd; ++iter)
 	{
-		(*itor)->GetTransform()->SetChildrenRotationDirty();
+		(*iter)->GetTransform()->SetChildrenRotationDirty();
 	}
 }
 
@@ -279,11 +279,11 @@ void CrTransform::SetChildrenScaleDirty()
 		return;
 
 	std::vector<CrGameObject*> children = GetGameObject()->GetChildren();
-	std::vector<CrGameObject*>::iterator itor = children.begin();
-	std::vector<CrGameObject*>::iterator itorEnd = children.end();
+	std::vector<CrGameObject*>::iterator iter = children.begin();
+	std::vector<CrGameObject*>::iterator iterEnd = children.end();
 
-	for (; itor != itorEnd; ++itor)
+	for (; iter != iterEnd; ++iter)
 	{
-		(*itor)->GetTransform()->SetChildrenScaleDirty();
+		(*iter)->GetTransform()->SetChildrenScaleDirty();
 	}
 }

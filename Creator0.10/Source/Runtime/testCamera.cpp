@@ -54,6 +54,6 @@ void testCamera::EventCallback(GLint64 msg, GLint64 wParam, GLint64 lParam)
 
 	if (msg == CR_EVENT_MOUSE_MOVE)
 	{
-		GetGameObject()->GetTransform()->SetRotation(GetGameObject()->GetTransform()->GetRotation() + Vector3(lParam, wParam, 0) * CrTime::Instance()->GetDelateTime());
+		GetGameObject()->GetTransform()->SetRotation(GetGameObject()->GetTransform()->GetRotation() - Vector3(lParam, wParam, 0) * CrTime::Instance()->GetDelateTime());
 	}
 }

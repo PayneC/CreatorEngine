@@ -15,8 +15,6 @@ public:
 	UISprite();
 	~UISprite();
 
-protected:
-	Vector2 m_pixel;
 };
 
 #endif

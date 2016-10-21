@@ -11,4 +11,6 @@ Payne
 #include <CrEngineInterface.h>
 #include <CrEngineInterfaceLua.h>
 
+#include <UI\UISprite.h>
+
 #endif

@@ -17,12 +17,22 @@ public:
 
 public:
 	void AddChild(UIWidget * pNode);
-
+	void CalculateFinalRect(UIWidget * parent);
 protected:
 	Vector2 m_size;
-	
-private:
+	Vector2 m_anchorMin;
+	Vector2 m_anchorMax;
+	Vector2 m_pivot;
+
+	Vector2 m_finalPosition;
+	Vector2 m_finalSize;
+
+protected:
 	std::vector<UIWidget *> m_pChildrenWidget;
+
+
+
+
 };
 
 #endif

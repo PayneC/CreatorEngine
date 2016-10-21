@@ -41,13 +41,13 @@ void CrCamera::_Render(CrGameObject * pGameObject)
 
 	std::vector<CrGameObject * > gameobjects = pGameObject->GetChildren();
 
-	std::vector<CrGameObject * >::iterator itor = gameobjects.begin();
-	std::vector<CrGameObject * >::iterator itorEnd = gameobjects.end();
+	std::vector<CrGameObject * >::iterator iter = gameobjects.begin();
+	std::vector<CrGameObject * >::iterator iterEnd = gameobjects.end();
 
 	CrGameObject * gameobject = NULL;
-	for (; itor != itorEnd; ++itor)
+	for (; iter != iterEnd; ++iter)
 	{
-		gameobject = (*itor);
+		gameobject = (*iter);
 		_Render(gameobject);
 	}
 }

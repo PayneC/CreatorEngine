@@ -63,9 +63,6 @@
     <ClCompile Include="..\..\..\Source\Runtime\CrCamera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\Runtime\CrCanvas.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Source\Runtime\CrComponent.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -129,6 +126,9 @@
     <ClCompile Include="..\..\..\Source\Runtime\testCamera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\UI\UICanvas.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\Runtime\Common\CrFontLab.h">
@@ -162,9 +162,6 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Runtime\CrCamera.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\Runtime\CrCanvas.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Runtime\CrConfig.h">
@@ -229,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Runtime\testCamera.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\UI\UICanvas.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
