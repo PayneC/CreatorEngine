@@ -20,20 +20,24 @@ public:
 
 public:
 	CrMaterial();
-	~CrMaterial();
+	~CrMaterial();	
 
-public:
-
-
-public:
 	EasyGetSet(CrShader *, m_pShader, Shader);
 	EasyGet(glm::vec4 , m_dColor, Color);
 	EasyGetSet(CrTexture *, m_pMainTexture, pMainTexture);
 	EasyGetSet(glm::vec2, m_v2mainTextureOffset, mainTextureOffset);
 	EasyGetSet(glm::vec2, m_v2mainTextureScale, mainTextureScale);
-	void SetColor(glm::vec4 & color);
+
+	void SetColor(glm::vec4 & color);	
+// 	void SetFloat(std::string name, float value);
+// 	void SetColor(std::string name, float value);
+// 	void SetVector(std::string name, glm::vec4 & color);
+// 	void SetTextureOffset(std::string name, glm::vec2 & color);
+// 	void SetTextureScale(std::string name, glm::vec2 & color);
 private:
 	void UploadUniform();
+
+	std::map<std::string, void*> _parameter;
 };
 
 
