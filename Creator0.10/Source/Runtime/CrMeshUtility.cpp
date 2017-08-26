@@ -133,8 +133,8 @@ CrMesh* CrMeshUtility::CreateMeshCube()
 
 	GLushort triangles[] =
 	{
-		0, 2, 3, 
-		0, 3, 1, 
+		0, 2, 3,
+		0, 3, 1,
 		8, 4, 5,
 		8, 5, 9,
 		10, 6, 7,
@@ -157,12 +157,9 @@ CrMesh* CrMeshUtility::CreateMeshCube()
 
 	size_t triangleSize = sizeof(triangles);
 
-	glGenVertexArrays(1, &VAO);
+	//创建顶点缓存对象
+	//VertexBufferObject
 	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
-
-	glBindVertexArray(VAO);
-
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, verticeSize + normalSize + uvSize, NULL, GL_STATIC_DRAW);
 
@@ -170,9 +167,19 @@ CrMesh* CrMeshUtility::CreateMeshCube()
 	glBufferSubData(GL_ARRAY_BUFFER, verticeSize, normalSize, normals);
 	glBufferSubData(GL_ARRAY_BUFFER, verticeSize + normalSize, uvSize, uvs);
 
+	//创建索引缓存
+	//ElementBufferObject
+	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, triangleSize, triangles, GL_STATIC_DRAW);
 
+	//创建顶点数组对象
+	//VertexArrayObject
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
+	//设置顶点属性(数据来自于顶点缓存）
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glEnableVertexAttribArray(0); //attribute 0. No particular reason for 0, but must match the layout in the shader.
 	glVertexAttribPointer(
 		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
@@ -202,6 +209,9 @@ CrMesh* CrMeshUtility::CreateMeshCube()
 		0,                  // stride
 		(void*)(verticeSize + normalSize)			// array buffer offset
 		);
+
+	//设置索引(数据来自于索引缓存）
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
 	glBindVertexArray(0);
 
