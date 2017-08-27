@@ -225,7 +225,8 @@ int CrEngine::MainLoop()
 				}
 			}
 
-			CrFontLab::Instance()->Render(wcstr, 50, 50, 900, 25);
+			//内存泄漏飞起的地方
+			//CrFontLab::Instance()->Render(wcstr, 50, 50, 900, 25);
 
 			CrWindow::Instance()->Update();
 			CrEvent::Instance()->Update();
