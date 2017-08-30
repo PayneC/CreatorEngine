@@ -191,9 +191,11 @@ void CrTransform::_ExecuteMatrix()
 
 		m_m4LocalToWorld = tm * sm * rm;
 		m_m4WorldToLocal = glm::inverse(m_m4LocalToWorld);
-		m_v3Forword = glm::vec3(m_m4LocalToWorld * glm::vec4(0.f, 0.f, 1.f, 1.f));
-		m_v3Up = glm::vec3(m_m4LocalToWorld * glm::vec4(0.f, 1.f, 0.f, 1.f));
-		m_v3Right = glm::vec3(m_m4LocalToWorld * glm::vec4(1.f, 0.f, 0.f, 1.f));
+
+		//glm::mat4 irm = glm::inverse(rm);
+		m_v3Forword = glm::vec3(rm * glm::vec4(0.f, 0.f, 1.f, 1.f));
+		m_v3Up = glm::vec3(rm * glm::vec4(0.f, 1.f, 0.f, 1.f));
+		m_v3Right = glm::vec3(rm * glm::vec4(1.f, 0.f, 0.f, 1.f));
 
 		m_isDirty = false;
 	}
