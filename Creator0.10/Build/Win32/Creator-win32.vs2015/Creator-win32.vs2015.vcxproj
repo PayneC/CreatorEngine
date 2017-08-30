@@ -25,10 +25,12 @@
     <ClCompile Include="..\..\..\Source\Runtime\Component\CrMesh.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\Component\CrMeshRender.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\Component\CrSkinMeshRender.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\Component\CrSkybox.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\Component\CrTransform.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrCamera.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrComponent.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrConfig.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\CrCubemap.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CreatorEngine.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrEngine.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrEngineInterface.cpp" />
@@ -61,9 +63,11 @@
     <ClInclude Include="..\..\..\Source\Runtime\Component\CrMesh.h" />
     <ClInclude Include="..\..\..\Source\Runtime\Component\CrMeshRender.h" />
     <ClInclude Include="..\..\..\Source\Runtime\Component\CrSkinMeshRender.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\Component\CrSkybox.h" />
     <ClInclude Include="..\..\..\Source\Runtime\Component\CrTransform.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrCamera.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrConfig.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrCubemap.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrDefine.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CreatorEngine.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrEngine.h" />

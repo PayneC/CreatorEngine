@@ -11,6 +11,7 @@ Payne
 #include <string>
 
 #include "CrDefine.h"
+#include "CrCubemap.h"
 #include "CrTexture.h"
 #include <CrSingleton.h>
 
@@ -23,6 +24,8 @@ public:
 public:
 	CrTexture * LoadTexture(const char* filename, unsigned int hashCode, GLenum image_format, GLint internal_format, GLint level, GLint border);
 	CrTexture * LoadTexture(const char* filename);
+
+	CrCubemap * LoadCubemap(const char* filename);	
 private:
 	std::map<unsigned int, CrTexture*> m_mapTexture;
 };
