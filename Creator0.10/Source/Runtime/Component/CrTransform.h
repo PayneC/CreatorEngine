@@ -28,12 +28,13 @@ public:
 	EasyGetFuncOnly(glm::mat4, m_m4LocalToWorld, LocalToWorldMatrix);
 	EasyGetFuncOnly(glm::mat4, m_m4WorldToLocal, WorldToLocalMatrix);
 
+	EasyGetFuncOnly(glm::quat, m_qQuaternion, Quaternion);
+
 	void LookAt(CrGameObject * gameobject);
 	void LookAt(CrTransform * transform);
 	void LookAt(glm::vec3 position);
 
 	glm::vec3 GetScale();
-	glm::quat GetQuaternion();
 
 	void SetChildrenPositionDirty();
 	void SetChildrenRotationDirty();

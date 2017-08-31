@@ -133,16 +133,22 @@ void CrTransform::SetPosition(glm::vec3 var)
 }
 
 void CrTransform::SetRotation(glm::vec3 var)
-{
+{	
 	if (m_v3Rotation == var)
 		return;
 
 	m_v3Rotation = var;
+	m_qQuaternion = glm::quat(m_v3Rotation * glm::pi<float>() / 180.f);		 
+
+	m_v3Forword = glm::vec3(m_qQuaternion * glm::vec4(0.f, 0.f, 1.f, 1.f));
+	m_v3Up = glm::vec3(m_qQuaternion * glm::vec4(0.f, 1.f, 0.f, 1.f));
+	m_v3Right = glm::vec3(m_qQuaternion * glm::vec4(1.f, 0.f, 0.f, 1.f));
 
 	CrTransform * parentTransform = GetGameObject() && GetGameObject()->GetParent() ? GetGameObject()->GetParent()->GetTransform() : NULL;
 	if (parentTransform)
 	{
-		m_v3LocalRotation = m_v3Rotation - parentTransform->GetRotation();
+		glm::quat quat = glm::quat(parentTransform->GetWorldToLocalMatrix() * glm::mat4(m_qQuaternion));
+		m_v3LocalRotation = glm::eulerAngles(quat) * 360.f;		
 	}
 	else
 	{
@@ -169,6 +175,23 @@ void CrTransform::SetLocalRotation(glm::vec3 var)
 		return;
 
 	m_v3LocalRotation = var;
+
+	CrTransform * parentTransform = GetGameObject() && GetGameObject()->GetParent() ? GetGameObject()->GetParent()->GetTransform() : NULL;
+	if (parentTransform)
+	{
+		glm::quat _quat = glm::quat(m_v3LocalRotation * glm::pi<float>() / 180.f);
+		m_qQuaternion = parentTransform->GetQuaternion() * _quat;
+		m_v3Rotation = glm::eulerAngles(m_qQuaternion) * 360.f;
+
+		m_v3Forword = glm::vec3(m_qQuaternion * glm::vec4(0.f, 0.f, 1.f, 1.f));
+		m_v3Up = glm::vec3(m_qQuaternion * glm::vec4(0.f, 1.f, 0.f, 1.f));
+		m_v3Right = glm::vec3(m_qQuaternion * glm::vec4(1.f, 0.f, 0.f, 1.f));
+	}
+	else
+	{
+		m_v3Rotation = m_v3LocalRotation;
+	}
+
 	SetChildrenRotationDirty();
 }
 
@@ -192,18 +215,13 @@ void CrTransform::_ExecuteMatrix()
 		m_m4LocalToWorld = tm * sm * rm;
 		m_m4WorldToLocal = glm::inverse(m_m4LocalToWorld);
 
-		//glm::mat4 irm = glm::inverse(rm);
-		m_v3Forword = glm::vec3(rm * glm::vec4(0.f, 0.f, 1.f, 1.f));
-		m_v3Up = glm::vec3(rm * glm::vec4(0.f, 1.f, 0.f, 1.f));
-		m_v3Right = glm::vec3(rm * glm::vec4(1.f, 0.f, 0.f, 1.f));
-
 		m_isDirty = false;
 	}
 }
 
 glm::quat CrTransform::GetQuaternion()
-{
-	return glm::quat(GetRotation() * glm::pi<float>() / 180.f);
+{	
+	return m_qQuaternion;
 }
 
 void CrTransform::LookAt(CrGameObject * gameobject)
@@ -221,11 +239,6 @@ void CrTransform::LookAt(CrTransform * transform)
 }
 void CrTransform::LookAt(glm::vec3 position)
 {
-	//glm::vec3 worldUp = glm::vec3(0.f, 1.f, 0.f);
-	//m_zAxis = glm::normalize(GetPosition() - position);
-	//m_xAxis = glm::normalize(glm::cross(worldUp, -m_zAxis));
-	//m_yAxis = glm::cross(m_zAxis, m_xAxis);
-
 	m_m4LocalToWorld = glm::lookAt(GetPosition(), position, glm::vec3(0.f, 1.f, 0.f));
 	glm::quat quat = glm::quat(m_m4LocalToWorld);
 	
