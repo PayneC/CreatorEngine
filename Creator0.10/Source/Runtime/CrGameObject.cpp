@@ -77,6 +77,8 @@ void CrGameObject::AddChild(CrGameObject * pNode)
 	m_pChildren.push_back(pNode);
 	pNode->m_pParent = this;
 	pNode->Retain();
+
+	GetTransform()->AddChild(pNode->GetTransform());
 }
 
 void CrGameObject::RemoveChild(CrGameObject * pNode)
@@ -93,13 +95,17 @@ void CrGameObject::RemoveChild(CrGameObject * pNode)
 	}
 	if (iter != iterEnd)
 	{
+		GetTransform()->RemoveChild(pNode->GetTransform());
+
 		m_pChildren.erase(iter);
 		pNode->Release();
-	}
+	}	
 }
 
 void CrGameObject::RemoveAllChild()
 {
+	GetTransform()->RemoveAllChild();
+
 	std::vector<CrGameObject * >::iterator iter = m_pChildren.begin();
 	std::vector<CrGameObject * >::iterator iterEnd = m_pChildren.end();
 	for (; iter != iterEnd; ++iter)

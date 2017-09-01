@@ -9,12 +9,16 @@ Payne
 
 #include "CrDefine.h"
 #include "CrComponent.h"
+#include <vector>
 
 class CrTransform : public CrComponent
 {
+	friend class CrGameObject;
 public:
 	CrTransform();
 	~CrTransform();
+
+	EasyGet(CrTransform *, m_pParent, Parent);		
 
 	FuncGetSet(glm::vec3, Position);
 	FuncGetSet(glm::vec3, Rotation);
@@ -41,6 +45,9 @@ public:
 	void SetChildrenScaleDirty();
 private:
 	void _ExecuteMatrix();
+	void AddChild(CrTransform * pChild);
+	void RemoveChild(CrTransform * pChild);
+	void RemoveAllChild();
 private:
 	
 	glm::vec3 m_v3Position;
@@ -59,6 +66,8 @@ private:
 	glm::vec3 m_xAxis;
 	glm::vec3 m_yAxis;
 	glm::vec3 m_zAxis;
+
+	std::vector<CrTransform *> m_pChildren;
 };
 
 #endif
