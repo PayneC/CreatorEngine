@@ -100,6 +100,10 @@ void CloseDebugThread()
 
 void Application()
 {
+	CrMaterial * material = CrMaterial::CreateCrMaterial();
+	CrShader * shader = CrShaderUtility::CreateShader("normal.vert", "normal.frag");
+	material->SetShader(shader);
+
 	CrTexture * texture = CrTextureUtility::Instance()->LoadTexture("001.png");
 
 	CrScene * pScene = CrGameObject::CreateGameObject<CrScene>("test01");
@@ -123,7 +127,8 @@ void Application()
 	pCamera->GetTransform()->LookAt(go);
 	pCamera->AddComponent<testCamera>();
 
-	CrTexture * texture2 = CrTextureUtility::Instance()->LoadTexture("TexMagic01.png");
+	CrTexture * texture2 = CrTextureUtility::Instance()->LoadTexture("SandyGround.tga");
+	CrTexture * texture2N = CrTextureUtility::Instance()->LoadTexture("SandyGround_Normal.tga");
 
 	CrGameObject * go2 = NULL;
 	for (int i = 0; i < 40; ++i)
@@ -138,8 +143,10 @@ void Application()
 				go2->GetTransform()->SetLocalPosition(glm::vec3(-18 + i * 4, 0.f, 0.f));
 				//go2->GetTransform()->SetLocalScale(glm::vec3(1.f, 1.f, 1.f));
 				meshRender = go2->GetComponent<CrMeshRender>();
+				//meshRender->SetMaterial(material);
 				meshRender->GetMaterial()->SetColor(glm::vec4((float)i / 10.f, (float)i / 10.f, (float)i / 10.f, 1.f));
 				meshRender->GetMaterial()->SetpMainTexture(texture2);
+				meshRender->GetMaterial()->SetpNormalTexture(texture2N);
 			}
 		}
 	}
@@ -153,6 +160,8 @@ void Application()
 	meshRender = go->GetComponent<CrMeshRender>();
 	meshRender->GetMaterial()->SetColor(glm::vec4(1, 1, 1, 1));
 	meshRender->GetMaterial()->SetpMainTexture(texture);
+
+	/*
 
 	UICanvas * canvas = CrGameObject::CreateGameObject<UICanvas>("canvas");
 	canvas->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
@@ -169,7 +178,7 @@ void Application()
 	sprite->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
 	meshRender = sprite->GetComponent<CrMeshRender>();
 	meshRender->GetMaterial()->SetpMainTexture(texture3);
-	
+	*/
 
 	Start(pScene);
 }
