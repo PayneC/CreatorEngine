@@ -176,7 +176,8 @@ void Scene1()
 void Scene2()
 {
 	CrTexture * texture = CrTextureUtility::Instance()->LoadTexture("caodi.jpg");
-	CrTexture * texture2 = CrTextureUtility::Instance()->LoadTexture("MudRockyAlbedoSpecular.bmp");
+	CrTexture * texture2 = CrTextureUtility::Instance()->LoadTexture("SandyGround.tga");
+	CrTexture * textureN = CrTextureUtility::Instance()->LoadTexture("SandyGround_Normal.tga");
 
 	CrScene * pScene = CrGameObject::CreateGameObject<CrScene>("test01");
 
@@ -198,6 +199,7 @@ void Scene2()
 	go2->AddComponent<test>();
 	meshRender = go2->GetComponent<CrMeshRender>();
 	meshRender->GetMaterial()->SetpMainTexture(texture2);
+	meshRender->GetMaterial()->SetpNormalTexture(textureN);
 
 	CrCamera * pCamera = CrGameObject::CreateGameObject<CrCamera>("Camera");
 	pScene->AddChild(pCamera);

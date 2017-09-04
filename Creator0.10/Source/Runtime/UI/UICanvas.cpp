@@ -58,7 +58,7 @@ void UICanvas::_Render(CrGameObject* pGameObject)
 	{
 		//glm::mat4 m = glm::ortho(0, 16, 0, 9);
 		glm::mat4 m = glm::mat4(1.0);
-		meshRender->Draw(m);
+		meshRender->Draw(m, glm::vec3());
 	}
 	
 	std::vector<CrGameObject * > gameobjects = pGameObject->GetChildren();
