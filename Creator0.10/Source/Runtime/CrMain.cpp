@@ -98,7 +98,7 @@ void CloseDebugThread()
 	m_cBuffer = NULL;
 }
 
-void Application()
+void Scene1()
 {
 	CrTexture * texture = CrTextureUtility::Instance()->LoadTexture("001.png");
 
@@ -144,7 +144,6 @@ void Application()
 		}
 	}
 
-
 	go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_QUAD, "center");
 	pScene->AddChild(go);
 	go->GetTransform()->SetPosition(glm::vec3(5, -5, 5));
@@ -169,9 +168,52 @@ void Application()
 	sprite->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
 	meshRender = sprite->GetComponent<CrMeshRender>();
 	meshRender->GetMaterial()->SetpMainTexture(texture3);
-	
+
 
 	Start(pScene);
+}
+
+void Scene2()
+{
+	CrTexture * texture = CrTextureUtility::Instance()->LoadTexture("caodi.jpg");
+	CrTexture * texture2 = CrTextureUtility::Instance()->LoadTexture("SandyGround.tga");
+	CrTexture * textureN = CrTextureUtility::Instance()->LoadTexture("SandyGround_Normal.tga");
+
+	CrScene * pScene = CrGameObject::CreateGameObject<CrScene>("test01");
+
+	CrGameObject * go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_QUAD, "center");
+	pScene->AddChild(go);
+	go->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+	go->GetTransform()->SetLocalScale(glm::vec3(10, 1, 10));
+	go->GetTransform()->SetRotation(glm::vec3(-90, 0, 0));
+	CrMeshRender * meshRender = go->GetComponent<CrMeshRender>();
+	meshRender->GetMaterial()->SetColor(glm::vec4(1, 1, 1, 1));
+	meshRender->GetMaterial()->SetpMainTexture(texture);
+	
+
+	CrGameObject * go2 = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_CUBE, "cube");
+	pScene->AddChild(go2);
+	go2->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
+	go2->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
+	go2->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
+	go2->AddComponent<test>();
+	meshRender = go2->GetComponent<CrMeshRender>();
+	meshRender->GetMaterial()->SetpMainTexture(texture2);
+	meshRender->GetMaterial()->SetpNormalTexture(textureN);
+
+	CrCamera * pCamera = CrGameObject::CreateGameObject<CrCamera>("Camera");
+	pScene->AddChild(pCamera);
+	pCamera->GetTransform()->SetPosition(glm::fvec3(0.f, 1.f, 3.0f));
+	pCamera->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
+	pCamera->GetTransform()->LookAt(go2);
+	pCamera->AddComponent<testCamera>();
+
+	Start(pScene);
+}
+
+void Application()
+{
+	Scene2();
 }
 
 int main(int argc, char **argv)
