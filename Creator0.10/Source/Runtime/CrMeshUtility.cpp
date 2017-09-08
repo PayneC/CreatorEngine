@@ -1,6 +1,5 @@
 #include "CrMeshUtility.h"
 
-
 #include <string>
 #include <fstream>
 
@@ -12,7 +11,7 @@ CrMeshUtility::~CrMeshUtility()
 {
 }
 
-CrMesh* CrMeshUtility::CreateMesh(EPresetMeshType meshType)
+CrMesh *CrMeshUtility::CreateMesh(EPresetMeshType meshType)
 {
 	switch (meshType)
 	{
@@ -25,7 +24,7 @@ CrMesh* CrMeshUtility::CreateMesh(EPresetMeshType meshType)
 	}
 }
 
-CrMesh* CrMeshUtility::CreateMeshCube()
+CrMesh *CrMeshUtility::CreateMeshCube()
 {
 	if (m_BuiltinMeshs[CR_MESH_TYPE_CUBE] != NULL)
 		return m_BuiltinMeshs[CR_MESH_TYPE_CUBE];
@@ -34,117 +33,118 @@ CrMesh* CrMeshUtility::CreateMeshCube()
 
 	GLfloat vertices[] =
 	{
-		0.5f, -0.5f, 0.5f,
-		-0.5f, -0.5f, 0.5f,
-		0.5f, 0.5f, 0.5f,
-		-0.5f, 0.5f, 0.5f,
-
-		0.5f, 0.5f, -0.5f,
-		-0.5f, 0.5f, -0.5f,
-		0.5f, -0.5f, -0.5f,
-		-0.5f, -0.5f, -0.5f,
-
-		0.5f, 0.5f, 0.5f,
-		-0.5f, 0.5f, 0.5f,
-		0.5f, 0.5f, -0.5f,
-		-0.5f, 0.5f, -0.5f,
-
-		0.5f, -0.5f, -0.5f,
-		0.5f, -0.5f, 0.5f,
-		-0.5f, -0.5f, 0.5f,
-		-0.5f, -0.5f, -0.5f,
-
-		-0.5f, -0.5f, 0.5f,
-		-0.5f, 0.5f, 0.5f,
-		-0.5f, 0.5f, -0.5f,
-		-0.5f, -0.5f, -0.5f,
-
-		0.5f, -0.5f, -0.5f,
-		0.5f, 0.5f, -0.5f,
-		0.5f, 0.5f, 0.5f,
-		0.5f, -0.5f, 0.5f,
+		-0.5,-0.5,0.5,
+		0.5,-0.5,0.5,
+		-0.5,0.5,0.5,
+		0.5,0.5,0.5,
+		-0.5,0.5,-0.5,
+		0.5,0.5,-0.5,
+		-0.5,-0.5,-0.5,
+		0.5,-0.5,-0.5,
+		-0.5,0.5,0.5,
+		0.5,0.5,0.5,
+		-0.5,0.5,-0.5,
+		0.5,0.5,-0.5,
+		-0.5,-0.5,-0.5,
+		-0.5,-0.5,0.5,
+		0.5,-0.5,0.5,
+		0.5,-0.5,-0.5,
+		0.5,-0.5,0.5,
+		0.5,0.5,0.5,
+		0.5,0.5,-0.5,
+		0.5,-0.5,-0.5,
+		-0.5,-0.5,-0.5,
+		-0.5,0.5,-0.5,
+		-0.5,0.5,0.5,
+		-0.5,-0.5,0.5,
 	};
 
 	GLfloat normals[] =
 	{
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-
-		0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, -1.0f,
-		0.0f, 0.0f, -1.0f,
-
-		0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, -1.0f,
-		0.0f, 0.0f, -1.0f,
-
-		0.0f, -1.0f, 0.0f,
-		0.0f, -1.0f, 0.0f,
-		0.0f, -1.0f, 0.0f,
-		0.0f, -1.0f, 0.0f,
-
-		-1.0f, -0.0f, 0.0f,
-		-1.0f, -0.0f, 0.0f,
-		-1.0f, -0.0f, 0.0f,
-		-1.0f, -0.0f, 0.0f,
-
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
+		0,0,1,
+		0,0,1,
+		0,0,1,
+		0,0,1,
+		0,1,0,
+		0,1,0,
+		0,0,-1,
+		0,0,-1,
+		0,1,0,
+		0,1,0,
+		0,0,-1,
+		0,0,-1,
+		0,-1,0,
+		0,-1,0,
+		0,-1,0,
+		0,-1,0,
+		1,0,0,
+		1,0,0,
+		1,0,0,
+		1,0,0,
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+	};
+	GLfloat tangents[] =
+	{
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+		-1,0,0,
+		0,0,-1,
+		0,0,-1,
+		0,0,-1,
+		0,0,-1,
+		0,0,1,
+		0,0,1,
+		0,0,1,
+		0,0,1,		
 	};
 
 	GLfloat uvs[] =
 	{
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		0.0f, 1.0f,
-		1.0f, 1.0f,
-
-		0.0f, 1.0f,
-		1.0f, 1.0f,
-		0.0f, 1.0f,
-		1.0f, 1.0f,
-
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-
-		0.0f, 0.0f,
-		0.0f, 1.0f,
-		1.0f, 1.0f,
-		1.0f, 0.0f,
-
-		0.0f, 0.0f,
-		0.0f, 1.0f,
-		1.0f, 1.0f,
-		1.0f, 0.0f,
-
-		0.0f, 0.0f,
-		0.0f, 1.0f,
-		1.0f, 1.0f,
-		1.0f, 0.0f,
+		0,0,
+		1,0,
+	0,1,
+	1,1,
+	0,1,
+	1,1,
+	0,1,
+	1,1,
+	0,0,
+	1,0,
+	0,0,
+	1,0,
+	0,0,
+	0,1,
+	1,1,
+	1,0,
+	0,0,
+	0,1,
+	1,1,
+	1,0,
+	0,0,
+	0,1,
+	1,1,
+	1,0,
 	};
 
 	GLushort triangles[] =
 	{
-		0, 2, 3,
-		0, 3, 1,
-		8, 4, 5,
-		8, 5, 9,
-		10, 6, 7,
-		10, 7, 11,
-		12, 13, 14,
-		12, 14, 15,
-		16, 17, 18,
-		16, 18, 19,
-		20, 21, 22,
-		20, 22, 23,
+		0,3,2,2,3,1,8,4,5,8,5,9,10,6,7,10,7,11,12,13,14,12,14,15,16,17,18,16,18,19,20,21,22,20,22,23,
 	};
 
 	GLuint VAO = 0;
@@ -153,64 +153,76 @@ CrMesh* CrMeshUtility::CreateMeshCube()
 
 	size_t verticeSize = sizeof(vertices);
 	size_t normalSize = sizeof(normals);
+	size_t tangentSize = sizeof(tangents);
 	size_t uvSize = sizeof(uvs);
 
 	size_t triangleSize = sizeof(triangles);
 
-	//´´½¨¶¥µã»º´æ¶ÔÏó
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã»ºï¿½ï¿½ï¿½ï¿½ï¿½
 	//VertexBufferObject
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, verticeSize + normalSize + uvSize, NULL, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, verticeSize + normalSize + tangentSize + uvSize, NULL, GL_STATIC_DRAW);
 
 	glBufferSubData(GL_ARRAY_BUFFER, 0, verticeSize, vertices);
 	glBufferSubData(GL_ARRAY_BUFFER, verticeSize, normalSize, normals);
-	glBufferSubData(GL_ARRAY_BUFFER, verticeSize + normalSize, uvSize, uvs);
+	glBufferSubData(GL_ARRAY_BUFFER, verticeSize + normalSize, tangentSize, triangles);
+	glBufferSubData(GL_ARRAY_BUFFER, verticeSize + normalSize + tangentSize, uvSize, uvs);
 
-	//´´½¨Ë÷Òý»º´æ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	//ElementBufferObject
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, triangleSize, triangles, GL_STATIC_DRAW);
 
-	//´´½¨¶¥µãÊý×é¶ÔÏó
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	//VertexArrayObject
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
-	//ÉèÖÃ¶¥µãÊôÐÔ(Êý¾ÝÀ´×ÔÓÚ¶¥µã»º´æ£©
+	//ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ã»ºï¿½æ£©
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glEnableVertexAttribArray(0); //attribute 0. No particular reason for 0, but must match the layout in the shader.
 	glVertexAttribPointer(
-		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		3,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)0			// array buffer offset
+		0,		  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+		3,		  // size
+		GL_FLOAT, // type
+		GL_FALSE, // normalized?
+		0,		  // stride
+		(void *)0 // array buffer offset
 		);
 
 	glEnableVertexAttribArray(1); //attribute 0. No particular reason for 0, but must match the layout in the shader.
 	glVertexAttribPointer(
-		1,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		3,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)verticeSize	// array buffer offset
+		1,					// attribute 0. No particular reason for 0, but must match the layout in the shader.
+		3,					// size
+		GL_FLOAT,			// type
+		GL_FALSE,			// normalized?
+		0,					// stride
+		(void *)verticeSize // array buffer offset
+		);
+
+	glEnableVertexAttribArray(3); //attribute 0. No particular reason for 0, but must match the layout in the shader.
+	glVertexAttribPointer(
+		3,								   // attribute 0. No particular reason for 0, but must match the layout in the shader.
+		3,								   // size
+		GL_FLOAT,						   // type
+		GL_FALSE,						   // normalized?
+		0,								   // stride
+		(void *)(verticeSize + normalSize) // array buffer offset
 		);
 
 	glEnableVertexAttribArray(2); //attribute 0. No particular reason for 0, but must match the layout in the shader.
 	glVertexAttribPointer(
-		2,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		2,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)(verticeSize + normalSize)			// array buffer offset
+		2,												 // attribute 0. No particular reason for 0, but must match the layout in the shader.
+		2,												 // size
+		GL_FLOAT,										 // type
+		GL_FALSE,										 // normalized?
+		0,												 // stride
+		(void *)(verticeSize + normalSize + tangentSize) // array buffer offset
 		);
 
-	//ÉèÖÃË÷Òý(Êý¾ÝÀ´×ÔÓÚË÷Òý»º´æ£©
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ£©
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
 	glBindVertexArray(0);
@@ -224,7 +236,7 @@ CrMesh* CrMeshUtility::CreateMeshCube()
 	return m_BuiltinMeshs[CR_MESH_TYPE_CUBE];
 }
 
-CrMesh* CrMeshUtility::CreateMeshQuad()
+CrMesh *CrMeshUtility::CreateMeshQuad()
 {
 	if (m_BuiltinMeshs[CR_MESH_TYPE_QUAD] != NULL)
 		return m_BuiltinMeshs[CR_MESH_TYPE_QUAD];
@@ -233,10 +245,10 @@ CrMesh* CrMeshUtility::CreateMeshQuad()
 
 	GLfloat vertices[] =
 	{
-		-0.5f,  0.5f, 0.0f,
+		-0.5f, 0.5f, 0.0f,
 		-0.5f, -0.5f, 0.0f,
-		 0.5f,  0.5f, 0.0f,
-		 0.5f, -0.5f, 0.0f,
+		0.5f, 0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
 	};
 
 	GLfloat normals[] =
@@ -289,32 +301,32 @@ CrMesh* CrMeshUtility::CreateMeshQuad()
 
 	glEnableVertexAttribArray(0); //attribute 0. No particular reason for 0, but must match the layout in the shader.
 	glVertexAttribPointer(
-		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		3,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)0			// array buffer offset
+		0,		  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+		3,		  // size
+		GL_FLOAT, // type
+		GL_FALSE, // normalized?
+		0,		  // stride
+		(void *)0 // array buffer offset
 		);
 
 	glEnableVertexAttribArray(1); //attribute 0. No particular reason for 0, but must match the layout in the shader.
 	glVertexAttribPointer(
-		1,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		3,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)verticeSize	// array buffer offset
+		1,					// attribute 0. No particular reason for 0, but must match the layout in the shader.
+		3,					// size
+		GL_FLOAT,			// type
+		GL_FALSE,			// normalized?
+		0,					// stride
+		(void *)verticeSize // array buffer offset
 		);
 
 	glEnableVertexAttribArray(2); //attribute 0. No particular reason for 0, but must match the layout in the shader.
 	glVertexAttribPointer(
-		2,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		2,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)(verticeSize + normalSize)			// array buffer offset
+		2,								   // attribute 0. No particular reason for 0, but must match the layout in the shader.
+		2,								   // size
+		GL_FLOAT,						   // type
+		GL_FALSE,						   // normalized?
+		0,								   // stride
+		(void *)(verticeSize + normalSize) // array buffer offset
 		);
 
 	glBindVertexArray(0);

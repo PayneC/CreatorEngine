@@ -36,7 +36,10 @@ void CrCamera::_Render(CrGameObject * pGameObject)
 	if (meshRender != NULL && transform != NULL)
 	{
 		glm::mat4 mvp = GetVP() * transform->GetLocalToWorldMatrix();
-		meshRender->Draw(mvp, GetTransform()->GetForword());
+		glm::mat4 v = GetTransform()->GetWorldToLocalMatrix();
+		glm::mat4 m = transform->GetLocalToWorldMatrix();
+
+		meshRender->Draw(mvp, GetTransform()->GetPosition(), m, v);
 	}
 
 	std::vector<CrGameObject * > gameobjects = pGameObject->GetChildren();

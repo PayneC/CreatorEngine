@@ -121,7 +121,7 @@ TReturnType * CrGameObject::CreateGameObject(EPresetMeshType type, std::string n
 		CrMeshRender * meshRender = pRef->AddComponent<CrMeshRender>();
 		CrMaterial * material = CrMaterial::CreateCrMaterial();
 		CrMesh * mesh = CrMeshUtility::CreateMesh(type);
-		CrShader * shader = CrShaderUtility::CreateShader("testShader.vert", "testShader.frag");
+		CrShader * shader = CrShaderUtility::CreateShader("VertexLit.vert", "VertexLit.frag");
 		material->SetShader(shader);
 		meshRender->SetMaterial(material);
 		meshRender->SetMesh(mesh);

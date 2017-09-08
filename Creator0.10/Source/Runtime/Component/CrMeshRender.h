@@ -20,7 +20,7 @@ public:
 	~CrMeshRender();
 
 public:
-	void Draw(glm::fmat4 & mvp, glm::vec3 & eye);
+	void Draw(glm::fmat4 & mvp, glm::vec3 & eye, glm::fmat4 & mv, glm::fmat4 & v);
 	EasyGetSet(CrMesh*, m_pMesh, Mesh);
 	EasyGetSet(int8_t, m_CastShadows, CastShadows);				   //投射影子
 	EasyGetSet(int8_t, m_ReceiveShadows, ReceiveShadows);		   //接收影子
