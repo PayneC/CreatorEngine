@@ -10,7 +10,7 @@ Payne
 #include "CrDefine.h"
 #include <CrSingleton.h>
 
-class CrTime : public CrSingleton<CrTime>
+class DLL_ClASS CrTime : public CrSingleton<CrTime>
 {
 public:
 	CrTime();

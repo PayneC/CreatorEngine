@@ -11,7 +11,7 @@ Payne
 #include <string>
 #include <Component\CrMeshRender.h>
 
-class CrSkinMeshRender : public CrMeshRender
+class DLL_ClASS CrSkinMeshRender : public CrMeshRender
 {
 public:
 	CrSkinMeshRender();

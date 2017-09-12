@@ -16,7 +16,7 @@ Payne
 #include "CrDefine.h"
 #include "CrSingleton.h"
 
-class CrMeshUtility : public CrSingleton<CrMeshUtility>
+class DLL_ClASS CrMeshUtility : public CrSingleton<CrMeshUtility>
 {
 public:
 	CrMeshUtility();

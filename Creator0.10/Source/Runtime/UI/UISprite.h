@@ -9,7 +9,7 @@ Payne
 
 #include <UI\UIWidget.h>
 
-class UISprite : public UIWidget
+class DLL_ClASS UISprite : public UIWidget
 {
 public:
 	UISprite();

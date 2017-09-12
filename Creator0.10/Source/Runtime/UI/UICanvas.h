@@ -10,7 +10,7 @@ Payne
 #include <CrGameObject.h>
 #include <UI\UIWidget.h>
 
-class UICanvas : public UIWidget
+class DLL_ClASS UICanvas : public UIWidget
 {
 public:
 	UICanvas();

@@ -11,7 +11,7 @@ Payne
 #include <list>
 #include <CrSingleton.h>
 
-class CrMemoryPool : public CrSingleton<CrMemoryPool>
+class DLL_ClASS CrMemoryPool : public CrSingleton<CrMemoryPool>
 {
 	friend class CrEngine;
 private:

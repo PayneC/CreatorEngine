@@ -15,7 +15,7 @@ Payne
 #include <Component\CrTransform.h>
 #include <Component\CrMeshRender.h>
 
-class CrGameObject : public CrObject
+class DLL_ClASS CrGameObject : public CrObject
 {
 public:
 	template<typename TReturnType>

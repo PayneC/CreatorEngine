@@ -13,7 +13,7 @@ Payne
 #include <CrShader.h>
 #include <CrTexture.h>
 
-class CrMaterial : public CrObject
+class DLL_ClASS CrMaterial : public CrObject
 {
 public:
 	static CrMaterial * CreateCrMaterial();

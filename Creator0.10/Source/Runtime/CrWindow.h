@@ -11,7 +11,7 @@ Payne
 #include "CrDefine.h"
 #include <CrSingleton.h>
 
-class CrWindow : public CrSingleton<CrWindow>
+class DLL_ClASS CrWindow : public CrSingleton<CrWindow>
 {
 public:
 	CrWindow();

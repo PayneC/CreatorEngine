@@ -12,7 +12,7 @@ Payne
 #include <string>
 #include <map>
 
-class CrTexture : public CrObject
+class DLL_ClASS CrTexture : public CrObject
 {
 	friend class CrTextureUtility;
 

@@ -11,7 +11,7 @@ Payne
 #include "CrComponent.h"
 #include <vector>
 
-class CrTransform : public CrComponent
+class DLL_ClASS CrTransform : public CrComponent
 {
 	friend class CrGameObject;
 public:

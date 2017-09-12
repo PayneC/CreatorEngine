@@ -12,7 +12,7 @@ Payne
 #include <string>
 #include <CrObject.h>
 
-class CrMesh : public CrObject
+class DLL_ClASS CrMesh : public CrObject
 {
 	friend class CrMeshUtility;
 public:

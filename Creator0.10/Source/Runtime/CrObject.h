@@ -20,7 +20,7 @@ public:
 };
 #define Func_Event(FUN) (EventFunc)(&FUN)
 
-class CrObject
+class DLL_ClASS CrObject
 {
 	friend class CrMemoryPool;
 

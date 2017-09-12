@@ -9,7 +9,7 @@ Payne
 
 #include <CrObject.h>
 
-class IBehaviour
+class DLL_ClASS IBehaviour
 {
 public:
 	virtual void Awake() = 0;
@@ -44,7 +44,7 @@ public:
 	
 	CrGameObject * GetGameObject();
 
-	virtual int GetInstanceCountLimit();
+	//virtual int GetInstanceCountLimit();
 
 
 	//void AddListen();

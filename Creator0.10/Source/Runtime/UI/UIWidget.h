@@ -9,7 +9,7 @@ Payne
 
 #include <CrGameObject.h>
 
-class UIWidget : public CrGameObject
+class DLL_ClASS UIWidget : public CrGameObject
 {
 public:
 	UIWidget();

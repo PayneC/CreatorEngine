@@ -77,6 +77,11 @@ enum EPresetMeshType
 #define Vector2 glm::vec2
 #define Vector3 glm::vec3
 
+#ifdef DLL_IMPORT
+#define DLL_ClASS _declspec(dllimport) 
+#else
+#define DLL_ClASS _declspec(dllexport)
+#endif // DLL_IMPORT
 
 
 #endif

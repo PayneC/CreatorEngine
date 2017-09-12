@@ -18,95 +18,15 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\Source\Runtime\Common\CrFontLab.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\Component\CrMaterial.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\Component\CrMesh.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\Component\CrMeshRender.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\Component\CrSkinMeshRender.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\Component\CrSkybox.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\Component\CrTransform.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrCamera.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrComponent.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrConfig.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrCubemap.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CreatorEngine.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrEngine.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrEngineInterface.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrEngineInterfaceLua.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrEvent.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrGameObject.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrLight.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrMemoryPool.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrMeshUtility.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrObject.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrScene.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrShader.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrShaderUtility.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrTexture.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrTextureUtility.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrTime.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrWindow.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\Lua\CrLuaState.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\test.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\testCamera.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\UI\UICanvas.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\UI\UISprite.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\UI\UIWidget.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\Source\Runtime\Common\CrFontLab.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\Component\CrComponent.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\Component\CrMaterial.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\Component\CrMesh.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\Component\CrMeshRender.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\Component\CrSkinMeshRender.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\Component\CrSkybox.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\Component\CrTransform.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrCamera.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrConfig.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrCubemap.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrDefine.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CreatorEngine.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrEngine.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrEngineInterface.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrEngineInterfaceLua.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrEvent.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrGameObject.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrLight.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrMemoryPool.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrMeshUtility.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrObject.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrScene.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrShader.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrShaderUtility.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrSingleton.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrTexture.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrTextureUtility.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrTime.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrWindow.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\Lua\CrLuaState.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\test.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\testCamera.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\UI\UICanvas.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\UI\UISprite.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\UI\UIWidget.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\Shaders\fragment.cg" />
-    <None Include="..\..\..\Shaders\testShader.frag" />
-    <None Include="..\..\..\Shaders\testShader.vert" />
-    <None Include="..\..\..\Shaders\vertex.cg" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{73A1C54D-D373-498F-95F9-8CCFA53466AF}</ProjectGuid>
+    <ProjectGuid>{148E84AC-5E6A-4921-8358-29FA410DF9A8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Creatorwin32vs2015</RootNamespace>
+    <RootNamespace>CreatorApp</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -150,11 +70,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)../../Source/Runtime;$(SolutionDir)../../Source/Runtime/Component;$(SolutionDir)../../Source/Runtime/UI;$(SolutionDir)../../Source/ThirdParty/glm/glm;$(SolutionDir)../../Source/ThirdParty/glfw3/include/GLFW;$(SolutionDir)../../Source/ThirdParty/glew/include/GL;$(SolutionDir)../../Source/ThirdParty/lua\src;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)../../Binaries\Win32_Debug</OutDir>
     <IntDir>$(SolutionDir)../../Temp\Win32_Debug</IntDir>
-    <IncludePath>$(SolutionDir)../../Source/ThirdParty/Cg/include;$(SolutionDir)../../Source/ThirdParty/freetype2/include/freetype2/freetype;$(SolutionDir)../../Source/ThirdParty/freetype2/include/freetype2;$(SolutionDir)../../Source/ThirdParty/freetype2/include;$(SolutionDir)../../Source/ThirdParty/glew/include/GL;$(SolutionDir)../../Source/ThirdParty/glfw3/include/GLFW;$(SolutionDir)../../Source/ThirdParty/glm/glm;$(SolutionDir)../../Source/ThirdParty/SOIL/include;$(SolutionDir)../../Source/ThirdParty/lua\src;$(SolutionDir)../../Source/Runtime;$(SolutionDir)../../Source/Runtime/Common;$(SolutionDir)../../Source/Runtime/Lua;$(SolutionDir)../../Source/Runtime/UI;$(SolutionDir)../../Source/Runtime/Component;$(SolutionDir)../../Source/ThirdParty;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)../../Source/ThirdParty/Cg/lib;$(SolutionDir)../../Source/ThirdParty/SOIL/lib;$(SolutionDir)../../Source/ThirdParty/glfw3/lib-vc2013;$(SolutionDir)../../Source/ThirdParty/freetype2/lib;$(SolutionDir)../../Source/ThirdParty/glew/lib;$(SolutionDir)../../Binaries/Win32_Debug;$(LibraryPath)</LibraryPath>
-    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(SolutionDir)../../Binaries\Win32_Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -171,16 +91,13 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;DLL_IMPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;USE_GLSL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <StructMemberAlignment>16Bytes</StructMemberAlignment>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;glew32.lib;OpenGL32.Lib;freetype.lib;SOIL.lib;legacy_stdio_definitions.lib;Lua.lib;tinyxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>Creator-win32.vs2015.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -234,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="mian.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

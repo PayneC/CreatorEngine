@@ -10,7 +10,7 @@ Payne
 #include "CrGameObject.h"
 #include <list>
 
-class CrScene : public CrGameObject
+class DLL_ClASS CrScene : public CrGameObject
 {
 public:
 	CrScene();

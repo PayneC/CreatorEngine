@@ -15,7 +15,7 @@ Payne
 #include "CrTexture.h"
 #include <CrSingleton.h>
 
-class CrTextureUtility : public CrSingleton<CrTextureUtility>
+class DLL_ClASS CrTextureUtility : public CrSingleton<CrTextureUtility>
 {
 public:
 	CrTextureUtility();

@@ -9,7 +9,7 @@ Payne
 
 #include <CrScene.h>
 
-class CrCamera : public CrGameObject
+class DLL_ClASS CrCamera : public CrGameObject
 {
 public:
 	CrCamera();

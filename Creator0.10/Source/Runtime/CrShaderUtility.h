@@ -5,7 +5,7 @@ Payne
 */
 
 #ifndef _CREATOR_SHADERUTILITY_H
-#define _CREATOR_SHADERUTILITY_H
+#define _CREATOR_SHADERUTILITY_H 
 
 #include <glew.h>
 #include <stdio.h>
@@ -15,7 +15,7 @@ Payne
 #include "CrShader.h"
 #include "CrSingleton.h"
 
-class CrShaderUtility : public CrSingleton<CrShaderUtility>
+class DLL_ClASS CrShaderUtility : public CrSingleton<CrShaderUtility>
 {
 public:
 	static CrShader * CreateShader(const char * vertexFile, const char * fragmentFile);
@@ -34,7 +34,7 @@ public:
 private:
 	CrShader * _CreateShader(const char * vertexFile, const char * fragmentFile);
 	GLuint CompileShader(const char * vertexFile, const char * fragmentFile);
-private:	
+private:
 	std::map<std::string, GLuint> m_shaders;
 	std::map<std::string, GLuint>::iterator m_iterShader;
 };

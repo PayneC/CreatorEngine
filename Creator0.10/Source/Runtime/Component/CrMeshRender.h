@@ -13,7 +13,7 @@ Payne
 #include <Component\CrMesh.h>
 #include <Component\CrMaterial.h>
 
-class CrMeshRender : public CrComponent
+class DLL_ClASS CrMeshRender : public CrComponent
 {
 public:
 	CrMeshRender();

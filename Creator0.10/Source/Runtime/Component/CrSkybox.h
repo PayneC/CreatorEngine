@@ -13,7 +13,7 @@ Payne
 #include <Component\CrMesh.h>
 #include <Component\CrMaterial.h>
 
-class CrSkybox : public CrComponent
+class DLL_ClASS CrSkybox : public CrComponent
 {
 public:
 	CrSkybox();

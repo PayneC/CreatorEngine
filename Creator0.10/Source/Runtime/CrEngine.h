@@ -23,7 +23,7 @@ Payne
 #include <UICanvas.h>
 #include <CrScene.h>
 
-class CrEngine : public CrSingleton<CrEngine>
+class DLL_ClASS CrEngine : public CrSingleton<CrEngine>
 {
 
 public:

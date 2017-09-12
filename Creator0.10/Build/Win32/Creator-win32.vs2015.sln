@@ -13,6 +13,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lua", "..\..\Source\ThirdPa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tinyxml2", "..\..\Source\ThirdParty\tinyxml2\tinyxml2\tinyxml2.vcxproj", "{D1C528B6-AA02-4D29-9D61-DC08E317A70D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreatorApp", "..\..\..\CreatorApp\CreatorApp.vcxproj", "{148E84AC-5E6A-4921-8358-29FA410DF9A8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{73A1C54D-D373-498F-95F9-8CCFA53466AF} = {73A1C54D-D373-498F-95F9-8CCFA53466AF}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -101,6 +106,30 @@ Global
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release-Lib|x64.Build.0 = Release-Lib|x64
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release-Lib|x86.ActiveCfg = Release-Lib|Win32
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release-Lib|x86.Build.0 = Release-Lib|Win32
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Debug|x64.ActiveCfg = Debug|x64
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Debug|x64.Build.0 = Debug|x64
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Debug|x86.ActiveCfg = Debug|Win32
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Debug|x86.Build.0 = Debug|Win32
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Debug-Dll|x64.ActiveCfg = Debug|x64
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Debug-Dll|x64.Build.0 = Debug|x64
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Debug-Dll|x86.ActiveCfg = Debug|Win32
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Debug-Dll|x86.Build.0 = Debug|Win32
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Debug-Lib|x64.ActiveCfg = Debug|x64
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Debug-Lib|x64.Build.0 = Debug|x64
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Debug-Lib|x86.ActiveCfg = Debug|Win32
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Debug-Lib|x86.Build.0 = Debug|Win32
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Release|x64.ActiveCfg = Release|x64
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Release|x64.Build.0 = Release|x64
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Release|x86.ActiveCfg = Release|Win32
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Release|x86.Build.0 = Release|Win32
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Release-Dll|x64.ActiveCfg = Release|x64
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Release-Dll|x64.Build.0 = Release|x64
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Release-Dll|x86.ActiveCfg = Release|Win32
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Release-Dll|x86.Build.0 = Release|Win32
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Release-Lib|x64.ActiveCfg = Release|x64
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Release-Lib|x64.Build.0 = Release|x64
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Release-Lib|x86.ActiveCfg = Release|Win32
+		{148E84AC-5E6A-4921-8358-29FA410DF9A8}.Release-Lib|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

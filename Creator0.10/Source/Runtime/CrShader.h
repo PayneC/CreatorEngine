@@ -48,7 +48,7 @@ public:
 	CrTextureChunk * m_pTextur2D;
 };
 */
-class CrShader : CrObject
+class DLL_ClASS CrShader : CrObject
 {
 public:
 	CrShader();

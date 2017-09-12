@@ -13,7 +13,7 @@ Payne
 #include <Component\CrMesh.h>
 #include <Component\CrMaterial.h>
 
-class CrLight : public CrComponent
+class DLL_ClASS CrLight : public CrComponent
 {	
 public:
 	CrLight();
