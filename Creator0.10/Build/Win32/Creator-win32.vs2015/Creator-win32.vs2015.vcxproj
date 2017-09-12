@@ -48,8 +48,6 @@
     <ClCompile Include="..\..\..\Source\Runtime\CrTime.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrWindow.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\Lua\CrLuaState.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\test.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\testCamera.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\UI\UICanvas.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\UI\UISprite.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\UI\UIWidget.cpp" />
@@ -86,8 +84,6 @@
     <ClInclude Include="..\..\..\Source\Runtime\CrTime.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrWindow.h" />
     <ClInclude Include="..\..\..\Source\Runtime\Lua\CrLuaState.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\test.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\testCamera.h" />
     <ClInclude Include="..\..\..\Source\Runtime\UI\UICanvas.h" />
     <ClInclude Include="..\..\..\Source\Runtime\UI\UISprite.h" />
     <ClInclude Include="..\..\..\Source\Runtime\UI\UIWidget.h" />

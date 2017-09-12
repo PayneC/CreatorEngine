@@ -2,7 +2,7 @@
 
 #include "CreatorEngine.h"
 
-class DLL_ClASS test : public CrComponent
+class test : public CrComponent
 {
 private:
 	float a;

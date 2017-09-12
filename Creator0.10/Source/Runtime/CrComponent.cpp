@@ -48,9 +48,7 @@ CrGameObject * CrComponent::GetGameObject()
 	return m_pGameObject;
 }
 
-//0 = No Limit
-//>0 = Limit count
-//int CrComponent::GetInstanceCountLimit()
-//{
-//return 0;
-//}
+int CrComponent::GetInstanceCountLimit()
+{
+	return 0;
+}

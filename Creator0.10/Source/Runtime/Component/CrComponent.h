@@ -22,7 +22,7 @@ public:
 };
 
 class CrGameObject;
-class CrComponent : public CrObject, public IBehaviour
+class DLL_ClASS CrComponent : public CrObject, public IBehaviour
 {
 	friend class CrGameObject;
 private:
@@ -44,7 +44,7 @@ public:
 	
 	CrGameObject * GetGameObject();
 
-	//virtual int GetInstanceCountLimit();
+	virtual int GetInstanceCountLimit();
 
 
 	//void AddListen();
