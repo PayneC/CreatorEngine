@@ -114,8 +114,7 @@ void Scene1()
 }
 
 void Scene2()
-{
-	CrTexture * texture = CrTextureUtility::Instance()->LoadTexture("caodi.jpg");
+{	
 	CrTexture * texture2 = CrTextureUtility::Instance()->LoadTexture("SandyGround.tga");
 	CrTexture * textureN = CrTextureUtility::Instance()->LoadTexture("SandyGround_Normal.tga");
 
