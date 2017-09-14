@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)../../Binaries/Win32_Debug</OutDir>
+    <OutDir>$(SolutionDir)../../Lib</OutDir>
     <IntDir>$(SolutionDir)../../Temp\Win32_Debug</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

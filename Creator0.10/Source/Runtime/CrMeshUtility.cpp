@@ -3,6 +3,10 @@
 #include <string>
 #include <fstream>
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 CrMeshUtility::CrMeshUtility()
 {
 }
@@ -33,134 +37,91 @@ CrMesh *CrMeshUtility::CreateMeshCube()
 
 	GLfloat vertices[] =
 	{
-		-0.5,-0.5,0.5,
-		0.5,-0.5,0.5,
-		-0.5,0.5,0.5,
-		0.5,0.5,0.5,
-
-		-0.5,0.5,-0.5,
-		0.5,0.5,-0.5,
-		-0.5,-0.5,-0.5,
-		0.5,-0.5,-0.5,
-
-		-0.5,0.5,0.5,
-		0.5,0.5,0.5,
-		-0.5,0.5,-0.5,
-		0.5,0.5,-0.5,
-
-		-0.5,-0.5,-0.5,
-		-0.5,-0.5,0.5,
-		0.5,-0.5,0.5,
-		0.5,-0.5,-0.5,
-
-		0.5,-0.5,0.5,
-		0.5,0.5,0.5,
-		0.5,0.5,-0.5,
-		0.5,-0.5,-0.5,
-		
-		-0.5,-0.5,-0.5,
-		-0.5,0.5,-0.5,
-		-0.5,0.5,0.5,
-		-0.5,-0.5,0.5,
+		0.5, -0.5, 0.5,
+		-0.5, -0.5, 0.5,
+		0.5, 0.5, 0.5,
+		-0.5, 0.5, 0.5,
+		0.5, 0.5, -0.5,
+		-0.5, 0.5, -0.5,
+		0.5, -0.5, -0.5,
+		-0.5, -0.5, -0.5,
+		0.5, 0.5, 0.5,
+		-0.5, 0.5, 0.5,
+		0.5, 0.5, -0.5,
+		-0.5, 0.5, -0.5,
+		0.5, -0.5, -0.5,
+		0.5, -0.5, 0.5,
+		-0.5, -0.5, 0.5,
+		-0.5, -0.5, -0.5,
+		-0.5, -0.5, 0.5,
+		-0.5, 0.5, 0.5,
+		-0.5, 0.5, -0.5,
+		-0.5, -0.5, -0.5,
+		0.5, -0.5, -0.5,
+		0.5, 0.5, -0.5,
+		0.5, 0.5, 0.5,
+		0.5, -0.5, 0.5,
 	};
 
 	GLfloat normals[] =
 	{
-		0,0,1,
-		0,0,1,
-		0,0,1,
-		0,0,1,
-		0,1,0,
-		0,1,0,
-		0,0,-1,
-		0,0,-1,
-		0,1,0,
-		0,1,0,
-		0,0,-1,
-		0,0,-1,
-		0,-1,0,
-		0,-1,0,
-		0,-1,0,
-		0,-1,0,
-		1,0,0,
-		1,0,0,
-		1,0,0,
-		1,0,0,
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-	};
-	GLfloat tangents[] =
-	{
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-		-1,0,0,
-		0,0,-1,
-		0,0,-1,
-		0,0,-1,
-		0,0,-1,
-		0,0,1,
-		0,0,1,
-		0,0,1,
-		0,0,1,		
+		0, 0, 1,
+		0, 0, 1,
+		0, 0, 1,
+		0, 0, 1,
+		0, 1, 0,
+		0, 1, 0,
+		0, 0, -1,
+		0, 0, -1,
+		0, 1, 0,
+		0, 1, 0,
+		0, 0, -1,
+		0, 0, -1,
+		0, -1, 0,
+		0, -1, 0,
+		0, -1, 0,
+		0, -1, 0,
+		-1, 0, 0,
+		-1, 0, 0,
+		-1, 0, 0,
+		-1, 0, 0,
+		1, 0, 0,
+		1, 0, 0,
+		1, 0, 0,
+		1, 0, 0,
 	};
 
 	GLfloat uvs[] =
 	{
-		0,0,
-		1,0,
-	0,1,
-	1,1,
-	0,1,
-	1,1,
-	0,1,
-	1,1,
-	0,0,
-	1,0,
-	0,0,
-	1,0,
-	0,0,
-	0,1,
-	1,1,
-	1,0,
-	0,0,
-	0,1,
-	1,1,
-	1,0,
-	0,0,
-	0,1,
-	1,1,
-	1,0,
+		0, 0,
+		1, 0,
+		0, 1,
+		1, 1,
+		0, 1,
+		1, 1,
+		0, 1,
+		1, 1,
+		0, 0,
+		1, 0,
+		0, 0,
+		1, 0,
+		0, 0,
+		0, 1,
+		1, 1,
+		1, 0,
+		0, 0,
+		0, 1,
+		1, 1,
+		1, 0,
+		0, 0,
+		0, 1,
+		1, 1,
+		1, 0,
 	};
 
 	GLushort triangles[] =
 	{
-		2,3,0,
-		1,3,2,
-		5,4,8,
-		9,5,8,
-		7,6,10,
-		11,7,10,
-		14,13,12,
-		15,14,12,
-		18,17,16,
-		19,18,16,
-		22,21,20,
-		23,22,20,
+		0, 2, 3, 0, 3, 1, 8, 4, 5, 8, 5, 9, 10, 6, 7, 10, 7, 11, 12, 13, 14, 12, 14, 15, 16, 17, 18, 16, 18, 19, 20, 21, 22, 20, 22, 23,
 	};
 
 	GLuint VAO = 0;
@@ -169,34 +130,28 @@ CrMesh *CrMeshUtility::CreateMeshCube()
 
 	size_t verticeSize = sizeof(vertices);
 	size_t normalSize = sizeof(normals);
-	size_t tangentSize = sizeof(tangents);
 	size_t uvSize = sizeof(uvs);
 
 	size_t triangleSize = sizeof(triangles);
 
-	//�������㻺�����
 	//VertexBufferObject
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, verticeSize + normalSize + tangentSize + uvSize, NULL, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, verticeSize + normalSize + uvSize, NULL, GL_STATIC_DRAW);
 
 	glBufferSubData(GL_ARRAY_BUFFER, 0, verticeSize, vertices);
 	glBufferSubData(GL_ARRAY_BUFFER, verticeSize, normalSize, normals);
-	glBufferSubData(GL_ARRAY_BUFFER, verticeSize + normalSize, tangentSize, triangles);
-	glBufferSubData(GL_ARRAY_BUFFER, verticeSize + normalSize + tangentSize, uvSize, uvs);
+	glBufferSubData(GL_ARRAY_BUFFER, verticeSize + normalSize, uvSize, uvs);
 
-	//������������
 	//ElementBufferObject
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, triangleSize, triangles, GL_STATIC_DRAW);
 
-	//���������������
 	//VertexArrayObject
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
-	//���ö�������(���������ڶ��㻺�棩
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glEnableVertexAttribArray(0); //attribute 0. No particular reason for 0, but must match the layout in the shader.
 	glVertexAttribPointer(
@@ -218,16 +173,6 @@ CrMesh *CrMeshUtility::CreateMeshCube()
 		(void *)verticeSize // array buffer offset
 		);
 
-	glEnableVertexAttribArray(3); //attribute 0. No particular reason for 0, but must match the layout in the shader.
-	glVertexAttribPointer(
-		3,								   // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		3,								   // size
-		GL_FLOAT,						   // type
-		GL_FALSE,						   // normalized?
-		0,								   // stride
-		(void *)(verticeSize + normalSize) // array buffer offset
-		);
-
 	glEnableVertexAttribArray(2); //attribute 0. No particular reason for 0, but must match the layout in the shader.
 	glVertexAttribPointer(
 		2,												 // attribute 0. No particular reason for 0, but must match the layout in the shader.
@@ -235,10 +180,9 @@ CrMesh *CrMeshUtility::CreateMeshCube()
 		GL_FLOAT,										 // type
 		GL_FALSE,										 // normalized?
 		0,												 // stride
-		(void *)(verticeSize + normalSize + tangentSize) // array buffer offset
+		(void *)(verticeSize + normalSize) // array buffer offset
 		);
 
-	//��������(�����������������棩
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
 	glBindVertexArray(0);
@@ -354,4 +298,11 @@ CrMesh *CrMeshUtility::CreateMeshQuad()
 	m_BuiltinMeshs[CR_MESH_TYPE_QUAD]->SetName("cube");
 
 	return m_BuiltinMeshs[CR_MESH_TYPE_QUAD];
+}
+
+CrMesh *CrMeshUtility::CreateMesh(const char* filename)
+{
+	Assimp::Importer _importer;
+	const aiScene* pScene = _importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);
+	return NULL;
 }

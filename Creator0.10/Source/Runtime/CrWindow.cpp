@@ -20,6 +20,7 @@ bool CrWindow::Init()
 		return true;
 	}
 	glfwTerminate();
+
 	return false;
 }
 

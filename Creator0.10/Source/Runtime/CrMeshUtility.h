@@ -23,6 +23,7 @@ public:
 	~CrMeshUtility();
 
 	static CrMesh* CreateMesh(EPresetMeshType meshType);
+	static CrMesh* CreateMesh(const char* filename);
 private:
 	CrMesh* CreateMeshCube();
 	CrMesh* CreateMeshQuad();

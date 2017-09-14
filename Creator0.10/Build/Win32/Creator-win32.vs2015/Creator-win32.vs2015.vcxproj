@@ -149,7 +149,7 @@
     <OutDir>$(SolutionDir)../../Binaries\Win32_Debug</OutDir>
     <IntDir>$(SolutionDir)../../Temp\Win32_Debug</IntDir>
     <IncludePath>$(SolutionDir)../../Source/ThirdParty/Cg/include;$(SolutionDir)../../Source/ThirdParty/freetype2/include/freetype2/freetype;$(SolutionDir)../../Source/ThirdParty/freetype2/include/freetype2;$(SolutionDir)../../Source/ThirdParty/freetype2/include;$(SolutionDir)../../Source/ThirdParty/glew/include/GL;$(SolutionDir)../../Source/ThirdParty/glfw3/include/GLFW;$(SolutionDir)../../Source/ThirdParty/glm/glm;$(SolutionDir)../../Source/ThirdParty/SOIL/include;$(SolutionDir)../../Source/ThirdParty/lua\src;$(SolutionDir)../../Source/Runtime;$(SolutionDir)../../Source/Runtime/Common;$(SolutionDir)../../Source/Runtime/Lua;$(SolutionDir)../../Source/Runtime/UI;$(SolutionDir)../../Source/Runtime/Component;$(SolutionDir)../../Source/ThirdParty;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)../../Source/ThirdParty/Cg/lib;$(SolutionDir)../../Source/ThirdParty/SOIL/lib;$(SolutionDir)../../Source/ThirdParty/glfw3/lib-vc2013;$(SolutionDir)../../Source/ThirdParty/freetype2/lib;$(SolutionDir)../../Source/ThirdParty/glew/lib;$(SolutionDir)../../Binaries/Win32_Debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)../../Source/ThirdParty/Cg/lib;$(SolutionDir)../../Source/ThirdParty/SOIL/lib;$(SolutionDir)../../Source/ThirdParty/glfw3/lib-vc2013;$(SolutionDir)../../Source/ThirdParty/freetype2/lib;$(SolutionDir)../../Source/ThirdParty/glew/lib;$(SolutionDir)../../Binaries/Win32_Debug;$(SolutionDir)../../Lib;$(LibraryPath)</LibraryPath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -168,15 +168,18 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;USE_GLSL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;USE_GLSL;DLL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StructMemberAlignment>16Bytes</StructMemberAlignment>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;glew32.lib;OpenGL32.Lib;freetype.lib;SOIL.lib;legacy_stdio_definitions.lib;Lua.lib;tinyxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;glew32.lib;OpenGL32.Lib;freetype.lib;SOIL.lib;legacy_stdio_definitions.lib;Lua.lib;tinyxml2.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <ImportLibrary>$(SolutionDir)../../Lib/$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

@@ -12,6 +12,15 @@ Payne
 #include <string>
 #include <CrObject.h>
 
+#include <vector>
+
+struct Vertex
+{
+	glm::vec3 Position;
+	glm::vec3 Normal;
+	glm::vec2 TexCoords;
+};
+
 class DLL_ClASS CrMesh : public CrObject
 {
 	friend class CrMeshUtility;
@@ -26,9 +35,11 @@ public:
 	EasyGetSet(GLuint, m_uVBO, VBO);
 	EasyGetSet(GLuint, m_uEBO, EBO);
 	EasyGetSet(GLuint, m_uElementCount, ElementCount);
-private:
-	
 
+	void SetupMesh();
+private:
+	std::vector<Vertex> vertices;
+	std::vector<GLuint> indices;
 };
 
 
