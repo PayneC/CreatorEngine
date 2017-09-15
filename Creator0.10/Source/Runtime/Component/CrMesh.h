@@ -8,7 +8,6 @@ Payne
 #define _CREATOR_MESH_H
 
 #include <CrDefine.h>
-#include <Component\CrComponent.h>
 #include <string>
 #include <CrObject.h>
 

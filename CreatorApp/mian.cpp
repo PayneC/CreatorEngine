@@ -140,6 +140,12 @@ void Scene2()
 	meshRender->GetMaterial()->SetpMainTexture(texture2);
 	meshRender->GetMaterial()->SetpNormalTexture(textureN);
 
+	CrGameObject * go3 = CrMeshUtility::LoadModel("nanosuit.obj");
+	pScene->AddChild(go3);
+	go2->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
+	go2->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
+	go2->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
+
 	CrCamera * pCamera = CrGameObject::CreateGameObject<CrCamera>("Camera");
 	pScene->AddChild(pCamera);
 	pCamera->GetTransform()->SetPosition(glm::fvec3(0.f, 1.f, 3.0f));

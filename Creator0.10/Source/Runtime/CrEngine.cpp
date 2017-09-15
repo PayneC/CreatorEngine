@@ -164,9 +164,9 @@ bool CrEngine::Init()
 	//正反面
 	//glFrontFace(GL_CCW);
 	//裁剪
-	//glCullFace(GL_BACK);
+	glCullFace(GL_BACK);
 	//开启
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 	//渲染模式
 	//glPolygonMode(GL_FRONT, GL_LINE);
 	m_isInit = true;

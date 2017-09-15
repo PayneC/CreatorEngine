@@ -1,11 +1,8 @@
 #include "CrMeshUtility.h"
+#include "CrShaderUtility.h"
 
 #include <string>
 #include <fstream>
-
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
 
 CrMeshUtility::CrMeshUtility()
 {
@@ -300,9 +297,79 @@ CrMesh *CrMeshUtility::CreateMeshQuad()
 	return m_BuiltinMeshs[CR_MESH_TYPE_QUAD];
 }
 
-CrMesh *CrMeshUtility::CreateMesh(const char* filename)
+CrGameObject *CrMeshUtility::LoadModel(const char* filename)
 {
 	Assimp::Importer _importer;
 	const aiScene* pScene = _importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);
-	return NULL;
+
+	CrGameObject* _go = processNode(pScene->mRootNode, pScene);
+	return _go;
+}
+
+CrGameObject* CrMeshUtility::processNode(aiNode *node, const aiScene *scene)
+{	
+	CrGameObject* _go = CrGameObject::CreateGameObject<CrGameObject>("a");
+	for (int i = 0; i < node->mNumMeshes; ++i)
+	{
+		aiMesh * mesh = scene->mMeshes[node->mMeshes[i]];
+		CrGameObject* _goMesh = processMesh(mesh, scene);
+		_go->AddChild(_goMesh);
+		_goMesh->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
+		_goMesh->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
+		_goMesh->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
+	}
+
+	for (int i = 0; i < node->mNumChildren; ++i)
+	{
+		CrGameObject * _goChild = processNode(node->mChildren[i], scene);
+		_go->AddChild(_goChild);
+		_goChild->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
+		_goChild->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
+		_goChild->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
+	}
+
+	return _go;
+}
+
+CrGameObject* CrMeshUtility::processMesh(aiMesh *mesh, const aiScene *scene)
+{
+	CrGameObject* _go = CrGameObject::CreateGameObject<CrGameObject>("a");
+	CrMeshRender * meshRender = _go->AddComponent<CrMeshRender>();	
+
+	CrMesh * _mesh = new CrMesh();
+	CrMaterial * material = CrMaterial::CreateCrMaterial();	
+	CrShader * shader = CrShaderUtility::CreateShader("VertexLit.vert", "VertexLit.frag");
+	material->SetShader(shader);
+	meshRender->SetMaterial(material);
+	meshRender->SetMesh(_mesh);
+
+	material->SetColor(glm::vec4(1, 1, 1, 1));
+
+	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
+	{
+		Vertex _vertex;
+		_vertex.Position.x = mesh->mVertices[i].x;
+		_vertex.Position.y = mesh->mVertices[i].y;
+		_vertex.Position.z = mesh->mVertices[i].z;
+
+		_vertex.Normal.x = mesh->mNormals[i].x;
+		_vertex.Normal.y = mesh->mNormals[i].y;
+		_vertex.Normal.z = mesh->mNormals[i].z;
+
+		_vertex.TexCoords.x = mesh->mTextureCoords[0][i].x;
+		_vertex.TexCoords.y = mesh->mTextureCoords[0][i].y;
+
+		_mesh->vertices.push_back(_vertex);
+	}
+
+	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+	{
+		aiFace face = mesh->mFaces[i];
+		for (unsigned int j = 0; j < face.mNumIndices; j++)
+			_mesh->indices.push_back(face.mIndices[j]);
+	}
+	
+	_mesh->SetupMesh();
+
+	return _go;
 }

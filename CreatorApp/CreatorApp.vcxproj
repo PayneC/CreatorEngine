@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)../../Source/Runtime;$(SolutionDir)../../Source/Runtime/Component;$(SolutionDir)../../Source/Runtime/UI;$(SolutionDir)../../Source/ThirdParty/glm/glm;$(SolutionDir)../../Source/ThirdParty/glfw3/include/GLFW;$(SolutionDir)../../Source/ThirdParty/glew/include/GL;$(SolutionDir)../../Source/ThirdParty/lua\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)../../Source/Runtime;$(SolutionDir)../../Source/Runtime/Component;$(SolutionDir)../../Source/Runtime/UI;$(SolutionDir)../../Source/ThirdParty/glm/glm;$(SolutionDir)../../Source/ThirdParty/glfw3/include/GLFW;$(SolutionDir)../../Source/ThirdParty/glew/include/GL;$(SolutionDir)../../Source/ThirdParty/lua\src;$(SolutionDir)../../Source/ThirdParty;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)../../Binaries\Win32_Debug</OutDir>
     <IntDir>$(SolutionDir)../../Temp\Win32_Debug</IntDir>
     <LibraryPath>$(SolutionDir)../../Binaries\Win32_Debug;$(SolutionDir)../../Lib;$(LibraryPath)</LibraryPath>
@@ -91,7 +91,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;SWIG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>

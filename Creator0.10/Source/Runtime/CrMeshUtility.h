@@ -16,6 +16,11 @@ Payne
 #include "CrDefine.h"
 #include "CrSingleton.h"
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include "CrGameObject.h"
+
 class DLL_ClASS CrMeshUtility : public CrSingleton<CrMeshUtility>
 {
 public:
@@ -23,7 +28,9 @@ public:
 	~CrMeshUtility();
 
 	static CrMesh* CreateMesh(EPresetMeshType meshType);
-	static CrMesh* CreateMesh(const char* filename);
+	static CrGameObject* LoadModel(const char* filename);
+	static CrGameObject* processNode(aiNode *node, const aiScene *scene);
+	static CrGameObject* processMesh(aiMesh *mesh, const aiScene *scene);
 private:
 	CrMesh* CreateMeshCube();
 	CrMesh* CreateMeshQuad();
