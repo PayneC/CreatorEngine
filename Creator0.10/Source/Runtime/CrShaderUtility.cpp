@@ -120,9 +120,9 @@ GLuint CrShaderUtility::CompileShader(const char * vertexFile, const char * frag
 bool CrShaderUtility::Init()
 {
 	m_shaders = std::map<std::string, GLuint>();
-	std::string shaderName = "testShader";
-	GLuint shader = CompileShader("testShader.vert", "testShader.frag");
-	m_shaders.insert(std::make_pair(shaderName, shader));
+	//std::string shaderName = "testShader";
+	//GLuint shader = CompileShader("testShader.vert", "testShader.frag");
+	//m_shaders.insert(std::make_pair(shaderName, shader));
 	return true;
 }
 

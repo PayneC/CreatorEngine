@@ -68,7 +68,7 @@ void CrMeshRender::Draw(glm::fmat4 & mvp, glm::vec3 & eye, glm::fmat4 & m, glm::
 		glUniform1i(tex1, 1);
 	}
 
-	glDrawElements(GL_TRIANGLES, m_pMesh->GetElementCount() / sizeof(GLushort), GL_UNSIGNED_SHORT, NULL);//GL_TRIANGLE_STRIP
+	glDrawElements(GL_TRIANGLES, m_pMesh->GetElementCount(), GL_UNSIGNED_INT, NULL);//GL_TRIANGLE_STRIP
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindVertexArray(0);
