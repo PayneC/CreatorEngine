@@ -11,6 +11,14 @@ Payne
 #include "CrDefine.h"
 #include <CrSingleton.h>
 
+// GLFW
+#ifdef _WIN32
+#undef APIENTRY
+#define GLFW_EXPOSE_NATIVE_WIN32
+#define GLFW_EXPOSE_NATIVE_WGL
+#endif
+#include <glfw3native.h>
+
 class DLL_ClASS CrWindow : public CrSingleton<CrWindow>
 {
 public:
@@ -20,10 +28,13 @@ public:
 public:
 	bool Init();
 	void Update();
+#ifdef _WIN32
+	HWND GetWin32WindowHWND();
+#endif
 
-	EasyGet(GLFWwindow*, m_pEngineWindow, EngineWindow);
 	EasyGetSetFuncOnly(glm::uvec2, m_v2WindowSize, WindowSize);
 	EasyGetSetFuncOnly(std::string, m_strWindowName, WindowName);
+	EasyGet(GLFWwindow*, m_pEngineWindow, EngineWindow);
 
 private:
 	

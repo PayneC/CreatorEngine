@@ -371,5 +371,9 @@ CrGameObject* CrMeshUtility::processMesh(aiMesh *mesh, const aiScene *scene)
 	
 	_mesh->SetupMesh();
 
+	//aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+
+
+
 	return _go;
 }

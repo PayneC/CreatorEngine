@@ -1,5 +1,6 @@
 #include "CrWindow.h"
 
+
 CrWindow::CrWindow()
 : m_pEngineWindow(NULL)
 , m_v2WindowSize(1366,768)
@@ -46,5 +47,12 @@ void CrWindow::SetWindowName(std::string name)
 
 void CrWindow::Update()
 {
-	glfwSwapBuffers(m_pEngineWindow);
+	glfwSwapBuffers(m_pEngineWindow);	
 }
+
+#ifdef _WIN32
+HWND CrWindow::GetWin32WindowHWND()
+{
+	return glfwGetWin32Window(m_pEngineWindow);
+}
+#endif

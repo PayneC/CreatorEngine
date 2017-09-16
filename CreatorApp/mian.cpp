@@ -132,7 +132,7 @@ void Scene2()
 	*/
 	CrGameObject * go2 = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_CUBE, "cube");
 	pScene->AddChild(go2);
-	go2->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
+	go2->GetTransform()->SetPosition(glm::vec3(0, 15, 0));
 	go2->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
 	go2->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
 	go2->AddComponent<test>();
@@ -148,9 +148,10 @@ void Scene2()
 
 	CrCamera * pCamera = CrGameObject::CreateGameObject<CrCamera>("Camera");
 	pScene->AddChild(pCamera);
-	pCamera->GetTransform()->SetPosition(glm::fvec3(0.f, 1.f, 3.0f));
+	pCamera->GetTransform()->SetPosition(glm::fvec3(0.f, 15.f, 3.0f));
 	pCamera->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
-	pCamera->GetTransform()->LookAt(go2);
+	pCamera->GetTransform()->SetLocalRotation(glm::vec3(1, 1, 1));
+	//pCamera->GetTransform()->LookAt(go2);
 	pCamera->AddComponent<testCamera>();
 
 	CrEngine::Instance()->Start(pScene);
