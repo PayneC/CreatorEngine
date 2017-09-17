@@ -37,6 +37,10 @@ void CrMesh::SetupMesh()
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
 		(GLvoid*)offsetof(Vertex, TexCoords));
+	// …Ë÷√«–œﬂ÷∏’Î
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+		(GLvoid*)offsetof(Vertex, Tangent));
 
 	glBindVertexArray(0);
 

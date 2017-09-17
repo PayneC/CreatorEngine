@@ -301,7 +301,7 @@ CrMesh *CrMeshUtility::CreateMeshQuad()
 CrGameObject *CrMeshUtility::LoadModel(const char* filename)
 {
 	Assimp::Importer _importer;
-	const aiScene* pScene = _importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);
+	const aiScene* pScene = _importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
 	CrGameObject* _go = processNode(pScene->mRootNode, pScene);
 	return _go;
@@ -339,7 +339,7 @@ CrGameObject* CrMeshUtility::processMesh(aiMesh *mesh, const aiScene *scene)
 
 	CrMesh * _mesh = new CrMesh();
 	CrMaterial * material = CrMaterial::CreateCrMaterial();	
-	CrShader * shader = CrShaderUtility::CreateShader("VertexLit.vert", "VertexLit.frag");
+	CrShader * shader = CrShaderUtility::CreateShader("Blinn-Phong.vert", "Blinn-Phong.frag");
 	material->SetShader(shader);
 	meshRender->SetMaterial(material);
 	meshRender->SetMesh(_mesh);
@@ -356,6 +356,10 @@ CrGameObject* CrMeshUtility::processMesh(aiMesh *mesh, const aiScene *scene)
 		_vertex.Normal.x = mesh->mNormals[i].x;
 		_vertex.Normal.y = mesh->mNormals[i].y;
 		_vertex.Normal.z = mesh->mNormals[i].z;
+
+		_vertex.Tangent.x = mesh->mTangents[i].x;
+		_vertex.Tangent.y = mesh->mTangents[i].y;
+		_vertex.Tangent.z = mesh->mTangents[i].z;
 
 		_vertex.TexCoords.x = mesh->mTextureCoords[0][i].x;
 		_vertex.TexCoords.y = mesh->mTextureCoords[0][i].y;		
@@ -380,11 +384,24 @@ CrGameObject* CrMeshUtility::processMesh(aiMesh *mesh, const aiScene *scene)
 		const char * path = str.C_Str();
 		CrTexture * texture = CrTextureUtility::Instance()->LoadTexture(path);
 		material->SetpMainTexture(texture);
-
+		
+		str.Clear();
 		_material->GetTexture(aiTextureType_SPECULAR, 0, &str);
-		path = str.C_Str();
-		texture = CrTextureUtility::Instance()->LoadTexture(path);
-		material->SetpSpecularTexture(texture);
+		if (str.length > 0)
+		{
+			path = str.C_Str();
+			texture = CrTextureUtility::Instance()->LoadTexture(path);
+			material->SetpSpecularTexture(texture);
+		}
+				
+		str.Clear();
+		_material->GetTexture(aiTextureType_HEIGHT, 0, &str);
+		if (str.length > 0)
+		{
+			path = str.C_Str();
+			texture = CrTextureUtility::Instance()->LoadTexture(path);
+			material->SetpNormalTexture(texture);
+		}
 	}	
 
 

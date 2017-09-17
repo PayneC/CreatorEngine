@@ -1,6 +1,7 @@
 #include "CrEvent.h"
 #include "CrEngine.h"
 #include <glfw3.h>
+#include <glm.hpp>
 
 void KeyCallBack(GLFWwindow* pWindow, int keyCode, int scanCode, int action, int Crds)
 {
@@ -10,7 +11,7 @@ void KeyCallBack(GLFWwindow* pWindow, int keyCode, int scanCode, int action, int
 void CursorPosCallback(GLFWwindow* pWindow, double xPos, double yPos)
 {
 	//printf("%lf-%lf \n", xPos, yPos);
-	CrEngine::Instance()->ProMessage(pWindow, CR_EVENT_MOUSE_MOVE, xPos, yPos);
+	CrEngine::Instance()->ProMessage(pWindow, CR_EVENT_MOUSE_MOVE, xPos, yPos);		
 }
 
 void CruseButtonCallback(GLFWwindow* pWindow, int keyCode, int action, int Crds)
@@ -42,13 +43,15 @@ CrEvent::~CrEvent()
 bool CrEvent::Init()
 {
 	GLFWwindow * pWindow = CrWindow::Instance()->GetEngineWindow();
-	glfwSetInputMode(pWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	glfwSetInputMode(pWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 	glfwSetKeyCallback(pWindow, KeyCallBack);
 	glfwSetCursorPosCallback(pWindow, CursorPosCallback);
 	glfwSetMouseButtonCallback(pWindow, CruseButtonCallback);
 
-	glfwGetCursorPos(pWindow, &m_mousePosX, &m_mousePosY);
-
+	//glfwGetCursorPos(pWindow, &m_mousePosX, &m_mousePosY);	
+	glm::uvec2 _pos = CrWindow::Instance()->GetWindowSize();
+	m_mousePosX = _pos.x * 0.5;
+	m_mousePosY = _pos.y * 0.5;
 	return true;
 }
 
@@ -70,8 +73,10 @@ void CrEvent::ProMessage(GLint64 msg, GLint64 wParam, GLint64 lParam)
 			b = lParam - m_mousePosY;
 		}
 
-		m_mousePosX = wParam;
-		m_mousePosY = lParam;
+		//m_mousePosX = wParam;
+		//m_mousePosY = lParam;
+		GLFWwindow * pWindow = CrWindow::Instance()->GetEngineWindow();
+		glfwSetCursorPos(pWindow, m_mousePosX, m_mousePosY);
 	}
 	else
 	{

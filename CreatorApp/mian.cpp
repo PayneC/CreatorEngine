@@ -123,7 +123,7 @@ void Scene2()
 	CrGameObject * go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_QUAD, "center");
 	pScene->AddChild(go);
 	go->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-	go->GetTransform()->SetLocalScale(glm::vec3(10, 1, 10));
+	go->GetTransform()->SetLocalScale(glm::vec3(50, 1, 50));
 	go->GetTransform()->SetRotation(glm::vec3(-90, 0, 0));
 	CrMeshRender * meshRender = go->GetComponent<CrMeshRender>();
 	meshRender->GetMaterial()->SetColor(glm::vec4(1, 1, 1, 1));
@@ -141,7 +141,7 @@ void Scene2()
 
 	CrGameObject * go3 = CrMeshUtility::LoadModel("nanosuit.obj");
 	pScene->AddChild(go3);
-	go3->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	go3->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	go3->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
 	go3->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
 

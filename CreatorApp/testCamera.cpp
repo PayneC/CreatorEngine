@@ -31,7 +31,7 @@ void testCamera::Update()
 
 void testCamera::EventCallback(GLint64 msg, GLint64 wParam, GLint64 lParam)
 {
-	float _speed = 5.f;
+	float _speed = 20.f;
 	if (msg == CR_EVENT_KEY && (wParam == GLFW_REPEAT || wParam == GLFW_PRESS))
 	{
 		glm::vec3 _pos;
