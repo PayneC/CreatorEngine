@@ -119,7 +119,7 @@ void Scene2()
 	CrTexture * textureN = CrTextureUtility::Instance()->LoadTexture("SandyGround_Normal.tga");
 
 	CrScene * pScene = CrGameObject::CreateGameObject<CrScene>("test01");
-	/*
+	
 	CrGameObject * go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_QUAD, "center");
 	pScene->AddChild(go);
 	go->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
@@ -127,24 +127,24 @@ void Scene2()
 	go->GetTransform()->SetRotation(glm::vec3(-90, 0, 0));
 	CrMeshRender * meshRender = go->GetComponent<CrMeshRender>();
 	meshRender->GetMaterial()->SetColor(glm::vec4(1, 1, 1, 1));
-	meshRender->GetMaterial()->SetpMainTexture(texture);
+	meshRender->GetMaterial()->SetpMainTexture(texture2);
 
-	*/
 	CrGameObject * go2 = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_CUBE, "cube");
 	pScene->AddChild(go2);
-	go2->GetTransform()->SetPosition(glm::vec3(0, 15, 0));
+	go2->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
 	go2->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
 	go2->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
 	go2->AddComponent<test>();
-	CrMeshRender * meshRender = go2->GetComponent<CrMeshRender>();
+	meshRender = go2->GetComponent<CrMeshRender>();
 	meshRender->GetMaterial()->SetpMainTexture(texture2);
 	meshRender->GetMaterial()->SetpNormalTexture(textureN);
 
 	CrGameObject * go3 = CrMeshUtility::LoadModel("nanosuit.obj");
 	pScene->AddChild(go3);
-	go2->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
-	go2->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
-	go2->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
+	go3->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	go3->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
+	go3->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
+
 
 	CrCamera * pCamera = CrGameObject::CreateGameObject<CrCamera>("Camera");
 	pScene->AddChild(pCamera);

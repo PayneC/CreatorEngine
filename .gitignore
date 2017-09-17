@@ -34,3 +34,4 @@
 *.suo
 *.VC.db
 Temp/
+*.ipch

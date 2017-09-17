@@ -26,6 +26,7 @@ public:
 	EasyGet(glm::vec4 , m_dColor, Color);
 	EasyGetSet(CrTexture *, m_pMainTexture, pMainTexture);
 	EasyGetSet(CrTexture *, m_pNormalTexture, pNormalTexture);
+	EasyGetSet(CrTexture *, m_pSpecularTexture, pSpecularTexture);
 	EasyGetSet(glm::vec2, m_v2mainTextureOffset, mainTextureOffset);
 	EasyGetSet(glm::vec2, m_v2mainTextureScale, mainTextureScale);
 

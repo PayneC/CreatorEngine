@@ -11,7 +11,7 @@ testCamera::testCamera()
 
 testCamera::~testCamera()
 {
-
+	
 }
 
 void testCamera::Awake()
@@ -32,7 +32,7 @@ void testCamera::Update()
 void testCamera::EventCallback(GLint64 msg, GLint64 wParam, GLint64 lParam)
 {
 	float _speed = 5.f;
-	if (msg == CR_EVENT_KEY && wParam == GLFW_REPEAT)
+	if (msg == CR_EVENT_KEY && (wParam == GLFW_REPEAT || wParam == GLFW_PRESS))
 	{
 		glm::vec3 _pos;
 		glm::vec3 _move;
@@ -63,6 +63,10 @@ void testCamera::EventCallback(GLint64 msg, GLint64 wParam, GLint64 lParam)
 			_move = GetGameObject()->GetTransform()->GetRight();
 			_dt = CrTime::Instance()->GetDelateTime();
 			GetGameObject()->GetTransform()->SetPosition(_pos + _move  * _dt * _speed);
+			break;
+
+		case GLFW_KEY_ESCAPE:
+			CrEngine::Instance()->Stop();
 			break;
 		default:
 			break;

@@ -1,5 +1,6 @@
 #include "CrMeshUtility.h"
 #include "CrShaderUtility.h"
+#include "CrTextureUtility.h"
 
 #include <string>
 #include <fstream>
@@ -357,7 +358,7 @@ CrGameObject* CrMeshUtility::processMesh(aiMesh *mesh, const aiScene *scene)
 		_vertex.Normal.z = mesh->mNormals[i].z;
 
 		_vertex.TexCoords.x = mesh->mTextureCoords[0][i].x;
-		_vertex.TexCoords.y = mesh->mTextureCoords[0][i].y;
+		_vertex.TexCoords.y = mesh->mTextureCoords[0][i].y;		
 
 		_mesh->vertices.push_back(_vertex);
 	}
@@ -371,8 +372,20 @@ CrGameObject* CrMeshUtility::processMesh(aiMesh *mesh, const aiScene *scene)
 	
 	_mesh->SetupMesh();
 
-	//aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+	if (mesh->mMaterialIndex >= 0)
+	{
+		aiMaterial* _material = scene->mMaterials[mesh->mMaterialIndex];
+		aiString str;
+		_material->GetTexture(aiTextureType_DIFFUSE, 0, &str);
+		const char * path = str.C_Str();
+		CrTexture * texture = CrTextureUtility::Instance()->LoadTexture(path);
+		material->SetpMainTexture(texture);
 
+		_material->GetTexture(aiTextureType_SPECULAR, 0, &str);
+		path = str.C_Str();
+		texture = CrTextureUtility::Instance()->LoadTexture(path);
+		material->SetpSpecularTexture(texture);
+	}	
 
 
 	return _go;

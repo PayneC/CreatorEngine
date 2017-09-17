@@ -173,6 +173,7 @@ void CrGameObject::RemoveAllComponent()
 
 	for (; iter != iterEnd; ++iter)
 	{
+		(*iter)->Destroy();
 		(*iter)->Release();
 	}
 

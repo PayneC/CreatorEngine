@@ -162,7 +162,7 @@ bool CrEngine::Init()
 	//线宽
 	glLineWidth(2.f);
 	//正反面
-	//glFrontFace(GL_CCW);
+	glFrontFace(GL_CCW);
 	//裁剪
 	glCullFace(GL_BACK);
 	//开启

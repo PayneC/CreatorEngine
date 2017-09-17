@@ -27,7 +27,16 @@ CrEvent::CrEvent()
 
 CrEvent::~CrEvent()
 {
+	std::vector <EventListenEntry *>::iterator iter = m_eventListenEntrys.begin();
+	std::vector <EventListenEntry *>::iterator iterEnd = m_eventListenEntrys.end();
 
+	EventListenEntry * entry = NULL;
+	for (; iter != iterEnd; ++iter)
+	{
+		entry = (*iter);		
+		delete(entry);
+	}
+	m_eventListenEntrys.clear();
 }
 
 bool CrEvent::Init()
@@ -112,6 +121,7 @@ void CrEvent::RemoveListen(CrObject * object, EventFunc func)
 		if (entry->object == object && entry->func == func)
 		{
 			m_eventListenEntrys.erase(iter);
+			delete(entry);
 			break;
 		}
 	}

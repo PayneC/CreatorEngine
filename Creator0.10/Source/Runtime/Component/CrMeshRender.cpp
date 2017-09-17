@@ -42,11 +42,11 @@ void CrMeshRender::Draw(glm::fmat4 & mvp, glm::vec3 & eye, glm::fmat4 & m, glm::
 	GLuint m_uBaseColor = glGetUniformLocation(shader->GetShaderID(), "vBaseColor");
 	glUniform4fv(m_uBaseColor, 1, glm::value_ptr(material->GetColor()));
 
-	GLuint m_vLightDir = glGetUniformLocation(shader->GetShaderID(), "vLightPos");
-	glUniform3fv(m_vLightDir, 1, glm::value_ptr(_light));
+	GLuint vLightPos = glGetUniformLocation(shader->GetShaderID(), "vLightPos");
+	glUniform3fv(vLightPos, 1, glm::value_ptr(eye));
 
-	GLuint m_vEyeDir = glGetUniformLocation(shader->GetShaderID(), "vEyePos");
-	glUniform3fv(m_vEyeDir, 1, glm::value_ptr(eye));
+	GLuint vEyePos = glGetUniformLocation(shader->GetShaderID(), "vEyePos");
+	glUniform3fv(vEyePos, 1, glm::value_ptr(eye));
 
 	glBindVertexArray(m_pMesh->GetVAO());
 
@@ -60,12 +60,21 @@ void CrMeshRender::Draw(glm::fmat4 & mvp, glm::vec3 & eye, glm::fmat4 & m, glm::
 	}
 
 	CrTexture * textureN = material->GetpNormalTexture();
-	if (texture != NULL)
+	if (textureN != NULL)
 	{
 		GLuint tex1 = glGetUniformLocation(shader->GetShaderID(), "normal");		
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, texture->m_dTextureId);
+		glBindTexture(GL_TEXTURE_2D, textureN->m_dTextureId);
 		glUniform1i(tex1, 1);
+	}
+
+	CrTexture * textureS = material->GetpSpecularTexture();
+	if (textureS != NULL)
+	{
+		GLuint tex2 = glGetUniformLocation(shader->GetShaderID(), "specular");
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, textureS->m_dTextureId);
+		glUniform1i(tex2, 2);
 	}
 
 	glDrawElements(GL_TRIANGLES, m_pMesh->GetElementCount(), GL_UNSIGNED_INT, NULL);//GL_TRIANGLE_STRIP
