@@ -7,6 +7,7 @@ void KeyCallBack(GLFWwindow* pWindow, int keyCode, int scanCode, int action, int
 {
 	printf("%d-%d-%d-%d \n", keyCode, scanCode, action, Crds);
 	CrEngine::Instance()->ProMessage(pWindow, CR_EVENT_KEY, action, keyCode);
+
 }
 void CursorPosCallback(GLFWwindow* pWindow, double xPos, double yPos)
 {
@@ -17,7 +18,7 @@ void CursorPosCallback(GLFWwindow* pWindow, double xPos, double yPos)
 void CruseButtonCallback(GLFWwindow* pWindow, int keyCode, int action, int Crds)
 {
 	printf("%d-%d-%d \n", keyCode, action, Crds);
-	CrEngine::Instance()->ProMessage(pWindow, CR_EVENT_MOUSE_BUTTON, action, keyCode);
+	CrEngine::Instance()->ProMessage(pWindow, CR_EVENT_MOUSE_BUTTON, action, keyCode);	
 }
 
 CrEvent::CrEvent()
@@ -73,8 +74,8 @@ void CrEvent::ProMessage(GLint64 msg, GLint64 wParam, GLint64 lParam)
 			b = lParam - m_mousePosY;
 		}
 
-		//m_mousePosX = wParam;
-		//m_mousePosY = lParam;
+		m_mousePosX = wParam;
+		m_mousePosY = lParam;
 		GLFWwindow * pWindow = CrWindow::Instance()->GetEngineWindow();
 		glfwSetCursorPos(pWindow, m_mousePosX, m_mousePosY);
 	}

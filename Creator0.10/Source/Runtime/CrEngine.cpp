@@ -1,6 +1,7 @@
 #include "CrEngine.h"
 #include <common/CrFontLab.h>
-
+#include <imgui.h>
+#include "imgui_impl_glfw_gl3.h"
 wchar_t * wcstr = NULL;
 
 
@@ -181,13 +182,32 @@ void CrEngine::OnEnter()
 
 }
 
+void DrawSceneTree(CrGameObject * _go)
+{
+	if (ImGui::TreeNode(_go->GetName().c_str()))
+	{
+		std::vector<CrGameObject * > _childs = _go->GetChildren();
+		std::vector<CrGameObject * >::iterator iter = _childs.begin();
+		std::vector<CrGameObject * >::iterator iterEnd = _childs.end();
+		for (; iter != iterEnd; ++iter)
+		{
+			DrawSceneTree((*iter));
+		}
+		ImGui::TreePop();
+	}
+}
+
 int CrEngine::MainLoop()
 {
+	ImGui_ImplGlfwGL3_Init(CrWindow::Instance()->GetEngineWindow(), false);
+
 	while (m_isRun)
 	{
 		CrTime::Instance()->Update();
 		if (CrTime::Instance()->IsMeetInterval())
 		{
+			CrEvent::Instance()->Update();
+			ImGui_ImplGlfwGL3_NewFrame();
 			if (m_pRunScene)
 			{
 				m_pRunScene->Update();
@@ -225,11 +245,23 @@ int CrEngine::MainLoop()
 				}
 			}
 
+			unsigned int _fps = CrTime::Instance()->GetFramesPerSecond();
+
+			ImGui::Text("Hello, world!");			
+			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);		
+			DrawSceneTree(m_pRunScene);
+
+			// Rendering
+			int display_w, display_h;
+
+			glfwGetFramebufferSize(CrWindow::Instance()->GetEngineWindow(), &display_w, &display_h);
+			glViewport(0, 0, display_w, display_h);						
+			ImGui::Render();
+
 			//内存泄漏飞起的地方
 			//CrFontLab::Instance()->Render(wcstr, 50, 50, 900, 25);
 
-			CrWindow::Instance()->Update();
-			CrEvent::Instance()->Update();
+			CrWindow::Instance()->Update();			
 		}
 	}
 	Destory();

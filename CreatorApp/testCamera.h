@@ -8,6 +8,8 @@ private:
 	float a;
 	float b;
 	float bb;
+
+	bool mouseButton1Press;
 public:
 	testCamera();
 	~testCamera();

@@ -37,6 +37,14 @@ void CrComponent::Destroy()
 {
 
 }
+void CrComponent::OnGUI()
+{
+
+}
+void CrComponent::OnInspectionGUI()
+{
+
+}
 
 void CrComponent::SetGameObject(CrGameObject * pointer)
 {

@@ -19,6 +19,9 @@ public:
 	virtual void Disabled() = 0;
 	virtual void Enable() = 0;
 	virtual void Destroy() = 0;
+
+	virtual void OnGUI() = 0;
+	virtual void OnInspectionGUI() = 0;
 };
 
 class CrGameObject;
@@ -41,6 +44,9 @@ public:
 	virtual void Enable();
 	virtual void Disabled();
 	virtual void Destroy();
+
+	virtual void OnGUI();
+	virtual void OnInspectionGUI();
 	
 	CrGameObject * GetGameObject();
 

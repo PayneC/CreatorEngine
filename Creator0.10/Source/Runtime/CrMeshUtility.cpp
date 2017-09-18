@@ -308,8 +308,8 @@ CrGameObject *CrMeshUtility::LoadModel(const char* filename)
 }
 
 CrGameObject* CrMeshUtility::processNode(aiNode *node, const aiScene *scene)
-{	
-	CrGameObject* _go = CrGameObject::CreateGameObject<CrGameObject>("a");
+{		
+	CrGameObject* _go = CrGameObject::CreateGameObject<CrGameObject>(node->mName.C_Str());
 	for (int i = 0; i < node->mNumMeshes; ++i)
 	{
 		aiMesh * mesh = scene->mMeshes[node->mMeshes[i]];
@@ -333,8 +333,8 @@ CrGameObject* CrMeshUtility::processNode(aiNode *node, const aiScene *scene)
 }
 
 CrGameObject* CrMeshUtility::processMesh(aiMesh *mesh, const aiScene *scene)
-{
-	CrGameObject* _go = CrGameObject::CreateGameObject<CrGameObject>("a");
+{	
+	CrGameObject* _go = CrGameObject::CreateGameObject<CrGameObject>(mesh->mName.C_Str());
 	CrMeshRender * meshRender = _go->AddComponent<CrMeshRender>();	
 
 	CrMesh * _mesh = new CrMesh();

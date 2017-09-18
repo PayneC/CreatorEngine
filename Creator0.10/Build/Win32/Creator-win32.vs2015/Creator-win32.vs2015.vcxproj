@@ -50,6 +50,7 @@
     <ClCompile Include="..\..\..\Source\Runtime\IMGUI\Private\imgui.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\IMGUI\Private\imgui_demo.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\IMGUI\Private\imgui_draw.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\IMGUI\Private\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\Lua\CrLuaState.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\UI\UICanvas.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\UI\UISprite.cpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="..\..\..\Source\Runtime\CrWindow.h" />
     <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\imconfig.h" />
     <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\imgui.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\imgui_impl_glfw_gl3.h" />
     <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\imgui_internal.h" />
     <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\stb_rect_pack.h" />
     <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\stb_textedit.h" />
