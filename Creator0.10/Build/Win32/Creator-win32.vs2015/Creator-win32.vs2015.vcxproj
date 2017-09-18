@@ -47,6 +47,9 @@
     <ClCompile Include="..\..\..\Source\Runtime\CrTextureUtility.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrTime.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrWindow.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\IMGUI\Private\imgui.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\IMGUI\Private\imgui_demo.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\IMGUI\Private\imgui_draw.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\Lua\CrLuaState.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\UI\UICanvas.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\UI\UISprite.cpp" />
@@ -83,6 +86,12 @@
     <ClInclude Include="..\..\..\Source\Runtime\CrTextureUtility.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrTime.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrWindow.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\imconfig.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\imgui.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\imgui_internal.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\stb_rect_pack.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\stb_textedit.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\stb_truetype.h" />
     <ClInclude Include="..\..\..\Source\Runtime\Lua\CrLuaState.h" />
     <ClInclude Include="..\..\..\Source\Runtime\UI\UICanvas.h" />
     <ClInclude Include="..\..\..\Source\Runtime\UI\UISprite.h" />
@@ -148,7 +157,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)../../Binaries\Win32_Debug</OutDir>
     <IntDir>$(SolutionDir)../../Temp\Win32_Debug</IntDir>
-    <IncludePath>$(SolutionDir)../../Source/ThirdParty/Cg/include;$(SolutionDir)../../Source/ThirdParty/freetype2/include/freetype2/freetype;$(SolutionDir)../../Source/ThirdParty/freetype2/include/freetype2;$(SolutionDir)../../Source/ThirdParty/freetype2/include;$(SolutionDir)../../Source/ThirdParty/glew/include/GL;$(SolutionDir)../../Source/ThirdParty/glfw3/include/GLFW;$(SolutionDir)../../Source/ThirdParty/glm/glm;$(SolutionDir)../../Source/ThirdParty/SOIL/include;$(SolutionDir)../../Source/ThirdParty/lua\src;$(SolutionDir)../../Source/Runtime;$(SolutionDir)../../Source/Runtime/Common;$(SolutionDir)../../Source/Runtime/Lua;$(SolutionDir)../../Source/Runtime/UI;$(SolutionDir)../../Source/Runtime/Component;$(SolutionDir)../../Source/ThirdParty;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)../../Source/ThirdParty/Cg/include;$(SolutionDir)../../Source/ThirdParty/freetype2/include/freetype2/freetype;$(SolutionDir)../../Source/ThirdParty/freetype2/include/freetype2;$(SolutionDir)../../Source/ThirdParty/freetype2/include;$(SolutionDir)../../Source/ThirdParty/glew/include/GL;$(SolutionDir)../../Source/ThirdParty/glfw3/include/GLFW;$(SolutionDir)../../Source/ThirdParty/glm/glm;$(SolutionDir)../../Source/ThirdParty/SOIL/include;$(SolutionDir)../../Source/ThirdParty/lua\src;$(SolutionDir)../../Source/Runtime;$(SolutionDir)../../Source/Runtime/Common;$(SolutionDir)../../Source/Runtime/Lua;$(SolutionDir)../../Source/Runtime/UI;$(SolutionDir)../../Source/Runtime/Component;$(SolutionDir)../../Source/ThirdParty;$(SolutionDir)../../Source/Runtime/IMGUI/Public;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)../../Source/ThirdParty/Cg/lib;$(SolutionDir)../../Source/ThirdParty/SOIL/lib;$(SolutionDir)../../Source/ThirdParty/glfw3/lib-vc2013;$(SolutionDir)../../Source/ThirdParty/freetype2/lib;$(SolutionDir)../../Source/ThirdParty/glew/lib;$(SolutionDir)../../Binaries/Win32_Debug;$(SolutionDir)../../Lib;$(LibraryPath)</LibraryPath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>

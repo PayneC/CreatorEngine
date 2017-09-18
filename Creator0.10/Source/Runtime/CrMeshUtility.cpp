@@ -379,12 +379,17 @@ CrGameObject* CrMeshUtility::processMesh(aiMesh *mesh, const aiScene *scene)
 	if (mesh->mMaterialIndex >= 0)
 	{
 		aiMaterial* _material = scene->mMaterials[mesh->mMaterialIndex];
+		const char * path;
+		CrTexture * texture;
 		aiString str;
 		_material->GetTexture(aiTextureType_DIFFUSE, 0, &str);
-		const char * path = str.C_Str();
-		CrTexture * texture = CrTextureUtility::Instance()->LoadTexture(path);
-		material->SetpMainTexture(texture);
-		
+		if (str.length > 0)
+		{
+			path = str.C_Str();
+			texture = CrTextureUtility::Instance()->LoadTexture(path);
+			material->SetpMainTexture(texture);
+		}
+
 		str.Clear();
 		_material->GetTexture(aiTextureType_SPECULAR, 0, &str);
 		if (str.length > 0)
@@ -402,6 +407,8 @@ CrGameObject* CrMeshUtility::processMesh(aiMesh *mesh, const aiScene *scene)
 			texture = CrTextureUtility::Instance()->LoadTexture(path);
 			material->SetpNormalTexture(texture);
 		}
+
+		str.Clear();
 	}	
 
 
