@@ -19,6 +19,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreatorApp", "..\..\..\Crea
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editor", "VS2015\Editor.vcxproj", "{BA2ECB0A-857A-4471-B55C-0A57CE64BBEE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{73A1C54D-D373-498F-95F9-8CCFA53466AF} = {73A1C54D-D373-498F-95F9-8CCFA53466AF}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
