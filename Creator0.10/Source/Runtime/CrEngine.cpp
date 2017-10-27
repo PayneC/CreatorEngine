@@ -177,7 +177,7 @@ bool CrEngine::Init()
 	//glPolygonMode(GL_FRONT, GL_LINE);
 
 	ImGui_ImplGlfwGL3_Init(CrWindow::Instance()->GetEngineWindow(), false);
-
+	ImGui_ImplGlfwGL3_NewFrame();
 	m_isInit = true;
 
 	//Destory();
@@ -211,7 +211,7 @@ int CrEngine::MainLoop()
 	if (CrTime::Instance()->IsMeetInterval())
 	{
 		CrEvent::Instance()->Update();
-		ImGui_ImplGlfwGL3_NewFrame();
+		
 		if (m_pRunScene)
 		{
 			m_pRunScene->Update();
