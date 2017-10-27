@@ -22,7 +22,7 @@ wchar_t * AnsiToUnicode(char * mbstr)
 }
 
 int CrEngine::Initialization()
-{ 
+{
 	if (false == Init())
 	{
 		return -1;
@@ -36,8 +36,13 @@ int CrEngine::Initialization()
 int CrEngine::Start(CrScene * pScene)
 {
 	m_pRunScene = pScene;
-	m_pInstance->m_isRun = true;
-	return m_pInstance->MainLoop(); 
+	m_pInstance->m_isRun = true;	
+	while (m_isRun)
+	{
+		m_pInstance->MainLoop();
+	}
+	Destory();
+	return 0;
 }
 
 void CrEngine::Stop()
@@ -46,7 +51,7 @@ void CrEngine::Stop()
 }
 
 CrEngine::CrEngine()
-:m_isInit(false)
+	:m_isInit(false)
 {
 }
 
@@ -63,9 +68,9 @@ bool CrEngine::Init()
 #ifdef _DEBUG
 	printf("log: Initializing GLFW ...\n");
 #endif
-	if (GL_FALSE == glfwInit()){
+	if (GL_FALSE == glfwInit()) {
 #ifdef _DEBUG
-		printf("error: GLFW initialization fail\n");	
+		printf("error: GLFW initialization fail\n");
 #endif
 		return false;
 	}
@@ -94,7 +99,7 @@ bool CrEngine::Init()
 #ifdef _DEBUG
 	printf("log: Initializing GLEW ...\n");
 #endif
-	
+
 	if (glewInit() != GLEW_OK)
 	{
 #ifdef _DEBUG
@@ -102,7 +107,7 @@ bool CrEngine::Init()
 #endif
 		return false;
 	}
-	
+
 #ifdef _DEBUG
 	printf("log: Initializing MemoryPool ...\n");
 #endif	
@@ -117,7 +122,7 @@ bool CrEngine::Init()
 #ifdef _DEBUG
 	printf("log: Initializing Director ...\n");
 #endif
-	
+
 #ifdef _DEBUG
 	printf("log: Initialize Time ...\n");
 #endif
@@ -129,11 +134,11 @@ bool CrEngine::Init()
 #endif
 		return false;
 	}
-	
+
 #ifdef _DEBUG
 	printf("log: Initialize Shader ...\n");
 #endif
-	
+
 	if (!CrShaderUtility::Instance()->Init())
 	{
 #ifdef _DEBUG
@@ -141,7 +146,7 @@ bool CrEngine::Init()
 #endif
 		return false;
 	}
-	
+
 #ifdef _DEBUG
 	printf("log: Initialize Event ...\n");
 #endif
@@ -152,7 +157,7 @@ bool CrEngine::Init()
 #endif
 		return false;
 	}
-	
+
 
 	CrFontLab::Instance()->Init();
 
@@ -170,6 +175,9 @@ bool CrEngine::Init()
 	//glEnable(GL_CULL_FACE);
 	//渲染模式
 	//glPolygonMode(GL_FRONT, GL_LINE);
+
+	ImGui_ImplGlfwGL3_Init(CrWindow::Instance()->GetEngineWindow(), false);
+
 	m_isInit = true;
 
 	//Destory();
@@ -199,72 +207,66 @@ void DrawSceneTree(CrGameObject * _go)
 
 int CrEngine::MainLoop()
 {
-	ImGui_ImplGlfwGL3_Init(CrWindow::Instance()->GetEngineWindow(), false);
-
-	while (m_isRun)
+	CrTime::Instance()->Update();
+	if (CrTime::Instance()->IsMeetInterval())
 	{
-		CrTime::Instance()->Update();
-		if (CrTime::Instance()->IsMeetInterval())
+		CrEvent::Instance()->Update();
+		ImGui_ImplGlfwGL3_NewFrame();
+		if (m_pRunScene)
 		{
-			CrEvent::Instance()->Update();
-			ImGui_ImplGlfwGL3_NewFrame();
-			if (m_pRunScene)
+			m_pRunScene->Update();
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClearColor(0, 0, 0, 1);
+
+			glEnable(GL_DEPTH_TEST);
+
+			if (m_pCameraList.size() > 0)
 			{
-				m_pRunScene->Update();
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-				glClearColor(0, 0, 0, 1);
+				std::list<CrCamera*>::iterator cameraIter = m_pCameraList.begin();
+				std::list<CrCamera*>::iterator cameraIterEnd = m_pCameraList.end();
+				CrCamera * camera = NULL;
 
-				glEnable(GL_DEPTH_TEST);
-
-				if (m_pCameraList.size() > 0)
+				for (; cameraIter != cameraIterEnd; ++cameraIter)
 				{
-					std::list<CrCamera*>::iterator cameraIter = m_pCameraList.begin();
-					std::list<CrCamera*>::iterator cameraIterEnd = m_pCameraList.end();
-					CrCamera * camera = NULL;
-
-					for (; cameraIter != cameraIterEnd; ++cameraIter)
-					{
-						camera = (*cameraIter);
-						camera->Render(m_pRunScene);
-					}
-				}
-
-				glDisable(GL_DEPTH_TEST);
-
-				if (m_pCanvasList.size() > 0)
-				{
-					std::list<UICanvas*>::iterator canvasIter = m_pCanvasList.begin();
-					std::list<UICanvas*>::iterator canvasIterEnd = m_pCanvasList.end();
-					UICanvas * canvas = NULL;
-
-					for (; canvasIter != canvasIterEnd; ++canvasIter)
-					{
-						canvas = (*canvasIter);
-						canvas->Render();
-					}
+					camera = (*cameraIter);
+					camera->Render(m_pRunScene);
 				}
 			}
 
-			unsigned int _fps = CrTime::Instance()->GetFramesPerSecond();
+			glDisable(GL_DEPTH_TEST);
 
-			ImGui::Text("Hello, world!");			
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);		
-			DrawSceneTree(m_pRunScene);
+			if (m_pCanvasList.size() > 0)
+			{
+				std::list<UICanvas*>::iterator canvasIter = m_pCanvasList.begin();
+				std::list<UICanvas*>::iterator canvasIterEnd = m_pCanvasList.end();
+				UICanvas * canvas = NULL;
 
-			// Rendering
-			int display_w, display_h;
-
-			glfwGetFramebufferSize(CrWindow::Instance()->GetEngineWindow(), &display_w, &display_h);
-			glViewport(0, 0, display_w, display_h);						
-			ImGui::Render();
-
-			//内存泄漏飞起的地方
-			//CrFontLab::Instance()->Render(wcstr, 50, 50, 900, 25);
-
-			CrWindow::Instance()->Update();			
+				for (; canvasIter != canvasIterEnd; ++canvasIter)
+				{
+					canvas = (*canvasIter);
+					canvas->Render();
+				}
+			}
 		}
+
+		unsigned int _fps = CrTime::Instance()->GetFramesPerSecond();
+
+		ImGui::Text("Hello, world!");
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		DrawSceneTree(m_pRunScene);
+
+		// Rendering
+		int display_w, display_h;
+
+		glfwGetFramebufferSize(CrWindow::Instance()->GetEngineWindow(), &display_w, &display_h);
+		glViewport(0, 0, display_w, display_h);
+		ImGui::Render();
+
+		//内存泄漏飞起的地方
+		//CrFontLab::Instance()->Render(wcstr, 50, 50, 900, 25);
+
+		CrWindow::Instance()->Update();
 	}
-	Destory();
 
 	return 0;
 }
@@ -282,7 +284,7 @@ void CrEngine::ProMessage(GLFWwindow* window, GLuint64 msg, unsigned __int64 wPa
 void CrEngine::Destory()
 {
 	CrMemoryPool::Instance()->FreeMemory();//payne
-	glfwTerminate(); 
+	glfwTerminate();
 
 	delete[] wcstr;
 	wcstr = NULL;
