@@ -7,7 +7,7 @@ Payne
 #ifndef _CREATOR_UI_CANVAS_H
 #define _CREATOR_UI_CANVAS_H
 
-#include <CrGameObject.h>
+#include <Core/CrGameObject.h>
 #include <UI\UIWidget.h>
 
 class DLL_ClASS UICanvas : public UIWidget

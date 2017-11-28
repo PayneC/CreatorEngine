@@ -1,6 +1,6 @@
 /*
 CreatorEngine
-Class CrMemoryChunk
+Class CrObject
 Payne
 */
 

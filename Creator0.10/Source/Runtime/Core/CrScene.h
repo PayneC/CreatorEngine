@@ -7,7 +7,7 @@ Payne
 #ifndef _CREATOR_SCENE_H
 #define _CREATOR_SCENE_H
 
-#include "CrGameObject.h"
+#include <Core/CrGameObject.h>
 #include <list>
 
 class DLL_ClASS CrScene : public CrGameObject

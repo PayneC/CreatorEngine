@@ -8,7 +8,7 @@ Payne
 #define _CREATOR_TEXTURE_H
 
 #include "CrDefine.h"
-#include "CrObject.h"
+#include <Core/CrObject.h>
 #include <string>
 #include <map>
 

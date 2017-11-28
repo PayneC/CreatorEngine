@@ -14,7 +14,7 @@ Payne
 #include <vector>
 #include <CrSingleton.h>
 
-#include <CrObject.h>
+#include <Core/CrObject.h>
 
 class CrEvent : public CrSingleton<CrEvent>
 {

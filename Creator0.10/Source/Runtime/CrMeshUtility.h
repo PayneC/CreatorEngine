@@ -19,7 +19,7 @@ Payne
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include "CrGameObject.h"
+#include <Core/CrGameObject.h>
 
 class DLL_ClASS CrMeshUtility : public CrSingleton<CrMeshUtility>
 {

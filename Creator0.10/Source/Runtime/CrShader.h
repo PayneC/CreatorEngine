@@ -9,7 +9,7 @@ Payne
 
 #include <glew.h>
 #include "CrDefine.h"
-#include <CrObject.h>
+#include <Core/CrObject.h>
 #include <string>
 
 /*

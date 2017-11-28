@@ -21,7 +21,7 @@ Payne
 
 #include <CrCamera.h>
 #include <UICanvas.h>
-#include <CrScene.h>
+#include <Core/CrScene.h>
 
 class DLL_ClASS CrEngine : public CrSingleton<CrEngine>
 {

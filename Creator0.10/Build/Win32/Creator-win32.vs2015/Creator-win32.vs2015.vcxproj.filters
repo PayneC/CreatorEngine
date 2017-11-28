@@ -1,12 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\..\..\Source\Runtime\Common\CrFontLab.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\Component\CrMaterial.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\Component\CrMesh.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\Component\CrMeshRender.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\Component\CrSkinMeshRender.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\Component\CrSkybox.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\Component\CrTransform.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrCamera.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrComponent.cpp" />
@@ -17,12 +14,9 @@
     <ClCompile Include="..\..\..\Source\Runtime\CrEngineInterface.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrEngineInterfaceLua.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrEvent.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrGameObject.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrLight.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrMemoryPool.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrMeshUtility.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrObject.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrScene.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrShader.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrShaderUtility.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrTexture.cpp" />
@@ -45,15 +39,21 @@
     <ClCompile Include="..\..\..\Source\Runtime\IMGUI\Private\imgui_impl_glfw_gl3.cpp">
       <Filter>IMGUI\Private</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\Core\CrObject.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\Core\CrScene.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\Core\CrGameObject.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Source\Runtime\Common\CrFontLab.h" />
     <ClInclude Include="..\..\..\Source\Runtime\Component\CrComponent.h" />
     <ClInclude Include="..\..\..\Source\Runtime\Component\CrMaterial.h" />
     <ClInclude Include="..\..\..\Source\Runtime\Component\CrMesh.h" />
     <ClInclude Include="..\..\..\Source\Runtime\Component\CrMeshRender.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\Component\CrSkinMeshRender.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\Component\CrSkybox.h" />
     <ClInclude Include="..\..\..\Source\Runtime\Component\CrTransform.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrCamera.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrConfig.h" />
@@ -64,12 +64,9 @@
     <ClInclude Include="..\..\..\Source\Runtime\CrEngineInterface.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrEngineInterfaceLua.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrEvent.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrGameObject.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrLight.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrMemoryPool.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrMeshUtility.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrObject.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrScene.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrShader.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrShaderUtility.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrSingleton.h" />
@@ -102,6 +99,15 @@
     <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\imgui_impl_glfw_gl3.h">
       <Filter>IMGUI\Public</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\Core\CrObject.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\Core\CrScene.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\Core\CrGameObject.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Shaders\fragment.cg" />
@@ -118,6 +124,9 @@
     </Filter>
     <Filter Include="IMGUI\Private">
       <UniqueIdentifier>{204d2893-622e-4648-b4ad-f8c2750568ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{c8f4a09f-5d4d-4d1f-a0ea-1f6c69c61e2a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

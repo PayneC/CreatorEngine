@@ -1,5 +1,5 @@
 #include <CrTransform.h>
-#include <CrGameObject.h>
+#include <Core/CrGameObject.h>
 
 CrTransform::CrTransform()
 	:m_isDirty(true)

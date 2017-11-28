@@ -1,4 +1,4 @@
-#include "CrGameObject.h"
+#include <Core/CrGameObject.h>
 #include "CrMeshUtility.h"
 #include "CrShaderUtility.h"
 

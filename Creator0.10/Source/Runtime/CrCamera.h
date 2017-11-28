@@ -7,7 +7,7 @@ Payne
 #ifndef _CREATOR_CAMERA_H
 #define _CREATOR_CAMERA_H
 
-#include <CrScene.h>
+#include <Core/CrScene.h>
 
 class DLL_ClASS CrCamera : public CrGameObject
 {

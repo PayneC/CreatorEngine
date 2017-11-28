@@ -14,7 +14,7 @@ out vec4 fragColor;
 
 void main()
 {
-	float shininess = 64f;
+	float shininess = 64;
 
 	vec3 lightAmbient = vec3(0.2, 0.2, 0.2);
 	vec3 lightDiffuse = vec3(0.5, 0.5, 0.5);

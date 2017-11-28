@@ -1,5 +1,4 @@
 #include "CrEngine.h"
-#include <common/CrFontLab.h>
 #include <imgui.h>
 #include "imgui_impl_glfw_gl3.h"
 wchar_t * wcstr = NULL;
@@ -153,9 +152,6 @@ bool CrEngine::Init()
 		return false;
 	}
 	
-
-	CrFontLab::Instance()->Init();
-
 	glEnable(GL_TEXTURE_2D);
 	glDepthFunc(GL_LESS);
 	//µ„¥Û–°

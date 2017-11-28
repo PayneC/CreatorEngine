@@ -7,7 +7,7 @@ Payne
 #ifndef _CREATOR_MEMORYPOOL_H
 #define _CREATOR_MEMORYPOOL_H
 
-#include <CrObject.h>
+#include <Core/CrObject.h>
 #include <list>
 #include <CrSingleton.h>
 

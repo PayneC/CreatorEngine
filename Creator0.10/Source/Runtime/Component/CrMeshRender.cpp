@@ -1,5 +1,5 @@
 #include <CrMeshRender.h>
-#include <CrGameObject.h>
+#include <Core/CrGameObject.h>
 
 CrMeshRender::CrMeshRender()
 {
