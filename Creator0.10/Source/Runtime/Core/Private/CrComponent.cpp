@@ -9,39 +9,32 @@ CrComponent::~CrComponent()
 {
 }
 
-void CrComponent::Awake()
-{
-
-}
 void CrComponent::Start()
 {
 
 }
-void CrComponent::Update()
+
+void CrComponent::Update(double dt)
 {
 
 }
-void CrComponent::LateUpdate()
+
+void CrComponent::LateUpdate(double dt)
 {
 
 }
-void CrComponent::Enable()
+
+void CrComponent::OnEnable()
 {
 
 }
-void CrComponent::Disabled()
+
+void CrComponent::OnDisable()
 {
 
 }
-void CrComponent::Destroy()
-{
 
-}
-void CrComponent::OnGUI()
-{
-
-}
-void CrComponent::OnInspectionGUI()
+void CrComponent::OnDestroy()
 {
 
 }
@@ -54,9 +47,4 @@ void CrComponent::SetGameObject(CrGameObject * pointer)
 CrGameObject * CrComponent::GetGameObject()
 {
 	return m_pGameObject;
-}
-
-int CrComponent::GetInstanceCountLimit()
-{
-	return 0;
 }

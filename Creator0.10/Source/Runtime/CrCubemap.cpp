@@ -1,5 +1,4 @@
-#include "CrCubemap.h"
-#include <SOIL.h>
+#include <CrCubemap.h>
 
 CrCubemap * CrCubemap::CreateInstance(const char* filename)
 {

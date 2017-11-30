@@ -7,10 +7,7 @@ Payne
 #ifndef _CREATOR_LUA_H
 #define _CREATOR_LUA_H
 
-#include "../CrSingleton.h"
-#include <lua.hpp>
-#include <string>
-#include <stdarg.h>
+#include <CrDefine.h>
 
 namespace CreatorLua
 {

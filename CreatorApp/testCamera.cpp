@@ -1,5 +1,4 @@
 #include "testCamera.h"
-#include <glm.hpp>
 
 testCamera::testCamera()
 	: a(0.f)
@@ -7,7 +6,7 @@ testCamera::testCamera()
 	, bb(1.f)
 	, mouseButton1Press(false)
 {
-
+	Event::AddListen(this, Func_Event(testCamera::EventCallback));
 }
 
 testCamera::~testCamera()
@@ -15,17 +14,12 @@ testCamera::~testCamera()
 	
 }
 
-void testCamera::Awake()
+void testCamera::OnDestroy()
 {
-	AddEventListen(Func_Event(testCamera::EventCallback));
+	Event::RemoveListen(this, Func_Event(testCamera::EventCallback));
 }
 
-void testCamera::Destroy()
-{
-	RemoveEventListen(Func_Event(testCamera::EventCallback));
-}
-
-void testCamera::Update()
+void testCamera::Update(double dt)
 {
 
 }
@@ -82,7 +76,7 @@ void testCamera::EventCallback(GLint64 msg, GLint64 wParam, GLint64 lParam)
 			break;
 
 		case GLFW_KEY_ESCAPE:
-			CrEngine::Instance()->Stop();
+			CrEngine::Stop();
 			break;
 		default:
 			break;

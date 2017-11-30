@@ -7,10 +7,7 @@ Payne
 #ifndef _CREATOR_TEXTURE_H
 #define _CREATOR_TEXTURE_H
 
-#include "CrDefine.h"
-#include <Core/CrObject.h>
-#include <string>
-#include <map>
+#include <CrObject.h>
 
 class DLL_ClASS CrTexture : public CrObject
 {

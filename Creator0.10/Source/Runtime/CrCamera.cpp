@@ -1,5 +1,5 @@
-#include "CrCamera.h"
-#include "CrEngine.h"
+#include <CrCamera.h>
+#include <CrTransform.h>
 
 CrCamera::CrCamera()
 	:m_m4Projection(1.f)
@@ -7,12 +7,12 @@ CrCamera::CrCamera()
 {
 	m_sName = "Camera";
 	m_m4Projection = glm::perspective(45.f, 16.f / 9.f, 0.1f, 200.f);
-	CrEngine::Instance()->AddCamera(this);
+	m_pCameraList.push_back(this);
 }
 
 CrCamera::~CrCamera()
 {
-	CrEngine::Instance()->RemoveCamera(this);
+	m_pCameraList.remove(this);
 }
 
 glm::mat4 CrCamera::GetVP()
@@ -21,36 +21,9 @@ glm::mat4 CrCamera::GetVP()
 	return m_m4VP;
 }
 
-void CrCamera::Render(CrScene * pScene)
+std::list<CrCamera*> CrCamera::m_pCameraList;
+
+std::list<CrCamera*> CrCamera::AllCamera()
 {
-	_Render(pScene);
-}
-
-void CrCamera::_Render(CrGameObject * pGameObject)
-{
-	if (pGameObject == NULL || !pGameObject->GetActive())
-		return;
-
-	CrMeshRender * meshRender = pGameObject->GetMeshRender();
-	CrTransform * transform = pGameObject->GetTransform();
-	if (meshRender != NULL && transform != NULL)
-	{
-		glm::mat4 mvp = GetVP() * transform->GetLocalToWorldMatrix();
-		glm::mat4 v = GetTransform()->GetWorldToLocalMatrix();
-		glm::mat4 m = transform->GetLocalToWorldMatrix();
-
-		meshRender->Draw(mvp, GetTransform()->GetPosition(), m, v);
-	}
-
-	std::vector<CrGameObject * > gameobjects = pGameObject->GetChildren();
-
-	std::vector<CrGameObject * >::iterator iter = gameobjects.begin();
-	std::vector<CrGameObject * >::iterator iterEnd = gameobjects.end();
-
-	CrGameObject * gameobject = NULL;
-	for (; iter != iterEnd; ++iter)
-	{
-		gameobject = (*iter);
-		_Render(gameobject);
-	}
+	return m_pCameraList;
 }

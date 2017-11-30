@@ -1,5 +1,4 @@
 #include "CrTextureUtility.h"
-#include <SOIL.h>
 
 CrTextureUtility::CrTextureUtility()
 {

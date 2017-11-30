@@ -7,9 +7,6 @@ Payne
 #ifndef _CREATOR_MATERIAL_H
 #define _CREATOR_MATERIAL_H
 
-#include <CrDefine.h>
-#include <Component\CrComponent.h>
-#include <string>
 #include <CrShader.h>
 #include <CrTexture.h>
 

@@ -1,5 +1,4 @@
 #include "test.h"
-#include <glm.hpp>
 
 test::test()
 	: a(0.f)
@@ -14,7 +13,7 @@ test::~test()
 
 }
 
-void test::Update()
+void test::Update(double dt)
 {
 	float t = CrTime::Instance()->GetDelateTime();
 	a -= t * 6;

@@ -7,18 +7,38 @@ Payne
 #ifndef _CREATOR_DEFINE_H
 #define _CREATOR_DEFINE_H
 
+#include <thread>
+
+#include <cstdio>
+
 #include <stdio.h>
 #include <stdlib.h>
 
-//Math
-#include <glm.hpp>
-#include <fwd.hpp>
-#include <gtc/type_ptr.hpp> 
-#include <gtc/matrix_transform.hpp>
-#include <gtc/quaternion.hpp>
+#include <iostream>
+#include <fstream>
 
-#include <glew.h>
-#include <glfw3.h>
+#include <string>
+#include <stdarg.h>
+
+#include <map>
+#include <list>
+#include <vector>
+#include <typeinfo.h>
+
+//Math
+#include <glm/glm/glm.hpp>
+#include <glm/glm/fwd.hpp>
+#include <glm/glm/gtc/type_ptr.hpp> 
+#include <glm/glm/gtc/matrix_transform.hpp>
+#include <glm/glm/gtc/quaternion.hpp>
+
+#include <glew/include/GL/glew.h>
+#include <glfw3/include/GLFW/glfw3.h>
+
+#include <SOIL/include/SOIL.h>
+#include <lua/src/lua.hpp>
+
+#include <CrSingleton.h>
 
 #define EasyGetSet(varType, varName, funName)\
 protected: varType varName; \
@@ -76,6 +96,14 @@ enum EPresetMeshType
 
 #define Vector2 glm::vec2
 #define Vector3 glm::vec3
+
+struct Vertex
+{
+	glm::vec3 Position;
+	glm::vec3 Normal;
+	glm::vec2 TexCoords;
+	glm::vec3 Tangent;
+};
 
 #ifdef DLL_EXPORT
 #define DLL_ClASS _declspec(dllexport)

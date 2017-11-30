@@ -7,10 +7,7 @@ Payne
 #ifndef _CREATOR_CUBEMAP_H
 #define _CREATOR_CUBEMAP_H
 
-#include "CrDefine.h"
-#include "CrTexture.h"
-#include <string>
-#include <map>
+#include <CrMaterial.h>
 
 class CrCubemap : public CrTexture
 {

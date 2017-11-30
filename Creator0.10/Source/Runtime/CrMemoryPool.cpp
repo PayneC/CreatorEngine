@@ -1,5 +1,5 @@
-#include <Core/CrObject.h>
-#include "CrMemoryPool.h"
+#include <CrObject.h>
+#include <CrMemoryPool.h>
 
 CrMemoryPool::CrMemoryPool()
 	:m_listReleaseMemoryChunk()
@@ -44,12 +44,16 @@ void CrMemoryPool::FreeMemory()
 	if (m_listReleaseMemoryChunk.empty())
 		return;
 
-	for each (CrObject * pChunk in m_listReleaseMemoryChunk)
+	std::list<CrObject*>::iterator iter = m_listReleaseMemoryChunk.begin();
+	std::list<CrObject*>::iterator iterEnd = m_listReleaseMemoryChunk.end();
+
+	CrObject * pChunk = NULL;
+	for (; iter != iterEnd; ++iter)
 	{
+		pChunk = (*iter);
 		if (pChunk)
 		{
 			delete pChunk;
-			pChunk = NULL;
 		}
 	}
 

@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Source\Runtime\CrCamera.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\CrCubemap.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\CreatorEngine.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\CrEngine.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\CrEngineInterface.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\CrEngineInterfaceLua.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\CrLight.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\CrMemoryPool.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\CrMeshUtility.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\CrShader.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\CrShaderUtility.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\CrTexture.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\CrTextureUtility.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\CrTime.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\CrWindow.cpp" />
+    <ClCompile Include="..\..\..\Source\Runtime\IMGUI\Private\imgui.cpp">
+      <Filter>IMGUI\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\IMGUI\Private\imgui_demo.cpp">
+      <Filter>IMGUI\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\IMGUI\Private\imgui_impl_glfw_gl3.cpp">
+      <Filter>IMGUI\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\IMGUI\Private\imgui_draw.cpp">
+      <Filter>IMGUI\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\Core\Private\CrComponent.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\Core\Private\CrGameObject.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\Core\Private\CrMaterial.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\Core\Private\CrMesh.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\Core\Private\CrMeshRender.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\Core\Private\CrObject.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\Core\Private\CrScene.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\Core\Private\CrTransform.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\Lua\Private\CrLuaState.cpp">
+      <Filter>Lua\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\UI\Private\UICanvas.cpp">
+      <Filter>UI\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\UI\Private\UISprite.cpp">
+      <Filter>UI\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\UI\Private\UIWidget.cpp">
+      <Filter>UI\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Runtime\Core\Private\Event.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Source\Runtime\CrCamera.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrCubemap.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrDefine.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CreatorEngine.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrEngine.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrEngineInterface.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrEngineInterfaceLua.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrLight.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrMemoryPool.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrMeshUtility.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrShader.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrShaderUtility.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrSingleton.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrTexture.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrTextureUtility.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrTime.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\CrWindow.h" />
+    <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\imconfig.h">
+      <Filter>IMGUI\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\imgui.h">
+      <Filter>IMGUI\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\imgui_impl_glfw_gl3.h">
+      <Filter>IMGUI\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\imgui_internal.h">
+      <Filter>IMGUI\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\stb_rect_pack.h">
+      <Filter>IMGUI\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\stb_textedit.h">
+      <Filter>IMGUI\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\stb_truetype.h">
+      <Filter>IMGUI\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\Core\Public\Core.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\UI\Public\UI.h">
+      <Filter>UI\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\Core\Public\CrComponent.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\Core\Public\CrGameObject.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\Core\Public\CrMaterial.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\Core\Public\CrMesh.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\Core\Public\CrMeshRender.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\Core\Public\CrObject.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\Core\Public\CrScene.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\Core\Public\CrTransform.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\Lua\Public\CrLuaState.h">
+      <Filter>Lua\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\UI\Public\UICanvas.h">
+      <Filter>UI\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\UI\Public\UISprite.h">
+      <Filter>UI\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\UI\Public\UIWidget.h">
+      <Filter>UI\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Runtime\Core\Public\Event.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Shaders\fragment.cg" />
+    <None Include="..\..\..\Shaders\testShader.frag" />
+    <None Include="..\..\..\Shaders\testShader.vert" />
+    <None Include="..\..\..\Shaders\vertex.cg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{2ae5b045-a4e0-473d-92a3-c142a771535c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Public">
+      <UniqueIdentifier>{5b85fce3-0b81-4b11-a865-a8fd60a44e51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Private">
+      <UniqueIdentifier>{6d4f48e3-42be-4d12-b567-349c8ceaa1d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IMGUI">
+      <UniqueIdentifier>{67616837-3f6e-4876-88ca-4c482379d4ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IMGUI\Public">
+      <UniqueIdentifier>{270ed243-dc70-4c67-abd2-9ebf2bee1f99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IMGUI\Private">
+      <UniqueIdentifier>{2265eb31-98c9-4b6b-821a-01aebbbd9751}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua">
+      <UniqueIdentifier>{c26bc4a8-ecb7-4f80-aaa9-ddc3b3307aea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua\Public">
+      <UniqueIdentifier>{bdfba8b4-9119-4f4e-abf0-d97cde03371e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua\Private">
+      <UniqueIdentifier>{ca8a83bb-747b-498d-9934-41e154ed67b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{017f50af-9fce-4ea9-b578-69d2f89dd893}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Public">
+      <UniqueIdentifier>{f24e8175-51b2-4f16-a366-0366152de9ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Private">
+      <UniqueIdentifier>{8835f9e6-2df2-453d-8984-c9089526ddbc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

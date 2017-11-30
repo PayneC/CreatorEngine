@@ -7,11 +7,14 @@ Payne
 #ifndef _CREATOR_UI_CANVAS_H
 #define _CREATOR_UI_CANVAS_H
 
-#include <Core/CrGameObject.h>
-#include <UI\UIWidget.h>
+#include <UIWidget.h>
 
 class DLL_ClASS UICanvas : public UIWidget
 {
+private:
+	static std::list<UICanvas*> m_pCanvasList;
+public:
+	static std::list<UICanvas*> AllCanvas();
 public:
 	UICanvas();
 	~UICanvas();

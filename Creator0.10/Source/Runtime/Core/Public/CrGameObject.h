@@ -7,13 +7,8 @@ Payne
 #ifndef _CREATOR_GAMEOBJECT_H
 #define _CREATOR_GAMEOBJECT_H
 
-#include <map>
-#include <list>
-#include <vector>
-#include <typeinfo.h>
-
-#include <Component\CrTransform.h>
-#include <Component\CrMeshRender.h>
+#include <CrObject.h>
+#include <CrTransform.h>
 
 class DLL_ClASS CrGameObject : public CrObject
 {
@@ -28,12 +23,12 @@ public:
 	CrGameObject();
 	~CrGameObject();
 	
-	virtual void Awake();
-	virtual void Begin();
-	virtual void Destroy();
-	virtual void Update();
-	virtual void Enable();
-	virtual void Disabled();
+	virtual void Start();
+	virtual void Update(double dt);
+	virtual void LateUpdate(double dt);
+	virtual void OnEnable();
+	virtual void OnDisable();
+	virtual void OnDestroy();
 	
 	void AddChild(CrGameObject * pNode);
 	void RemoveChild(CrGameObject * pNode);
@@ -55,7 +50,7 @@ public:
 	void RemoveAllComponent();
 
 	EasyGet(CrTransform *, m_kTransform, Transform);
-	EasyGet(CrMeshRender *, m_pMeshRender, MeshRender);
+	//EasyGet(CrMeshRender *, m_pMeshRender, MeshRender);
 
 	const std::vector<CrGameObject *> GetChildren() const { return m_pChildren; }
 
@@ -73,7 +68,6 @@ TReturnType * CrGameObject::AddComponent()
 	static_assert(std::is_base_of<CrComponent, TReturnType>::value, "'T' template parameter to FindComponentByClass must be derived from CrComponent");
 	
 	TReturnType* _instance = new TReturnType();
-	_instance->Awake();
 	_AddComponent(_instance);
 	return _instance;
 }
@@ -103,7 +97,6 @@ TReturnType * CrGameObject::CreateGameObject(std::string name)
 	if (pRef)
 	{
 		pRef->SetName(name);
-		pRef->Awake();
 	}
 	return pRef;
 }
@@ -117,7 +110,6 @@ TReturnType * CrGameObject::CreateGameObject(EPresetMeshType type, std::string n
 	if (pRef)
 	{
 		pRef->SetName(name);
-		pRef->Awake();
 		CrMeshRender * meshRender = pRef->AddComponent<CrMeshRender>();
 		CrMaterial * material = CrMaterial::CreateCrMaterial();
 		CrMesh * mesh = CrMeshUtility::CreateMesh(type);

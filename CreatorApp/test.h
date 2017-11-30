@@ -1,6 +1,4 @@
-
-
-#include "CreatorEngine.h"
+#include <CreatorEngine.h>
 
 class test : public CrComponent
 {
@@ -11,6 +9,6 @@ private:
 public:
 	test();
 	~test();
-	void Update();
+	void Update(double dt);
 
 };

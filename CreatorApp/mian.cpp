@@ -19,33 +19,21 @@ Payne
 #define new DEBUG_CLIENTBLOCK
 #endif
 
-#include "CreatorEngine.h"
-#include "CrTransform.h"
-#include <iostream>
+#include <CreatorEngine.h>
 
-#include <vector>
-#include <string>
-
-#include <thread>
-
-#include "CrMeshUtility.h"
-#include "CrShaderUtility.h"
-#include "CrTextureUtility.h"
 #include "test.h"
 #include "testCamera.h"
 
-using std::vector;
-using std::string;
 using namespace CreatorEngine;
 
 void Scene1()
 {
 	CrTexture * texture = CrTextureUtility::Instance()->LoadTexture("001.png");
 
-	CrScene * pScene = CrGameObject::CreateGameObject<CrScene>("test01");
+	CrScene * pScene = CrObject::Instance<CrScene>();
 
 	CrGameObject * go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_QUAD, "center");
-	pScene->AddChild(go);
+	pScene->AddGameObject(go);
 
 	go->AddComponent<test>();
 
@@ -57,7 +45,7 @@ void Scene1()
 	meshRender->GetMaterial()->SetpMainTexture(texture);
 
 	CrCamera * pCamera = CrGameObject::CreateGameObject<CrCamera>("Camera");
-	pScene->AddChild(pCamera);
+	pScene->AddGameObject(pCamera);
 	pCamera->GetTransform()->SetPosition(glm::fvec3(0.f, 0.f, 20.0f));
 
 	pCamera->GetTransform()->LookAt(go);
@@ -85,7 +73,7 @@ void Scene1()
 	}
 
 	go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_QUAD, "center");
-	pScene->AddChild(go);
+	pScene->AddGameObject(go);
 	go->GetTransform()->SetPosition(glm::vec3(5, -5, 5));
 	go->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
 	go->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
@@ -110,7 +98,9 @@ void Scene1()
 	meshRender->GetMaterial()->SetpMainTexture(texture3);
 
 
-	CrEngine::Instance()->Start(pScene);
+	CrScene::SetCurrentScene(pScene);
+
+	CrEngine::Start();
 }
 
 void Scene2()
@@ -118,10 +108,10 @@ void Scene2()
 	CrTexture * texture2 = CrTextureUtility::Instance()->LoadTexture("SandyGround.tga");
 	CrTexture * textureN = CrTextureUtility::Instance()->LoadTexture("SandyGround_Normal.tga");
 
-	CrScene * pScene = CrGameObject::CreateGameObject<CrScene>("test01");
+	CrScene * pScene = CrObject::Instance<CrScene>();
 	
 	CrGameObject * go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_QUAD, "center");
-	pScene->AddChild(go);
+	pScene->AddGameObject(go);
 	go->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	go->GetTransform()->SetLocalScale(glm::vec3(50, 1, 50));
 	go->GetTransform()->SetRotation(glm::vec3(-90, 0, 0));
@@ -130,7 +120,7 @@ void Scene2()
 	meshRender->GetMaterial()->SetpMainTexture(texture2);
 
 	CrGameObject * go2 = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_CUBE, "cube");
-	pScene->AddChild(go2);
+	pScene->AddGameObject(go2);
 	go2->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
 	go2->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
 	go2->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
@@ -140,21 +130,23 @@ void Scene2()
 	meshRender->GetMaterial()->SetpNormalTexture(textureN);
 
 	CrGameObject * go3 = CrMeshUtility::LoadModel("nanosuit.obj");
-	pScene->AddChild(go3);
+	pScene->AddGameObject(go3);
 	go3->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	go3->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
 	go3->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
 
 
 	CrCamera * pCamera = CrGameObject::CreateGameObject<CrCamera>("Camera");
-	pScene->AddChild(pCamera);
+	pScene->AddGameObject(pCamera);
 	pCamera->GetTransform()->SetPosition(glm::fvec3(0.f, 15.f, 3.0f));
 	pCamera->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
 	pCamera->GetTransform()->SetLocalRotation(glm::vec3(1, 1, 1));
 	//pCamera->GetTransform()->LookAt(go2);
 	pCamera->AddComponent<testCamera>();
 
-	CrEngine::Instance()->Start(pScene);
+	CrScene::SetCurrentScene(pScene);
+
+	CrEngine::Start();
 }
 
 void Application()
@@ -166,7 +158,7 @@ int main(int argc, char **argv)
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	if (CrEngine::Instance()->Initialization() != 0)
+	if (CrEngine::Initialization() != 0)
 		return 0;
 	Application();
 	_CrtDumpMemoryLeaks();

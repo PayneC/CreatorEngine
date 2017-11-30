@@ -5,14 +5,14 @@ UICanvas::UICanvas()
 	:m_m4Projection(1.0)
 {
 	m_sName = "UICanvas";
-	CrEngine::Instance()->AddCanvas(this);
+	m_pCanvasList.push_back(this);
 
 	m_size = Vector2(1366, 768);
 }
 
 UICanvas::~UICanvas()
 {
-	CrEngine::Instance()->RemoveCanvas(this);
+	m_pCanvasList.remove(this);
 }
 
 void UICanvas::Render()
@@ -52,7 +52,7 @@ void UICanvas::_Render(CrGameObject* pGameObject)
 	if (pGameObject == NULL || !pGameObject->GetActive())
 		return;
 	
-	CrMeshRender * meshRender = pGameObject->GetMeshRender();
+	CrMeshRender * meshRender = pGameObject->GetComponent<CrMeshRender>();
 	CrTransform * transform = pGameObject->GetTransform();
 	if (meshRender != NULL && transform != NULL)
 	{
@@ -72,4 +72,11 @@ void UICanvas::_Render(CrGameObject* pGameObject)
 		gameobject = (*iter);
 		_Render(gameobject);
 	}
+}
+
+std::list<UICanvas*> UICanvas::m_pCanvasList;
+
+std::list<UICanvas*> UICanvas::AllCanvas()
+{
+	return m_pCanvasList; 
 }

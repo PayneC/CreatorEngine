@@ -1,5 +1,4 @@
-#include <Core/CrObject.h>
-#include "CrEngine.h"
+#include <CrObject.h>
 
 CrObject::CrObject()
 :m_sUserNumber(0)
@@ -26,14 +25,4 @@ void CrObject::AutoRelease()
 	
 	CrMemoryPool::Instance()->AddChunkToReleasePool(this);
 
-}
-
-void CrObject::AddEventListen(EventFunc func)
-{
-	CrEvent::Instance()->AddListen(this, func);
-}
-
-void CrObject::RemoveEventListen(EventFunc func)
-{
-	CrEvent::Instance()->RemoveListen(this, func);
 }

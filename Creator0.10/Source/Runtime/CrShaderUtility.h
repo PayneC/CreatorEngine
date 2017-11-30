@@ -7,7 +7,7 @@ Payne
 #ifndef _CREATOR_SHADERUTILITY_H
 #define _CREATOR_SHADERUTILITY_H 
 
-#include <glew.h>
+#include <CrDefine.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <map>

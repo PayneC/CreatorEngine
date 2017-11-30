@@ -7,60 +7,25 @@ Payne
 #ifndef _CREATOR_ENGINE_H
 #define _CREATOR_ENGINE_H
 
-#include <cstdio>
-#include <stdlib.h>
+#include <UI.h>
+#include <Core.h>
 
-#include "CrSingleton.h"
-
-#include "CrConfig.h"
-#include "CrTime.h"
-#include "CrShaderUtility.h"
-#include "CrEvent.h"
-#include "CrMemoryPool.h"
-#include "CrWindow.h"
-
-#include <CrCamera.h>
-#include <UICanvas.h>
-#include <Core/CrScene.h>
-
-class DLL_ClASS CrEngine : public CrSingleton<CrEngine>
+static class DLL_ClASS CrEngine
 {
-
 public:
-	int Initialization();
-	int Start(CrScene * pScene);
-	void Stop();
+	static int Initialization();
+	static int Start();
+	static void Stop();
+	static bool Init();
+	static void Destory();
+	static void OnEnter();
+	static int MainLoop();
+	static void OnExit();
 
 private:
-	bool m_isRun;
-
-public:
-	CrEngine();
-	~CrEngine();
-
-private:
-
-	bool Init();
-	void Destory();
-	void OnEnter();
-	int MainLoop();
-	void OnExit();
-
-public:
-	void ProMessage(GLFWwindow* window, GLuint64 msg, unsigned __int64 wParam, unsigned __int64 lParam);
-
-	void AddCamera(CrCamera * pCamera);
-	void RemoveCamera(CrCamera * pCamera);
-
-	void AddCanvas(UICanvas * pCanvas);
-	void RemoveCanvas(UICanvas * pCanvas);
-private:
-	bool m_isInit;
-	double m_lfTotalDelay;
-
-	CrScene * m_pRunScene;
-	std::list<CrCamera*> m_pCameraList;
-	std::list<UICanvas*> m_pCanvasList;
+	static bool m_isRun;
+	static bool m_isInit;
+	static double m_lfTotalDelay;
 };
 
 #endif

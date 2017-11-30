@@ -12,14 +12,14 @@ Payne
 #include <stdlib.h>
 #include <map>
 #include <string>
-#include <Component\CrMesh.h>
+#include <CrMesh.h>
 #include "CrDefine.h"
 #include "CrSingleton.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include <Core/CrGameObject.h>
+#include <CrGameObject.h>
 
 class DLL_ClASS CrMeshUtility : public CrSingleton<CrMeshUtility>
 {

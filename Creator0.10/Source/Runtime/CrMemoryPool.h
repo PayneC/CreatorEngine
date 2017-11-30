@@ -7,9 +7,9 @@ Payne
 #ifndef _CREATOR_MEMORYPOOL_H
 #define _CREATOR_MEMORYPOOL_H
 
-#include <Core/CrObject.h>
-#include <list>
-#include <CrSingleton.h>
+#include <CrDefine.h>
+
+class CrObject;
 
 class DLL_ClASS CrMemoryPool : public CrSingleton<CrMemoryPool>
 {

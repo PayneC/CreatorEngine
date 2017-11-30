@@ -8,12 +8,10 @@ Payne
 #define _CREATOR_ENGINEINTERFACE_H
 
 #include "CrEngine.h"
-#include "Lua\CrLuaState.h"
+#include "CrLuaState.h"
 
 namespace CreatorEngine
 {
-	int Initialization();
-	int Start(CrScene * pScene);
 	void Stop();
 }
 

@@ -7,11 +7,9 @@ Payne
 #ifndef _CREATOR_MESHRENDER_H
 #define _CREATOR_MESHRENDER_H
 
-#include <CrDefine.h>
-#include <string>
-#include <vector>
-#include <Component\CrMesh.h>
-#include <Component\CrMaterial.h>
+#include <CrComponent.h>
+#include <CrMesh.h>
+#include <CrMaterial.h>
 
 class DLL_ClASS CrMeshRender : public CrComponent
 {
@@ -20,18 +18,22 @@ public:
 	~CrMeshRender();
 
 public:
-	void Draw(glm::fmat4 & mvp, glm::vec3 & eye, glm::fmat4 & mv, glm::fmat4 & v);
-	EasyGetSet(CrMesh*, m_pMesh, Mesh);
+	
 	EasyGetSet(int8_t, m_CastShadows, CastShadows);				   //投射影子
 	EasyGetSet(int8_t, m_ReceiveShadows, ReceiveShadows);		   //接收影子
 	EasyGetSet(int8_t, m_UseLightProbes, UseLightProbes);		   //灯光探测器
 	EasyGetSet(int8_t, m_ReflectionProbes, ReflectionProbes);	   //反射探头
 
+	void SetMesh(CrMesh * mesh);
+	CrMesh * GetMesh();
+
 	void SetMaterial(CrMaterial * material);
 	CrMaterial * GetMaterial();
 
+	void Draw(glm::fmat4 & mvp, glm::vec3 & eye, glm::fmat4 & mv, glm::fmat4 & v);
 protected:
 	std::vector<CrMaterial *> m_pMaterials;
+	CrMesh * m_pMesh;
 };
 
 

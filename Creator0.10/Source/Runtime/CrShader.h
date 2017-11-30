@@ -7,10 +7,7 @@ Payne
 #ifndef _CREATOR_SHADER_H
 #define _CREATOR_SHADER_H
 
-#include <glew.h>
-#include "CrDefine.h"
-#include <Core/CrObject.h>
-#include <string>
+#include <CrObject.h>
 
 /*
 enum CrShaderPropertiesType

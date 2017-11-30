@@ -1,23 +1,34 @@
-#include "CrEngine.h"
+#include <CrEngine.h>
 #include <imgui.h>
-#include "imgui_impl_glfw_gl3.h"
-wchar_t * wcstr = NULL;
+#include <imgui_impl_glfw_gl3.h>
 
-
-
-//参考地址： http://blog.bitfly.cn/post/mbstowcs-func/
-wchar_t * AnsiToUnicode(char * mbstr)
+void _Render(CrGameObject * pGameObject, CrCamera * pCamera)
 {
-	wchar_t * wcstr;
-	size_t _size = mbstowcs(NULL, mbstr, 0);
-	wcstr = new wchar_t[_size + 1];
-	size_t _ret = mbstowcs(wcstr, mbstr, _size + 1);
-	if (_ret == -1)
+	if (pGameObject == NULL || !pGameObject->GetActive())
+		return;
+
+	CrMeshRender * meshRender = pGameObject->GetComponent<CrMeshRender>();
+	CrTransform * transform = pGameObject->GetTransform();
+	if (meshRender != NULL && transform != NULL)
 	{
-		delete[] wcstr;
-		wcstr = NULL;
+		glm::mat4 mvp = pCamera->GetVP() * transform->GetLocalToWorldMatrix();
+		glm::mat4 v = pCamera->GetTransform()->GetWorldToLocalMatrix();
+		glm::mat4 m = transform->GetLocalToWorldMatrix();
+
+		meshRender->Draw(mvp, pCamera->GetTransform()->GetPosition(), m, v);
 	}
-	return wcstr;
+
+	std::vector<CrGameObject * > gameobjects = pGameObject->GetChildren();
+
+	std::vector<CrGameObject * >::iterator iter = gameobjects.begin();
+	std::vector<CrGameObject * >::iterator iterEnd = gameobjects.end();
+
+	CrGameObject * gameobject = NULL;
+	for (; iter != iterEnd; ++iter)
+	{
+		gameobject = (*iter);
+		_Render(gameobject, pCamera);
+	}
 }
 
 int CrEngine::Initialization()
@@ -26,19 +37,18 @@ int CrEngine::Initialization()
 	{
 		return -1;
 	}
-
-	wcstr = AnsiToUnicode("ddddddd");
-
 	return 0;
 }
 
-int CrEngine::Start(CrScene * pScene)
+int CrEngine::Start()
 {
-	m_pRunScene = pScene;
-	m_pInstance->m_isRun = true;	
+	ImGui_ImplGlfwGL3_Init(CrWindow::GetEngineWindow(), false);
+	m_isInit = true;
+
+	m_isRun = true;	
 	while (m_isRun)
 	{
-		m_pInstance->MainLoop();
+		MainLoop();
 	}
 	Destory();
 	return 0;
@@ -46,17 +56,7 @@ int CrEngine::Start(CrScene * pScene)
 
 void CrEngine::Stop()
 {
-	m_pInstance->m_isRun = false;
-}
-
-CrEngine::CrEngine()
-	:m_isInit(false)
-{
-}
-
-CrEngine::~CrEngine()
-{
-
+	m_isRun = false;
 }
 
 bool CrEngine::Init()
@@ -73,21 +73,11 @@ bool CrEngine::Init()
 #endif
 		return false;
 	}
-#ifdef _DEBUG
-	printf("log: Initializing Config ...\n");
-#endif
-	if (!(CrConfig::Instance()->Init()))
-	{
-#ifdef _DEBUG
-		printf("error: Config initialize fail\n");
-#endif
-		return false;
-	}
 
 #ifdef _DEBUG
 	printf("log: Initializing Window ...\n");
 #endif
-	if (!(CrWindow::Instance()->Init()))
+	if (!(CrWindow::Create()))
 	{
 #ifdef _DEBUG
 		printf("error: Window initializing fail\n");
@@ -146,24 +136,6 @@ bool CrEngine::Init()
 		return false;
 	}
 
-#ifdef _DEBUG
-	printf("log: Initialize Event ...\n");
-#endif
-	if (!(CrEvent::Instance()->Init()))
-	{
-#ifdef _DEBUG
-		printf("error: Event initialize fail\n");
-#endif
-		return false;
-	}
-<<<<<<< HEAD
-	
-=======
-
-
-	CrFontLab::Instance()->Init();
-
->>>>>>> 226e5776acfff1f2146f832f10ca1c8b415d7270
 	glEnable(GL_TEXTURE_2D);
 	glDepthFunc(GL_LESS);
 	//点大小
@@ -179,12 +151,6 @@ bool CrEngine::Init()
 	//渲染模式
 	//glPolygonMode(GL_FRONT, GL_LINE);
 
-	ImGui_ImplGlfwGL3_Init(CrWindow::Instance()->GetEngineWindow(), false);
-	ImGui_ImplGlfwGL3_NewFrame();
-	m_isInit = true;
-
-	//Destory();
-
 	return true;
 }
 
@@ -193,7 +159,7 @@ void CrEngine::OnEnter()
 
 }
 
-void DrawSceneTree(CrGameObject * _go)
+void DrawObjectTree(CrGameObject * _go)
 {
 	if (ImGui::TreeNode(_go->GetName().c_str()))
 	{
@@ -202,9 +168,20 @@ void DrawSceneTree(CrGameObject * _go)
 		std::vector<CrGameObject * >::iterator iterEnd = _childs.end();
 		for (; iter != iterEnd; ++iter)
 		{
-			DrawSceneTree((*iter));
+			DrawObjectTree((*iter));
 		}
 		ImGui::TreePop();
+	}
+}
+
+void DrawSceneTree(CrScene * _go)
+{
+	std::vector<CrGameObject * > _childs = _go->GetChildren();
+	std::vector<CrGameObject * >::iterator iter = _childs.begin();
+	std::vector<CrGameObject * >::iterator iterEnd = _childs.end();
+	for (; iter != iterEnd; ++iter)
+	{
+		DrawObjectTree((*iter));
 	}
 }
 
@@ -213,35 +190,57 @@ int CrEngine::MainLoop()
 	CrTime::Instance()->Update();
 	if (CrTime::Instance()->IsMeetInterval())
 	{
-		CrEvent::Instance()->Update();
-		
-		if (m_pRunScene)
+		Event::Update();
+
+		ImGui_ImplGlfwGL3_NewFrame();
+
+		CrScene * scene = CrScene::CurrentScene();
+		if (scene)
 		{
-			m_pRunScene->Update();
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			glClearColor(0, 0, 0, 1);
+			scene->Update(CrTime::Instance()->GetDelateTimeLF());
 
-			glEnable(GL_DEPTH_TEST);
-
-			if (m_pCameraList.size() > 0)
+			std::list<CrCamera*> cameras = CrCamera::AllCamera();
+			if (cameras.size() > 0)
 			{
-				std::list<CrCamera*>::iterator cameraIter = m_pCameraList.begin();
-				std::list<CrCamera*>::iterator cameraIterEnd = m_pCameraList.end();
+				std::list<CrCamera*>::iterator cameraIter = cameras.begin();
+				std::list<CrCamera*>::iterator cameraIterEnd = cameras.end();
 				CrCamera * camera = NULL;
+
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+				glClearColor(0, 0, 0, 1);
+
+				glEnable(GL_DEPTH_TEST);
 
 				for (; cameraIter != cameraIterEnd; ++cameraIter)
 				{
 					camera = (*cameraIter);
-					camera->Render(m_pRunScene);
+					ImGui::Begin("camera");
+					glm::vec3 pos = camera->GetTransform()->GetPosition();
+					ImGui::Text("position %f %f %f", pos.x, pos.y, pos.z);
+					glm::vec3 rot = camera->GetTransform()->GetRotation();
+					ImGui::Text("rotation %f %f %f", rot.x, rot.y, rot.z);
+					ImGui::End();
+
+					std::vector<CrGameObject * > gameobjects = scene->GetChildren();
+					std::vector<CrGameObject * >::iterator iter = gameobjects.begin();
+					std::vector<CrGameObject * >::iterator iterEnd = gameobjects.end();
+
+					CrGameObject * gameobject = NULL;
+					for (; iter != iterEnd; ++iter)
+					{
+						gameobject = (*iter);
+						_Render(gameobject, camera);
+					}
 				}
+
+				glDisable(GL_DEPTH_TEST);
 			}
 
-			glDisable(GL_DEPTH_TEST);
-
-			if (m_pCanvasList.size() > 0)
+			std::list<UICanvas*> canvases = UICanvas::AllCanvas();
+			if (canvases.size() > 0)
 			{
-				std::list<UICanvas*>::iterator canvasIter = m_pCanvasList.begin();
-				std::list<UICanvas*>::iterator canvasIterEnd = m_pCanvasList.end();
+				std::list<UICanvas*>::iterator canvasIter = canvases.begin();
+				std::list<UICanvas*>::iterator canvasIterEnd = canvases.end();
 				UICanvas * canvas = NULL;
 
 				for (; canvasIter != canvasIterEnd; ++canvasIter)
@@ -250,25 +249,31 @@ int CrEngine::MainLoop()
 					canvas->Render();
 				}
 			}
+
+			unsigned int _fps = CrTime::Instance()->GetFramesPerSecond();
 		}
-
-		unsigned int _fps = CrTime::Instance()->GetFramesPerSecond();
-
+	
 		ImGui::Text("Hello, world!");
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		DrawSceneTree(m_pRunScene);
+		if (scene)
+		{
+			DrawSceneTree(scene);
+		}
+		if (ImGui::Button("exit"))
+		{
+			Stop();
+		}
 
 		// Rendering
 		int display_w, display_h;
-
-		glfwGetFramebufferSize(CrWindow::Instance()->GetEngineWindow(), &display_w, &display_h);
+		glfwGetFramebufferSize(CrWindow::GetEngineWindow(), &display_w, &display_h);
 		glViewport(0, 0, display_w, display_h);
 		ImGui::Render();
 
 		//内存泄漏飞起的地方
 		//CrFontLab::Instance()->Render(wcstr, 50, 50, 900, 25);
 
-		CrWindow::Instance()->Update();
+		glfwSwapBuffers(CrWindow::GetEngineWindow());
 	}
 
 	return 0;
@@ -279,36 +284,13 @@ void CrEngine::OnExit()
 
 }
 
-void CrEngine::ProMessage(GLFWwindow* window, GLuint64 msg, unsigned __int64 wParam, unsigned __int64 lParam)
-{
-	CrEvent::Instance()->ProMessage(msg, wParam, lParam);
-}
-
 void CrEngine::Destory()
 {
+	Event::Clear();
 	CrMemoryPool::Instance()->FreeMemory();//payne
 	glfwTerminate();
-
-	delete[] wcstr;
-	wcstr = NULL;
 }
 
-void CrEngine::AddCamera(CrCamera * pCamera)
-{
-	m_pCameraList.push_back(pCamera);
-}
-
-void CrEngine::RemoveCamera(CrCamera * pCamera)
-{
-	m_pCameraList.remove(pCamera);
-}
-
-void CrEngine::AddCanvas(UICanvas * pCanvas)
-{
-	m_pCanvasList.push_back(pCanvas);
-}
-
-void CrEngine::RemoveCanvas(UICanvas * pCanvas)
-{
-	m_pCanvasList.remove(pCanvas);
-}
+bool CrEngine::m_isRun(false);
+bool CrEngine::m_isInit(false);;
+double CrEngine::m_lfTotalDelay(0);

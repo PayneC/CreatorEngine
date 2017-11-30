@@ -7,7 +7,7 @@ Payne
 #ifndef _CREATOR_UI_WIDGET_H
 #define _CREATOR_UI_WIDGET_H
 
-#include <Core/CrGameObject.h>
+#include <CrGameObject.h>
 
 class DLL_ClASS UIWidget : public CrGameObject
 {

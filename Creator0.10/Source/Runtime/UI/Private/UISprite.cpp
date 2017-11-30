@@ -1,4 +1,4 @@
-#include <UI\UISprite.h>
+#include <UISprite.h>
 
 UISprite::UISprite()
 {

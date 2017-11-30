@@ -1,5 +1,5 @@
+#include <CrGameObject.h>
 #include <CrTransform.h>
-#include <Core/CrGameObject.h>
 
 CrTransform::CrTransform()
 	:m_isDirty(true)
@@ -177,15 +177,16 @@ void CrTransform::SetLocalRotation(glm::vec3 var)
 		glm::quat _quat = glm::quat(m_v3LocalRotation * glm::pi<float>() / 180.f);
 		m_qQuaternion = m_pParent->GetQuaternion() * _quat;
 		m_v3Rotation = glm::eulerAngles(m_qQuaternion) * 360.f;
-
-		m_v3Forword = glm::vec3(m_qQuaternion * glm::vec4(0.f, 0.f, 1.f, 1.f));
-		m_v3Up = glm::vec3(m_qQuaternion * glm::vec4(0.f, 1.f, 0.f, 1.f));
-		m_v3Right = glm::vec3(m_qQuaternion * glm::vec4(1.f, 0.f, 0.f, 1.f));
 	}
 	else
 	{
 		m_v3Rotation = m_v3LocalRotation;
+		m_qQuaternion = glm::quat(m_v3LocalRotation * glm::pi<float>() / 180.f);
 	}
+
+	m_v3Forword = glm::vec3(m_qQuaternion * glm::vec4(0.f, 0.f, 1.f, 1.f));
+	m_v3Up = glm::vec3(m_qQuaternion * glm::vec4(0.f, 1.f, 0.f, 1.f));
+	m_v3Right = glm::vec3(m_qQuaternion * glm::vec4(1.f, 0.f, 0.f, 1.f));
 
 	SetChildrenRotationDirty();
 }

@@ -1,6 +1,4 @@
-#include <Core/CrGameObject.h>
-#include "CrMeshUtility.h"
-#include "CrShaderUtility.h"
+#include <CrGameObject.h>
 
 CrGameObject::CrGameObject()
 : m_isActive(true)
@@ -9,7 +7,6 @@ CrGameObject::CrGameObject()
 , m_iTag(0)
 , m_ulLayer(0L)
 , m_kTransform(NULL)
-, m_pMeshRender(NULL)
 {
 	m_kTransform = AddComponent<CrTransform>();
 }
@@ -18,17 +15,46 @@ CrGameObject::~CrGameObject()
 {
 }
 
-void CrGameObject::Awake()
+void CrGameObject::Start()
 {
 
 }
 
-void CrGameObject::Begin()
+void CrGameObject::Update(double dt)
+{
+	if (!m_isActive) return;
+
+	std::vector<CrComponent*>::iterator icom = m_pComponents.begin();
+	std::vector<CrComponent*>::iterator icomend = m_pComponents.end();
+	for (; icom != icomend; ++icom)
+	{
+		(*icom)->Update(dt);
+	}
+
+	std::vector<CrGameObject * >::iterator iter = m_pChildren.begin();
+	std::vector<CrGameObject * >::iterator iterEnd = m_pChildren.end();
+	for (; iter != iterEnd; ++iter)
+	{
+		(*iter)->Update(dt);
+	}
+}
+
+void CrGameObject::LateUpdate(double dt)
 {
 
 }
 
-void CrGameObject::Destroy()
+void CrGameObject::OnEnable()
+{
+
+}
+
+void CrGameObject::OnDisable()
+{
+
+}
+
+void CrGameObject::OnDestroy()
 {
 	if (m_pParent)
 		m_pParent->RemoveChild(this);
@@ -37,34 +63,6 @@ void CrGameObject::Destroy()
 	RemoveAllComponent();
 }
 
-void CrGameObject::Update()
-{
-	if (!m_isActive) return;
-
-	std::vector<CrComponent*>::iterator icom = m_pComponents.begin();
-	std::vector<CrComponent*>::iterator icomend = m_pComponents.end();
-	for (; icom != icomend; ++icom)
-	{
-		(*icom)->Update();
-	}
-
-	std::vector<CrGameObject * >::iterator iter = m_pChildren.begin();
-	std::vector<CrGameObject * >::iterator iterEnd = m_pChildren.end();
-	for (; iter != iterEnd; ++iter)
-	{
-		(*iter)->Update();
-	}
-}
-
-void CrGameObject::Enable()
-{
-
-}
-
-void CrGameObject::Disabled()
-{
-
-}
 
 void CrGameObject::AddChild(CrGameObject * pNode)
 {
@@ -150,11 +148,6 @@ void CrGameObject::_AddComponent(CrComponent * Pointer)
 	m_pComponents.push_back(Pointer);
 	Pointer->SetGameObject(this);
 	Pointer->Retain();
-
-	if (typeid(*Pointer) == typeid(CrMeshRender))
-	{
-		m_pMeshRender = (CrMeshRender * )Pointer;
-	}
 }
 
 void CrGameObject::RemoveComponent(CrComponent * Pointer)
@@ -173,7 +166,7 @@ void CrGameObject::RemoveAllComponent()
 
 	for (; iter != iterEnd; ++iter)
 	{
-		(*iter)->Destroy();
+		(*iter)->OnDestroy();
 		(*iter)->Release();
 	}
 

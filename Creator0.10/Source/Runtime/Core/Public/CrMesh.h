@@ -7,19 +7,7 @@ Payne
 #ifndef _CREATOR_MESH_H
 #define _CREATOR_MESH_H
 
-#include <CrDefine.h>
-#include <string>
-#include <Core/CrObject.h>
-
-#include <vector>
-
-struct Vertex
-{
-	glm::vec3 Position;
-	glm::vec3 Normal;
-	glm::vec2 TexCoords;	
-	glm::vec3 Tangent;
-};
+#include <CrObject.h>
 
 class DLL_ClASS CrMesh : public CrObject
 {

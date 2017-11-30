@@ -7,9 +7,7 @@ Payne
 #ifndef _CREATOR_TRANSFORM_H
 #define _CREATOR_TRANSFORM_H
 
-#include "CrDefine.h"
-#include "CrComponent.h"
-#include <vector>
+#include <CrComponent.h>
 
 class DLL_ClASS CrTransform : public CrComponent
 {

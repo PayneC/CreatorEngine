@@ -1,9 +1,8 @@
 #include "CrMeshUtility.h"
 #include "CrShaderUtility.h"
 #include "CrTextureUtility.h"
-
-#include <string>
-#include <fstream>
+#include <CrMeshRender.h>
+#include <CrTransform.h>
 
 CrMeshUtility::CrMeshUtility()
 {

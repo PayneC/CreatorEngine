@@ -1,5 +1,5 @@
 #include <CrMeshRender.h>
-#include <Core/CrGameObject.h>
+#include <CrGameObject.h>
 
 CrMeshRender::CrMeshRender()
 {
@@ -103,4 +103,14 @@ CrMaterial * CrMeshRender::GetMaterial()
 		return m_pMaterials[0];
 	}
 	return NULL;
+}
+
+void CrMeshRender::SetMesh(CrMesh * mesh)
+{
+	m_pMesh = mesh;
+}
+
+CrMesh * CrMeshRender::GetMesh()
+{
+	return m_pMesh;
 }
