@@ -5,10 +5,7 @@
     <ClCompile Include="..\..\..\Source\Runtime\CrCubemap.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CreatorEngine.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrEngine.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrEngineInterface.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrEngineInterfaceLua.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrLight.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrMemoryPool.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrMeshUtility.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrShader.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrShaderUtility.cpp" />
@@ -74,10 +71,7 @@
     <ClInclude Include="..\..\..\Source\Runtime\CrDefine.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CreatorEngine.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrEngine.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrEngineInterface.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrEngineInterfaceLua.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrLight.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrMemoryPool.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrMeshUtility.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrShader.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrShaderUtility.h" />

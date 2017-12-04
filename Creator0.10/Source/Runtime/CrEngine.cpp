@@ -98,17 +98,6 @@ bool CrEngine::Init()
 	}
 
 #ifdef _DEBUG
-	printf("log: Initializing MemoryPool ...\n");
-#endif	
-	if (!CrMemoryPool::Instance()->Init())
-	{
-#ifdef _DEBUG
-		printf("error: MemoryPool initialize fail\n");
-#endif
-		return false;
-	}
-
-#ifdef _DEBUG
 	printf("log: Initializing Director ...\n");
 #endif
 
@@ -287,7 +276,7 @@ void CrEngine::OnExit()
 void CrEngine::Destory()
 {
 	Event::Clear();
-	CrMemoryPool::Instance()->FreeMemory();//payne
+	CrObject::FreeObjects();//payne
 	glfwTerminate();
 }
 

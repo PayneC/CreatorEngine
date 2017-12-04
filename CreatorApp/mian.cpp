@@ -24,13 +24,11 @@ Payne
 #include "test.h"
 #include "testCamera.h"
 
-using namespace CreatorEngine;
-
 void Scene1()
 {
 	CrTexture * texture = CrTextureUtility::Instance()->LoadTexture("001.png");
 
-	CrScene * pScene = CrObject::Instance<CrScene>();
+	CrScene* pScene = CrObject::Instance<CrScene>();
 
 	CrGameObject * go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_QUAD, "center");
 	pScene->AddGameObject(go);
@@ -108,7 +106,7 @@ void Scene2()
 	CrTexture * texture2 = CrTextureUtility::Instance()->LoadTexture("SandyGround.tga");
 	CrTexture * textureN = CrTextureUtility::Instance()->LoadTexture("SandyGround_Normal.tga");
 
-	CrScene * pScene = CrObject::Instance<CrScene>();
+	CrScene* pScene = CrObject::Instance<CrScene>();
 	
 	CrGameObject * go = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_QUAD, "center");
 	pScene->AddGameObject(go);

@@ -10,8 +10,6 @@ Payne
 //²Î¿¼µØÖ·£º http://blog.bitfly.cn/post/mbstowcs-func/
 
 #include <CrEngine.h>
-#include <CrEngineInterface.h>
-#include <CrEngineInterfaceLua.h>
 
 #include <CrDefine.h>
 #include <Core.h>
