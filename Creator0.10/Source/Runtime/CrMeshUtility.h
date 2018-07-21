@@ -27,14 +27,14 @@ public:
 	CrMeshUtility();
 	~CrMeshUtility();
 
-	static CrMesh* CreateMesh(EPresetMeshType meshType);
-	static CrGameObject* LoadModel(const char* filename);
-	static CrGameObject* processNode(aiNode *node, const aiScene *scene);
-	static CrGameObject* processMesh(aiMesh *mesh, const aiScene *scene);
+	static std::shared_ptr<CrMesh>  CreateMesh(EPresetMeshType meshType);
+	static std::shared_ptr<CrGameObject>  LoadModel(const char* filename);
+	static std::shared_ptr<CrGameObject>  processNode(aiNode *node, const aiScene *scene);
+	static std::shared_ptr<CrGameObject>  processMesh(aiMesh *mesh, const aiScene *scene);
 private:
-	CrMesh* CreateMeshCube();
-	CrMesh* CreateMeshQuad();
-	CrMesh* m_BuiltinMeshs[CR_MESH_TYPE_COUNT];
+	std::shared_ptr<CrMesh>  CreateMeshCube();
+	std::shared_ptr<CrMesh>  CreateMeshQuad();
+	std::shared_ptr<CrMesh>  m_BuiltinMeshs[CR_MESH_TYPE_COUNT];
 };
 
 #endif

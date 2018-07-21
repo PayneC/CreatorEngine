@@ -2,32 +2,31 @@
 #include <imgui.h>
 #include <imgui_impl_glfw_gl3.h>
 
-void _Render(CrGameObject * pGameObject, CrCamera * pCamera)
+
+void _Render(std::shared_ptr<CrGameObject> pGameObject, std::shared_ptr<CrCamera> pCamera)
 {
 	if (pGameObject == NULL || !pGameObject->GetActive())
 		return;
 
-	CrMeshRender * meshRender = pGameObject->GetComponent<CrMeshRender>();
-	CrTransform * transform = pGameObject->GetTransform();
+	std::shared_ptr<CrMeshRender> meshRender = pGameObject->GetComponent<CrMeshRender>();
+	std::shared_ptr <CrTransform> transform = pGameObject->get_transform();
 	if (meshRender != NULL && transform != NULL)
 	{
 		glm::mat4 mvp = pCamera->GetVP() * transform->GetLocalToWorldMatrix();
-		glm::mat4 v = pCamera->GetTransform()->GetWorldToLocalMatrix();
+		glm::mat4 v = pCamera->get_transform()->GetWorldToLocalMatrix();
 		glm::mat4 m = transform->GetLocalToWorldMatrix();
 
-		meshRender->Draw(mvp, pCamera->GetTransform()->GetPosition(), m, v);
+		meshRender->Draw(mvp, pCamera->get_transform()->GetPosition(), m, v);
 	}
 
-	std::vector<CrGameObject * > gameobjects = pGameObject->GetChildren();
+	std::vector<std::shared_ptr<CrTransform>> transforms = transform->get_children();
+	std::vector<std::shared_ptr<CrTransform>>::iterator iter = transforms.begin();
+	std::vector<std::shared_ptr<CrTransform>>::iterator iterEnd = transforms.end();
 
-	std::vector<CrGameObject * >::iterator iter = gameobjects.begin();
-	std::vector<CrGameObject * >::iterator iterEnd = gameobjects.end();
-
-	CrGameObject * gameobject = NULL;
 	for (; iter != iterEnd; ++iter)
 	{
-		gameobject = (*iter);
-		_Render(gameobject, pCamera);
+		transform = (*iter);
+		_Render(transform->GetGameObject(), pCamera);
 	}
 }
 
@@ -45,7 +44,7 @@ int CrEngine::Start()
 	ImGui_ImplGlfwGL3_Init(CrWindow::GetEngineWindow(), false);
 	m_isInit = true;
 
-	m_isRun = true;	
+	m_isRun = true;
 	while (m_isRun)
 	{
 		MainLoop();
@@ -148,29 +147,29 @@ void CrEngine::OnEnter()
 
 }
 
-void DrawObjectTree(CrGameObject * _go)
+void DrawObjectTree(std::shared_ptr<CrGameObject>_go)
 {
-	if (ImGui::TreeNode(_go->GetName().c_str()))
+	if (ImGui::TreeNode(_go->get_name().c_str()))
 	{
-		std::vector<CrGameObject * > _childs = _go->GetChildren();
-		std::vector<CrGameObject * >::iterator iter = _childs.begin();
-		std::vector<CrGameObject * >::iterator iterEnd = _childs.end();
+		std::vector<std::shared_ptr<CrTransform>> _childs = _go->get_transform()->get_children();
+		std::vector<std::shared_ptr<CrTransform>>::iterator iter = _childs.begin();
+		std::vector<std::shared_ptr<CrTransform>>::iterator iterEnd = _childs.end();
 		for (; iter != iterEnd; ++iter)
 		{
-			DrawObjectTree((*iter));
+			DrawObjectTree((*iter)->GetGameObject());
 		}
 		ImGui::TreePop();
 	}
 }
 
-void DrawSceneTree(CrScene * _go)
+void DrawSceneTree(std::shared_ptr<CrScene> _go)
 {
-	std::vector<CrGameObject * > _childs = _go->GetChildren();
-	std::vector<CrGameObject * >::iterator iter = _childs.begin();
-	std::vector<CrGameObject * >::iterator iterEnd = _childs.end();
+	std::vector<std::shared_ptr<CrTransform>> _childs = _go->get_transform()->get_children();
+	std::vector<std::shared_ptr<CrTransform>>::iterator iter = _childs.begin();
+	std::vector<std::shared_ptr<CrTransform>>::iterator iterEnd = _childs.end();
 	for (; iter != iterEnd; ++iter)
 	{
-		DrawObjectTree((*iter));
+		DrawObjectTree((*iter)->GetGameObject());
 	}
 }
 
@@ -183,17 +182,17 @@ int CrEngine::MainLoop()
 
 		ImGui_ImplGlfwGL3_NewFrame();
 
-		CrScene * scene = CrScene::CurrentScene();
+		std::shared_ptr<CrScene> scene = CrScene::CurrentScene();
 		if (scene)
 		{
 			scene->Update(CrTime::Instance()->GetDelateTimeLF());
 
-			std::list<CrCamera*> cameras = CrCamera::AllCamera();
+			std::list<std::shared_ptr<CrCamera>> cameras = CrCamera::AllCamera();
 			if (cameras.size() > 0)
 			{
-				std::list<CrCamera*>::iterator cameraIter = cameras.begin();
-				std::list<CrCamera*>::iterator cameraIterEnd = cameras.end();
-				CrCamera * camera = NULL;
+				std::list<std::shared_ptr<CrCamera>>::iterator cameraIter = cameras.begin();
+				std::list<std::shared_ptr<CrCamera>>::iterator cameraIterEnd = cameras.end();
+				std::shared_ptr<CrCamera> camera = NULL;
 
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 				glClearColor(0, 0, 0, 1);
@@ -204,44 +203,30 @@ int CrEngine::MainLoop()
 				{
 					camera = (*cameraIter);
 					ImGui::Begin("camera");
-					glm::vec3 pos = camera->GetTransform()->GetPosition();
+					glm::vec3 pos = camera->get_transform()->GetPosition();
 					ImGui::Text("position %f %f %f", pos.x, pos.y, pos.z);
-					glm::vec3 rot = camera->GetTransform()->GetRotation();
+					glm::vec3 rot = camera->get_transform()->GetRotation();
 					ImGui::Text("rotation %f %f %f", rot.x, rot.y, rot.z);
 					ImGui::End();
 
-					std::vector<CrGameObject * > gameobjects = scene->GetChildren();
-					std::vector<CrGameObject * >::iterator iter = gameobjects.begin();
-					std::vector<CrGameObject * >::iterator iterEnd = gameobjects.end();
+					std::vector<std::shared_ptr<CrTransform>> transforms = scene->get_transform()->get_children();
+					std::vector<std::shared_ptr<CrTransform>>::iterator iter = transforms.begin();
+					std::vector<std::shared_ptr<CrTransform>>::iterator iterEnd = transforms.end();
 
-					CrGameObject * gameobject = NULL;
+					std::shared_ptr<CrTransform>transform = NULL;
 					for (; iter != iterEnd; ++iter)
 					{
-						gameobject = (*iter);
-						_Render(gameobject, camera);
+						transform = (*iter);
+						_Render(transform->GetGameObject(), camera);
 					}
 				}
 
 				glDisable(GL_DEPTH_TEST);
 			}
 
-			std::list<UICanvas*> canvases = UICanvas::AllCanvas();
-			if (canvases.size() > 0)
-			{
-				std::list<UICanvas*>::iterator canvasIter = canvases.begin();
-				std::list<UICanvas*>::iterator canvasIterEnd = canvases.end();
-				UICanvas * canvas = NULL;
-
-				for (; canvasIter != canvasIterEnd; ++canvasIter)
-				{
-					canvas = (*canvasIter);
-					canvas->Render();
-				}
-			}
-
 			unsigned int _fps = CrTime::Instance()->GetFramesPerSecond();
 		}
-	
+
 		ImGui::Text("Hello, world!");
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		if (scene)
@@ -276,7 +261,6 @@ void CrEngine::OnExit()
 void CrEngine::Destory()
 {
 	Event::Clear();
-	CrObject::FreeObjects();//payne
 	glfwTerminate();
 }
 

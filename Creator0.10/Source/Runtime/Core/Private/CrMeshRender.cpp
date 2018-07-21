@@ -105,12 +105,12 @@ CrMaterial * CrMeshRender::GetMaterial()
 	return NULL;
 }
 
-void CrMeshRender::SetMesh(CrMesh * mesh)
+void CrMeshRender::SetMesh(std::shared_ptr<CrMesh> mesh)
 {
 	m_pMesh = mesh;
 }
 
-CrMesh * CrMeshRender::GetMesh()
+std::shared_ptr<CrMesh> CrMeshRender::GetMesh()
 {
 	return m_pMesh;
 }

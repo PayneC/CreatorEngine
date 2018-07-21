@@ -11,10 +11,9 @@ Payne
 
 class DLL_ClASS CrCamera : public CrGameObject
 {
-private:
-	static std::list<CrCamera*> m_pCameraList;
 public:
-	static std::list<CrCamera*> AllCamera();
+	static std::list<std::shared_ptr<CrCamera>> m_pCameraList;
+	static std::list<std::shared_ptr<CrCamera>> AllCamera();
 
 public:
 	CrCamera();

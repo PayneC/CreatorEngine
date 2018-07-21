@@ -9,25 +9,18 @@ Payne
 
 #include <CrGameObject.h>
 
-class DLL_ClASS CrScene : public CrObject
+class DLL_ClASS CrScene : public CrGameObject
 {
 public:
-	static CrScene * CurrentScene();
-	static void SetCurrentScene(CrScene * var);
+	static std::shared_ptr<CrScene>  CurrentScene();
+	static void SetCurrentScene(std::shared_ptr<CrScene>  var);
 
 public:
 	CrScene();
 	~CrScene();
 
-	void AddGameObject(CrGameObject * gameobject);
-	void RemoveGameObject(CrGameObject * gameobject);
-	const std::vector<CrGameObject *> GetChildren() const { return m_pChildren; }
-	void Update(double dt);
-
 protected:
-	static CrScene * m_pRunScene;
-
-	std::vector<CrGameObject *> m_pChildren;
+	static std::shared_ptr<CrScene>  m_pRunScene;
 };
 
 #endif

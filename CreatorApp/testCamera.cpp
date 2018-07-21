@@ -51,28 +51,28 @@ void testCamera::EventCallback(GLint64 msg, GLint64 wParam, GLint64 lParam)
 			mouseButton1Press = true;
 			break;
 		case GLFW_KEY_W:
-			_pos = GetGameObject()->GetTransform()->GetPosition();
-			_move = GetGameObject()->GetTransform()->GetForword();
+			_pos = GetGameObject()->get_transform()->GetPosition();
+			_move = GetGameObject()->get_transform()->GetForword();
 			_dt = CrTime::Instance()->GetDelateTime();
-			GetGameObject()->GetTransform()->SetPosition(_pos - _move  * _dt * _speed);
+			GetGameObject()->get_transform()->SetPosition(_pos - _move  * _dt * _speed);
 			break;
 		case GLFW_KEY_S:
-			_pos = GetGameObject()->GetTransform()->GetPosition();
-			_move = GetGameObject()->GetTransform()->GetForword();
+			_pos = GetGameObject()->get_transform()->GetPosition();
+			_move = GetGameObject()->get_transform()->GetForword();
 			_dt = CrTime::Instance()->GetDelateTime();
-			GetGameObject()->GetTransform()->SetPosition(_pos + _move  * _dt * _speed);
+			GetGameObject()->get_transform()->SetPosition(_pos + _move  * _dt * _speed);
 			break;
 		case GLFW_KEY_A:
-			_pos = GetGameObject()->GetTransform()->GetPosition();
-			_move = GetGameObject()->GetTransform()->GetRight();
+			_pos = GetGameObject()->get_transform()->GetPosition();
+			_move = GetGameObject()->get_transform()->GetRight();
 			_dt = CrTime::Instance()->GetDelateTime();
-			GetGameObject()->GetTransform()->SetPosition(_pos - _move  * _dt * _speed);
+			GetGameObject()->get_transform()->SetPosition(_pos - _move  * _dt * _speed);
 			break;
 		case GLFW_KEY_D:
-			_pos = GetGameObject()->GetTransform()->GetPosition();
-			_move = GetGameObject()->GetTransform()->GetRight();
+			_pos = GetGameObject()->get_transform()->GetPosition();
+			_move = GetGameObject()->get_transform()->GetRight();
 			_dt = CrTime::Instance()->GetDelateTime();
-			GetGameObject()->GetTransform()->SetPosition(_pos + _move  * _dt * _speed);
+			GetGameObject()->get_transform()->SetPosition(_pos + _move  * _dt * _speed);
 			break;
 
 		case GLFW_KEY_ESCAPE:
@@ -85,6 +85,6 @@ void testCamera::EventCallback(GLint64 msg, GLint64 wParam, GLint64 lParam)
 
 	if (msg == CR_EVENT_MOUSE_MOVE && mouseButton1Press)
 	{
-		GetGameObject()->GetTransform()->SetLocalRotation(GetGameObject()->GetTransform()->GetLocalRotation() - Vector3(lParam, wParam, 0) * CrTime::Instance()->GetDelateTime()* _speed);
+		GetGameObject()->get_transform()->SetLocalRotation(GetGameObject()->get_transform()->GetLocalRotation() - Vector3(lParam, wParam, 0) * CrTime::Instance()->GetDelateTime()* _speed);
 	}
 }

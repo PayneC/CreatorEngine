@@ -13,7 +13,6 @@ Payne
 
 #include <CrDefine.h>
 #include <Core.h>
-#include <UI.h>
 
 #include <CrMeshUtility.h>
 #include <CrShaderUtility.h>

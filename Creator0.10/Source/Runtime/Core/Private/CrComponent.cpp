@@ -39,12 +39,12 @@ void CrComponent::OnDestroy()
 
 }
 
-void CrComponent::SetGameObject(CrGameObject * pointer)
+void CrComponent::SetGameObject(std::shared_ptr<CrGameObject> pointer)
 {
 	m_pGameObject = pointer;
 }
 
-CrGameObject * CrComponent::GetGameObject()
+std::shared_ptr<CrGameObject> CrComponent::GetGameObject()
 {
-	return m_pGameObject;
+	return m_pGameObject.lock();
 }

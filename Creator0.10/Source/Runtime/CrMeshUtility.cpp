@@ -12,7 +12,7 @@ CrMeshUtility::~CrMeshUtility()
 {
 }
 
-CrMesh *CrMeshUtility::CreateMesh(EPresetMeshType meshType)
+std::shared_ptr<CrMesh> CrMeshUtility::CreateMesh(EPresetMeshType meshType)
 {
 	switch (meshType)
 	{
@@ -25,12 +25,12 @@ CrMesh *CrMeshUtility::CreateMesh(EPresetMeshType meshType)
 	}
 }
 
-CrMesh *CrMeshUtility::CreateMeshCube()
+std::shared_ptr<CrMesh> CrMeshUtility::CreateMeshCube()
 {
 	if (m_BuiltinMeshs[CR_MESH_TYPE_CUBE] != NULL)
 		return m_BuiltinMeshs[CR_MESH_TYPE_CUBE];
 
-	m_BuiltinMeshs[CR_MESH_TYPE_CUBE] = new CrMesh();
+	m_BuiltinMeshs[CR_MESH_TYPE_CUBE] = std::make_shared<CrMesh>();
 
 	GLfloat vertices[] =
 	{
@@ -193,12 +193,12 @@ CrMesh *CrMeshUtility::CreateMeshCube()
 	return m_BuiltinMeshs[CR_MESH_TYPE_CUBE];
 }
 
-CrMesh *CrMeshUtility::CreateMeshQuad()
+std::shared_ptr<CrMesh> CrMeshUtility::CreateMeshQuad()
 {
 	if (m_BuiltinMeshs[CR_MESH_TYPE_QUAD] != NULL)
 		return m_BuiltinMeshs[CR_MESH_TYPE_QUAD];
 
-	m_BuiltinMeshs[CR_MESH_TYPE_QUAD] = new CrMesh();
+	m_BuiltinMeshs[CR_MESH_TYPE_QUAD] = std::make_shared<CrMesh>();
 
 	GLfloat vertices[] =
 	{
@@ -297,46 +297,46 @@ CrMesh *CrMeshUtility::CreateMeshQuad()
 	return m_BuiltinMeshs[CR_MESH_TYPE_QUAD];
 }
 
-CrGameObject *CrMeshUtility::LoadModel(const char* filename)
+std::shared_ptr<CrGameObject> CrMeshUtility::LoadModel(const char* filename)
 {
 	Assimp::Importer _importer;
 	const aiScene* pScene = _importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
-	CrGameObject* _go = processNode(pScene->mRootNode, pScene);
+	std::shared_ptr<CrGameObject> _go = processNode(pScene->mRootNode, pScene);
 	return _go;
 }
 
-CrGameObject* CrMeshUtility::processNode(aiNode *node, const aiScene *scene)
+std::shared_ptr<CrGameObject> CrMeshUtility::processNode(aiNode *node, const aiScene *scene)
 {		
-	CrGameObject* _go = CrGameObject::CreateGameObject<CrGameObject>(node->mName.C_Str());
+	std::shared_ptr<CrGameObject> _go = CrGameObject::CreateGameObject<CrGameObject>(node->mName.C_Str());
 	for (int i = 0; i < node->mNumMeshes; ++i)
 	{
 		aiMesh * mesh = scene->mMeshes[node->mMeshes[i]];
-		CrGameObject* _goMesh = processMesh(mesh, scene);
-		_go->AddChild(_goMesh);
-		_goMesh->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
-		_goMesh->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
-		_goMesh->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
+		std::shared_ptr<CrGameObject> _goMesh = processMesh(mesh, scene);
+		_goMesh->get_transform()->SetParent(_go->get_transform());
+		_goMesh->get_transform()->SetPosition(glm::vec3(0, 1, 0));
+		_goMesh->get_transform()->SetLocalScale(glm::vec3(1, 1, 1));
+		_goMesh->get_transform()->SetRotation(glm::vec3(0, 0, 0));
 	}
 
 	for (int i = 0; i < node->mNumChildren; ++i)
 	{
-		CrGameObject * _goChild = processNode(node->mChildren[i], scene);
-		_go->AddChild(_goChild);
-		_goChild->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
-		_goChild->GetTransform()->SetLocalScale(glm::vec3(1, 1, 1));
-		_goChild->GetTransform()->SetRotation(glm::vec3(0, 0, 0));
+		std::shared_ptr<CrGameObject> _goChild = processNode(node->mChildren[i], scene);
+		_goChild->get_transform()->SetParent(_go->get_transform());
+		_goChild->get_transform()->SetPosition(glm::vec3(0, 1, 0));
+		_goChild->get_transform()->SetLocalScale(glm::vec3(1, 1, 1));
+		_goChild->get_transform()->SetRotation(glm::vec3(0, 0, 0));
 	}
 
 	return _go;
 }
 
-CrGameObject* CrMeshUtility::processMesh(aiMesh *mesh, const aiScene *scene)
+std::shared_ptr<CrGameObject> CrMeshUtility::processMesh(aiMesh *mesh, const aiScene *scene)
 {	
-	CrGameObject* _go = CrGameObject::CreateGameObject<CrGameObject>(mesh->mName.C_Str());
-	CrMeshRender * meshRender = _go->AddComponent<CrMeshRender>();	
+	std::shared_ptr<CrGameObject> _go = CrGameObject::CreateGameObject<CrGameObject>(mesh->mName.C_Str());
+	std::shared_ptr<CrMeshRender> meshRender = _go->AddComponent<CrMeshRender>();
 
-	CrMesh * _mesh = new CrMesh();
+	std::shared_ptr<CrMesh>  _mesh = std::make_shared<CrMesh>();
 	CrMaterial * material = CrMaterial::CreateCrMaterial();	
 	CrShader * shader = CrShaderUtility::CreateShader("Blinn-Phong.vert", "Blinn-Phong.frag");
 	material->SetShader(shader);

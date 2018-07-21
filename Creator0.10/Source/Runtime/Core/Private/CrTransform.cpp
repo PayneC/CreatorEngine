@@ -4,7 +4,7 @@
 CrTransform::CrTransform()
 	:m_isDirty(true)
 	, m_v3Scale(1.f, 1.f, 1.f)
-	, m_pParent(nullptr)
+	, m_pParent()
 {
 }
 
@@ -12,13 +12,18 @@ CrTransform::~CrTransform()
 {
 }
 
+std::shared_ptr<CrTransform> CrTransform::GetParent()
+{
+	return std::shared_ptr<CrTransform>(m_pParent);
+}
+
 glm::vec3 CrTransform::GetPosition()
 {
 	if (m_isPositionDirty)
 	{
-		if (m_pParent)
+		if (!m_pParent.expired())
 		{
-			m_v3Position = glm::vec3(m_pParent->GetLocalToWorldMatrix() * glm::vec4(m_v3LocalPosition, 1.f));
+			m_v3Position = glm::vec3(GetParent()->GetLocalToWorldMatrix() * glm::vec4(m_v3LocalPosition, 1.f));
 		}
 		else
 		{
@@ -34,9 +39,9 @@ glm::vec3 CrTransform::GetRotation()
 {
 	if (m_isRotationDirty)
 	{
-		if (m_pParent)
+		if (!m_pParent.expired())
 		{
-			m_v3Rotation = m_pParent->GetRotation() + m_v3LocalRotation;
+			m_v3Rotation = GetParent()->GetRotation() + m_v3LocalRotation;
 		}
 		else
 		{
@@ -53,9 +58,9 @@ glm::vec3 CrTransform::GetScale()
 {
 	if (m_isScaleDirty)
 	{
-		if (m_pParent)
+		if (!m_pParent.expired())
 		{
-			m_v3Scale = m_pParent->GetScale() * m_v3LocalScale;
+			m_v3Scale = GetParent()->GetScale() * m_v3LocalScale;
 		}
 		else
 		{
@@ -116,9 +121,9 @@ void CrTransform::SetPosition(glm::vec3 var)
 		return;
 	m_v3Position = var;
 
-	if (m_pParent)
+	if (!m_pParent.expired())
 	{
-		m_v3LocalPosition = glm::vec3(m_pParent->GetWorldToLocalMatrix() * glm::vec4(m_v3Position, 1.f));
+		m_v3LocalPosition = glm::vec3(GetParent()->GetWorldToLocalMatrix() * glm::vec4(m_v3Position, 1.f));
 	}
 	else
 	{
@@ -141,9 +146,9 @@ void CrTransform::SetRotation(glm::vec3 var)
 	m_v3Up = glm::vec3(m_qQuaternion * glm::vec4(0.f, 1.f, 0.f, 1.f));
 	m_v3Right = glm::vec3(m_qQuaternion * glm::vec4(1.f, 0.f, 0.f, 1.f));
 
-	if (m_pParent)
+	if (!m_pParent.expired())
 	{
-		glm::quat quat = m_pParent->GetQuaternion() * m_qQuaternion;
+		glm::quat quat = GetParent()->GetQuaternion() * m_qQuaternion;
 		m_v3LocalRotation = glm::eulerAngles(quat) * 360.f;
 	}
 	else
@@ -172,10 +177,10 @@ void CrTransform::SetLocalRotation(glm::vec3 var)
 
 	m_v3LocalRotation = var;
 
-	if (m_pParent)
+	if (!m_pParent.expired())
 	{
 		glm::quat _quat = glm::quat(m_v3LocalRotation * glm::pi<float>() / 180.f);
-		m_qQuaternion = m_pParent->GetQuaternion() * _quat;
+		m_qQuaternion = GetParent()->GetQuaternion() * _quat;
 		m_v3Rotation = glm::eulerAngles(m_qQuaternion) * 360.f;
 	}
 	else
@@ -203,7 +208,7 @@ void CrTransform::SetLocalScale(glm::vec3 var)
 void CrTransform::_ExecuteMatrix()
 {
 	if (m_isDirty)
-	{		
+	{
 		glm::mat4 rm = glm::mat4(GetQuaternion());
 		glm::mat4 sm = glm::scale(glm::mat4(1.f), GetScale());
 		glm::mat4 tm = glm::translate(glm::mat4(1.f), GetPosition());
@@ -215,19 +220,42 @@ void CrTransform::_ExecuteMatrix()
 	}
 }
 
+void CrTransform::SetParent(std::shared_ptr<CrTransform> pParent)
+{
+	std::shared_ptr<CrTransform> _parent = m_pParent.lock();
+	if (_parent == pParent)
+	{
+		return;
+	}
+
+	if (_parent != nullptr)
+	{
+		_parent->RemoveChild(shared_from_this());
+	}
+
+	_parent = pParent;
+
+	if (_parent != nullptr)
+	{
+		_parent->m_pChildren.push_back(shared_from_this());
+	}
+
+	m_pParent = std::weak_ptr<CrTransform>(_parent);
+}
+
 glm::quat CrTransform::GetQuaternion()
 {
 	return m_qQuaternion;
 }
 
-void CrTransform::LookAt(CrGameObject * gameobject)
+void CrTransform::LookAt(std::shared_ptr<CrGameObject> gameobject)
 {
 	if (gameobject == NULL)
 		return;
 
-	LookAt(gameobject->GetTransform()->GetPosition());
+	LookAt(gameobject->get_transform()->GetPosition());
 }
-void CrTransform::LookAt(CrTransform * transform)
+void CrTransform::LookAt(std::shared_ptr<CrTransform> transform)
 {
 	if (transform == NULL)
 		return;
@@ -248,9 +276,8 @@ void CrTransform::SetChildrenPositionDirty()
 	m_isPositionDirty = true;
 	m_isDirty = true;
 
-	std::vector<CrTransform*> children = m_pChildren;
-	std::vector<CrTransform*>::iterator iter = children.begin();
-	std::vector<CrTransform*>::iterator iterEnd = children.end();
+	std::vector<std::shared_ptr<CrTransform>>::iterator iter = m_pChildren.begin();
+	std::vector<std::shared_ptr<CrTransform>>::iterator iterEnd = m_pChildren.end();
 
 	for (; iter != iterEnd; ++iter)
 	{
@@ -264,9 +291,8 @@ void CrTransform::SetChildrenRotationDirty()
 	m_isRotationDirty = true;
 	m_isDirty = true;
 
-	std::vector<CrTransform*> children = m_pChildren;
-	std::vector<CrTransform*>::iterator iter = children.begin();
-	std::vector<CrTransform*>::iterator iterEnd = children.end();
+	std::vector<std::shared_ptr<CrTransform>>::iterator iter = m_pChildren.begin();
+	std::vector<std::shared_ptr<CrTransform>>::iterator iterEnd = m_pChildren.end();
 
 	for (; iter != iterEnd; ++iter)
 	{
@@ -280,9 +306,8 @@ void CrTransform::SetChildrenScaleDirty()
 	m_isScaleDirty = true;
 	m_isDirty = true;
 
-	std::vector<CrTransform*> children = m_pChildren;
-	std::vector<CrTransform*>::iterator iter = children.begin();
-	std::vector<CrTransform*>::iterator iterEnd = children.end();
+	std::vector<std::shared_ptr<CrTransform>>::iterator iter = m_pChildren.begin();
+	std::vector<std::shared_ptr<CrTransform>>::iterator iterEnd = m_pChildren.end();
 
 	for (; iter != iterEnd; ++iter)
 	{
@@ -290,27 +315,13 @@ void CrTransform::SetChildrenScaleDirty()
 	}
 }
 
-
-void CrTransform::AddChild(CrTransform * pChild)
-{
-	if (NULL == pChild || pChild->m_pParent == this)
-		return;
-
-	if (pChild->m_pParent)
-		pChild->m_pParent->RemoveChild(this);
-
-	m_pChildren.push_back(pChild);
-	pChild->m_pParent = this;
-	pChild->Retain();
-}
-
-void CrTransform::RemoveChild(CrTransform * pChild)
+void CrTransform::RemoveChild(std::shared_ptr<CrTransform> pChild)
 {
 	if (!pChild)
 		return;
 
-	std::vector<CrTransform * >::iterator iter = m_pChildren.begin();
-	std::vector<CrTransform * >::iterator iterEnd = m_pChildren.end();
+	std::vector<std::shared_ptr<CrTransform>>::iterator iter = m_pChildren.begin();
+	std::vector<std::shared_ptr<CrTransform>>::iterator iterEnd = m_pChildren.end();
 	for (; iter != iterEnd; ++iter)
 	{
 		if ((*iter) == pChild)
@@ -319,18 +330,10 @@ void CrTransform::RemoveChild(CrTransform * pChild)
 	if (iter != iterEnd)
 	{
 		m_pChildren.erase(iter);
-		pChild->Release();
 	}
 }
 
 void CrTransform::RemoveAllChild()
 {
-	std::vector<CrTransform * >::iterator iter = m_pChildren.begin();
-	std::vector<CrTransform * >::iterator iterEnd = m_pChildren.end();
-	for (; iter != iterEnd; ++iter)
-	{
-		(*iter)->Release();
-	}
-
 	m_pChildren.clear();
 }

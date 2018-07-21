@@ -33,6 +33,6 @@ void test::Update(double dt)
 		bb = -bb;
 	}
 
-	m_pGameObject->GetTransform()->SetLocalRotation(glm::vec3(a, a, a));
+	GetGameObject()->get_transform()->SetLocalRotation(glm::vec3(a, a, a));
 	//m_pGameObject->GetTransform()->SetLocalScale(glm::vec3(b));
 }

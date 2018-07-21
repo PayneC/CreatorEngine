@@ -24,8 +24,8 @@ public:
 	EasyGetSet(int8_t, m_UseLightProbes, UseLightProbes);		   //µ∆π‚ÃΩ≤‚∆˜
 	EasyGetSet(int8_t, m_ReflectionProbes, ReflectionProbes);	   //∑¥…‰ÃΩÕ∑
 
-	void SetMesh(CrMesh * mesh);
-	CrMesh * GetMesh();
+	void SetMesh(std::shared_ptr<CrMesh>  mesh);
+	std::shared_ptr<CrMesh>  GetMesh();
 
 	void SetMaterial(CrMaterial * material);
 	CrMaterial * GetMaterial();
@@ -33,7 +33,7 @@ public:
 	void Draw(glm::fmat4 & mvp, glm::vec3 & eye, glm::fmat4 & mv, glm::fmat4 & v);
 protected:
 	std::vector<CrMaterial *> m_pMaterials;
-	CrMesh * m_pMesh;
+	std::shared_ptr<CrMesh>  m_pMesh;
 };
 
 

@@ -45,9 +45,6 @@
     <ClCompile Include="..\..\..\Source\Runtime\IMGUI\Private\imgui_draw.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\IMGUI\Private\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\Lua\Private\CrLuaState.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\UI\Private\UICanvas.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\UI\Private\UISprite.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\UI\Private\UIWidget.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\Runtime\Core\Public\Core.h" />
@@ -82,10 +79,6 @@
     <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\stb_textedit.h" />
     <ClInclude Include="..\..\..\Source\Runtime\IMGUI\Public\stb_truetype.h" />
     <ClInclude Include="..\..\..\Source\Runtime\Lua\Public\CrLuaState.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\UI\Public\UI.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\UI\Public\UICanvas.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\UI\Public\UISprite.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\UI\Public\UIWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Shaders\fragment.cg" />
@@ -103,7 +96,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">

@@ -40,14 +40,14 @@ public:
 	//virtual void OnGUI();
 	//virtual void OnInspectionGUI();
 
-	CrGameObject * GetGameObject();
+	std::shared_ptr<CrGameObject> GetGameObject();
 
 	//virtual int GetInstanceCountLimit();
 
-	void SetGameObject(CrGameObject * pointer);
+	void SetGameObject(std::shared_ptr<CrGameObject> pointer);
 
 protected:
-	CrGameObject * m_pGameObject;
+	std::weak_ptr<CrGameObject> m_pGameObject;
 };
 
 #endif

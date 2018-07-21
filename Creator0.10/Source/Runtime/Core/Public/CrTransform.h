@@ -9,15 +9,14 @@ Payne
 
 #include <CrComponent.h>
 
-class DLL_ClASS CrTransform : public CrComponent
+class DLL_ClASS CrTransform : public CrComponent, public std::enable_shared_from_this<CrTransform>
 {
 	friend class CrGameObject;
 public:
 	CrTransform();
 	~CrTransform();
 
-	EasyGet(CrTransform *, m_pParent, Parent);		
-
+	std::shared_ptr<CrTransform> GetParent();
 	FuncGetSet(glm::vec3, Position);
 	FuncGetSet(glm::vec3, Rotation);
 	FuncGetSet(glm::vec3, LocalPosition);
@@ -32,8 +31,8 @@ public:
 
 	EasyGetFuncOnly(glm::quat, m_qQuaternion, Quaternion);
 
-	void LookAt(CrGameObject * gameobject);
-	void LookAt(CrTransform * transform);
+	void LookAt(std::shared_ptr<CrGameObject> gameobject);
+	void LookAt(std::shared_ptr<CrTransform> transform);
 	void LookAt(glm::vec3 position);
 
 	glm::vec3 GetScale();
@@ -41,17 +40,19 @@ public:
 	void SetChildrenPositionDirty();
 	void SetChildrenRotationDirty();
 	void SetChildrenScaleDirty();
+	void SetParent(std::shared_ptr<CrTransform> pParent);
+	std::vector<std::shared_ptr<CrTransform>> get_children() { return m_pChildren; }
 private:
 	void _ExecuteMatrix();
-	void AddChild(CrTransform * pChild);
-	void RemoveChild(CrTransform * pChild);
+	
+	void RemoveChild(std::shared_ptr<CrTransform> pChild);
 	void RemoveAllChild();
 private:
-	
+
 	glm::vec3 m_v3Position;
 	glm::vec3 m_v3Rotation;
 	glm::vec3 m_v3Scale;
-	
+
 	glm::vec3 m_v3LocalPosition;
 	glm::vec3 m_v3LocalRotation;
 	glm::vec3 m_v3LocalScale;
@@ -65,7 +66,7 @@ private:
 	glm::vec3 m_yAxis;
 	glm::vec3 m_zAxis;
 
-	std::vector<CrTransform *> m_pChildren;
+	std::vector<std::shared_ptr<CrTransform>> m_pChildren;
+	std::weak_ptr<CrTransform> m_pParent;
 };
-
 #endif

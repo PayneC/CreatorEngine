@@ -52,15 +52,6 @@
     <ClCompile Include="..\..\..\Source\Runtime\Lua\Private\CrLuaState.cpp">
       <Filter>Lua\Private</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\Runtime\UI\Private\UICanvas.cpp">
-      <Filter>UI\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Source\Runtime\UI\Private\UISprite.cpp">
-      <Filter>UI\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Source\Runtime\UI\Private\UIWidget.cpp">
-      <Filter>UI\Private</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Source\Runtime\Core\Private\Event.cpp">
       <Filter>Core\Private</Filter>
     </ClCompile>
@@ -104,9 +95,6 @@
     <ClInclude Include="..\..\..\Source\Runtime\Core\Public\Core.h">
       <Filter>Core\Public</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\Runtime\UI\Public\UI.h">
-      <Filter>UI\Public</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Source\Runtime\Core\Public\CrComponent.h">
       <Filter>Core\Public</Filter>
     </ClInclude>
@@ -133,15 +121,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Runtime\Lua\Public\CrLuaState.h">
       <Filter>Lua\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\Runtime\UI\Public\UICanvas.h">
-      <Filter>UI\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\Runtime\UI\Public\UISprite.h">
-      <Filter>UI\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\Runtime\UI\Public\UIWidget.h">
-      <Filter>UI\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Runtime\Core\Public\Event.h">
       <Filter>Core\Public</Filter>
@@ -180,15 +159,6 @@
     </Filter>
     <Filter Include="Lua\Private">
       <UniqueIdentifier>{ca8a83bb-747b-498d-9934-41e154ed67b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UI">
-      <UniqueIdentifier>{017f50af-9fce-4ea9-b578-69d2f89dd893}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UI\Public">
-      <UniqueIdentifier>{f24e8175-51b2-4f16-a366-0366152de9ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UI\Private">
-      <UniqueIdentifier>{8835f9e6-2df2-453d-8984-c9089526ddbc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

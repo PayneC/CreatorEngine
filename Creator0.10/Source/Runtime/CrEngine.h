@@ -7,7 +7,6 @@ Payne
 #ifndef _CREATOR_ENGINE_H
 #define _CREATOR_ENGINE_H
 
-#include <UI.h>
 #include <Core.h>
 
 static class DLL_ClASS CrEngine
@@ -27,5 +26,4 @@ private:
 	static bool m_isInit;
 	static double m_lfTotalDelay;
 };
-
 #endif
