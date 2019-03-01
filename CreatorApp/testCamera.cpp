@@ -111,10 +111,10 @@ void testCamera::EventCallback(GLint64 msg, GLint64 wParam, GLint64 lParam)
 
 	if (msg == CR_EVENT_MOUSE_MOVE && mouseButton1Press)
 	{
-// 		Vector3f rotg = GetGameObject()->get_transform()->GetRotation();
-// 		Vector3f rot = GetGameObject()->get_transform()->GetLocalRotation();
-// 		Vector3f dt = Vector3f(lParam, wParam, 0) * CrTime::Instance()->GetDelateTime()* _speed;
-// 		rot = rot - dt;
-// 		GetGameObject()->get_transform()->SetLocalRotation(rot);
+		Vector3f rotg = GetGameObject()->get_transform()->GetRotation();
+		Vector3f rot = GetGameObject()->get_transform()->GetLocalRotation();
+		Vector3f dt = Vector3f(lParam, wParam, 0) * CrTime::Instance()->GetDelateTime()* _speed;
+		rot = rot - dt;
+		GetGameObject()->get_transform()->SetLocalRotation(rot);
 	}
 }

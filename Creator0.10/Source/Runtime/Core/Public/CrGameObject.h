@@ -13,7 +13,7 @@ Payne
 //using namespace CreatorEngine;
 
 class DLL_ClASS CrGameObject : public CrObject, public std::enable_shared_from_this<CrGameObject>
-{
+{	
 public:
 	template<typename TReturnType>
 	static SharedPtr<TReturnType> CreateGameObject(std::string name = "gameobject");
@@ -43,12 +43,20 @@ public:
 	SharedPtr<TReturnType> GetComponent();
 
 	SharedPtr<CrTransform> get_transform() { return m_kTransform; }
+
+	void SetParent(SharedPtr<CrGameObject> pParent);
+	void RemoveChild(SharedPtr<CrGameObject> pChild);
+
+	void RemoveAllChild();
 private:
 	void _AddComponent(SharedPtr<CrComponent> Pointer);
 
 protected:
 	SharedPtr<CrTransform> m_kTransform;
 	std::vector<SharedPtr<CrComponent>> m_pComponents;
+
+	WeakPtr<CrGameObject> m_pParent;
+	std::vector<SharedPtr<CrGameObject>> m_pChildren;
 };
 
 template<typename TReturnType>
@@ -86,7 +94,7 @@ SharedPtr<TReturnType> CrGameObject::CreateGameObject(std::string name)
 	if (pRef)
 	{		
 		pRef->m_kTransform = pRef->AddComponent<CrTransform>();
-		pRef->set_name(name);
+		pRef->set_name(name);		
 	}
 	return pRef;
 }
@@ -107,7 +115,7 @@ SharedPtr<TReturnType> CrGameObject::CreateGameObject(EPresetMeshType type, std:
 		CrShader * shader = CrShaderUtility::CreateShader("VertexLit.vert", "VertexLit.frag");
 		material->SetShader(shader);
 		meshRender->SetMaterial(material);
-		meshRender->SetMesh(mesh);
+		meshRender->SetMesh(mesh);		
 	}
 	return pRef;
 }

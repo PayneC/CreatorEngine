@@ -229,10 +229,7 @@ void CrTransform::_ExecuteMatrix()
 {
 	if (m_isMatrixDirty)
 	{
-		Matrix4 rm = Matrix4(GetQuaternion());
-		//Vector3f r = glm::radians(GetLocalRotation());
-
-		//Matrix4 rm = glm::eulerAngleYXZ(r.y, r.x, r.z);
+		Matrix4 rm = Matrix4(GetQuaternion());	
 		Matrix4 sm = glm::scale(Matrix4(1.f), GetScale());
 		Matrix4 tm = glm::translate(Matrix4(1.f), GetPosition());		
 
@@ -378,9 +375,25 @@ void CrTransform::RemoveChild(SharedPtr<CrTransform> pChild)
 	{
 		m_pChildren.erase(iter);
 	}
+
+	pChild->m_pParent.expired();
+	pChild->SetPositionDirty();
+	pChild->SetRotationDirty();
+	pChild->SetScaleDirty();
 }
 
 void CrTransform::RemoveAllChild()
 {
+	std::vector<SharedPtr<CrTransform>>::iterator iter = m_pChildren.begin();
+	std::vector<SharedPtr<CrTransform>>::iterator iterEnd = m_pChildren.end();
+	for (; iter != iterEnd; ++iter)
+	{
+		SharedPtr<CrTransform> child = (*iter);
+		child->m_pParent.expired();
+		child->SetPositionDirty();
+		child->SetRotationDirty();
+		child->SetScaleDirty();
+	}
+
 	m_pChildren.clear();
 }

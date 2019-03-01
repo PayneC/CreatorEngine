@@ -313,7 +313,7 @@ std::shared_ptr<CrGameObject> CrMeshUtility::processNode(aiNode *node, const aiS
 	{
 		aiMesh * mesh = scene->mMeshes[node->mMeshes[i]];
 		std::shared_ptr<CrGameObject> _goMesh = processMesh(mesh, scene);
-		_goMesh->get_transform()->SetParent(_go->get_transform());
+		_goMesh->SetParent(_go);
 		_goMesh->get_transform()->SetPosition(glm::vec3(0, 1, 0));
 		_goMesh->get_transform()->SetLocalScale(glm::vec3(1, 1, 1));
 		_goMesh->get_transform()->SetRotation(glm::vec3(0, 0, 0));
@@ -322,7 +322,7 @@ std::shared_ptr<CrGameObject> CrMeshUtility::processNode(aiNode *node, const aiS
 	for (int i = 0; i < node->mNumChildren; ++i)
 	{
 		std::shared_ptr<CrGameObject> _goChild = processNode(node->mChildren[i], scene);
-		_goChild->get_transform()->SetParent(_go->get_transform());
+		_goChild->SetParent(_go);
 		_goChild->get_transform()->SetPosition(glm::vec3(0, 1, 0));
 		_goChild->get_transform()->SetLocalScale(glm::vec3(1, 1, 1));
 		_goChild->get_transform()->SetRotation(glm::vec3(0, 0, 0));
