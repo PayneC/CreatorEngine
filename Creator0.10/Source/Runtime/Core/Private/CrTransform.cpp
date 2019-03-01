@@ -1,10 +1,47 @@
 #include <CrGameObject.h>
 #include <CrTransform.h>
 
+#include <glm/glm/gtc/quaternion.hpp>
+#include <glm/glm/gtx/euler_angles.hpp>
+
+Float _angle_limit(Float a)
+{
+	if (a > 180)
+	{
+		a = a - 360 * (int)(a / 360);
+	}
+	else if (a < -180)
+	{
+		a = a - 360 * (int)(a / 360);
+	}
+
+	if (a > 180)
+	{
+		return a - 360;
+	}
+	else if (a < -180)
+	{
+		return a + 360;
+	}
+
+	return a;
+}
+
+Vector3f angle_limit(Vector3f a)
+{
+	return Vector3f(_angle_limit(a.x), _angle_limit(a.y), _angle_limit(a.z));
+}
+
 CrTransform::CrTransform()
-	:m_isDirty(true)
+	: m_isMatrixDirty(false)
+	, m_isPositionDirty(true)
+	, m_isRotationDirty(true)
+	, m_isScaleDirty(true)
 	, m_v3Scale(1.f, 1.f, 1.f)
+	, m_v3LocalScale(1.f, 1.f, 1.f)
 	, m_pParent()
+	, m_qLocalQuaternion(1, 0, 0 ,0)
+	, m_qQuaternion(1, 0, 0, 0)
 {
 }
 
@@ -12,18 +49,18 @@ CrTransform::~CrTransform()
 {
 }
 
-std::shared_ptr<CrTransform> CrTransform::GetParent()
+SharedPtr<CrTransform> CrTransform::GetParent()
 {
-	return std::shared_ptr<CrTransform>(m_pParent);
+	return m_pParent.lock();
 }
 
-glm::vec3 CrTransform::GetPosition()
+Vector3f CrTransform::GetPosition()
 {
 	if (m_isPositionDirty)
 	{
 		if (!m_pParent.expired())
 		{
-			m_v3Position = glm::vec3(GetParent()->GetLocalToWorldMatrix() * glm::vec4(m_v3LocalPosition, 1.f));
+			m_v3Position = Vector3f(GetParent()->GetLocalToWorldMatrix() * Vector4f(m_v3LocalPosition, 1.f));
 		}
 		else
 		{
@@ -35,26 +72,13 @@ glm::vec3 CrTransform::GetPosition()
 	return m_v3Position;
 }
 
-glm::vec3 CrTransform::GetRotation()
+Vector3f CrTransform::GetRotation()
 {
-	if (m_isRotationDirty)
-	{
-		if (!m_pParent.expired())
-		{
-			m_v3Rotation = GetParent()->GetRotation() + m_v3LocalRotation;
-		}
-		else
-		{
-			m_v3Rotation = m_v3LocalRotation;
-		}
-
-		m_isRotationDirty = false;
-	}
-
+	GetQuaternion();
 	return m_v3Rotation;
 }
 
-glm::vec3 CrTransform::GetScale()
+Vector3f CrTransform::GetScale()
 {
 	if (m_isScaleDirty)
 	{
@@ -71,158 +95,157 @@ glm::vec3 CrTransform::GetScale()
 	return m_v3Scale;
 }
 
-glm::vec3 CrTransform::GetLocalPosition()
+Vector3f CrTransform::GetLocalPosition()
 {
 	return m_v3LocalPosition;
 }
 
-glm::vec3 CrTransform::GetLocalRotation()
+Quaternion CrTransform::GetLocalQuaternion()
+{
+	return m_qLocalQuaternion;
+}
+
+Vector3f CrTransform::GetLocalRotation()
 {
 	return m_v3LocalRotation;
 }
 
-glm::vec3 CrTransform::GetLocalScale()
+Vector3f CrTransform::GetLocalScale()
 {
 	return m_v3LocalScale;
 }
-glm::vec3 CrTransform::GetForword()
+
+Vector3f CrTransform::GetForword()
 {
-	_ExecuteMatrix();
+	GetQuaternion();
 	return m_v3Forword;
 }
 
-glm::vec3 CrTransform::GetRight()
+Vector3f CrTransform::GetRight()
 {
-	_ExecuteMatrix();
+	GetQuaternion();
 	return m_v3Right;
 }
 
-glm::vec3 CrTransform::GetUp()
+Vector3f CrTransform::GetUp()
 {
-	_ExecuteMatrix();
+	GetQuaternion();
 	return m_v3Up;
 }
 
-glm::mat4 CrTransform::GetLocalToWorldMatrix()
+Matrix4 CrTransform::GetLocalToWorldMatrix()
 {
 	_ExecuteMatrix();
 	return m_m4LocalToWorld;
 }
 
-glm::mat4 CrTransform::GetWorldToLocalMatrix()
+Matrix4 CrTransform::GetWorldToLocalMatrix()
 {
 	_ExecuteMatrix();
 	return m_m4WorldToLocal;
 }
 
-void CrTransform::SetPosition(glm::vec3 var)
-{
+void CrTransform::SetPosition(Vector3f var)
+{	
 	if (m_v3Position == var)
 		return;
-	m_v3Position = var;
 
+	m_v3Position = var;
 	if (!m_pParent.expired())
 	{
-		m_v3LocalPosition = glm::vec3(GetParent()->GetWorldToLocalMatrix() * glm::vec4(m_v3Position, 1.f));
+		m_v3LocalPosition = Vector3f(GetParent()->GetWorldToLocalMatrix() * Vector4f(m_v3Position, 1.f));
 	}
 	else
 	{
 		m_v3LocalPosition = m_v3Position;
 	}
-
-	SetChildrenPositionDirty();
+	
+	SetPositionDirty();
 	m_isPositionDirty = false;
 }
 
-void CrTransform::SetRotation(glm::vec3 var)
+void CrTransform::SetRotation(Vector3f var)
 {
 	if (m_v3Rotation == var)
-		return;
+		return;	
 
 	m_v3Rotation = var;
-	m_qQuaternion = glm::quat(m_v3Rotation * glm::pi<float>() / 180.f);
-
-	m_v3Forword = glm::vec3(m_qQuaternion * glm::vec4(0.f, 0.f, 1.f, 1.f));
-	m_v3Up = glm::vec3(m_qQuaternion * glm::vec4(0.f, 1.f, 0.f, 1.f));
-	m_v3Right = glm::vec3(m_qQuaternion * glm::vec4(1.f, 0.f, 0.f, 1.f));
+	m_qQuaternion = Quaternion(m_v3Rotation * glm::pi<float>() / 180.f);	
 
 	if (!m_pParent.expired())
-	{
-		glm::quat quat = GetParent()->GetQuaternion() * m_qQuaternion;
-		m_v3LocalRotation = glm::eulerAngles(quat) * 360.f;
+	{				
+		m_qLocalQuaternion = glm::inverse(GetParent()->GetQuaternion()) * m_qQuaternion;
+		m_v3LocalRotation = glm::eulerAngles(m_qLocalQuaternion) / glm::pi<float>() * 180.f;
 	}
 	else
 	{
 		m_v3LocalRotation = m_v3Rotation;
+		m_qLocalQuaternion = m_qQuaternion;
 	}
 
-	SetChildrenRotationDirty();
+	m_v3Forword = Vector3f(m_qQuaternion * Vector4f(0.f, 0.f, 1.f, 1.f));
+	m_v3Up = Vector3f(m_qQuaternion * Vector4f(0.f, 1.f, 0.f, 1.f));
+	m_v3Right = Vector3f(m_qQuaternion * Vector4f(1.f, 0.f, 0.f, 1.f));
+	
+	SetRotationDirty();
 	m_isRotationDirty = false;
 }
 
-void CrTransform::SetLocalPosition(glm::vec3 var)
+void CrTransform::SetLocalPosition(Vector3f var)
 {
 	if (m_v3LocalPosition == var)
 		return;
 
 	m_v3LocalPosition = var;
-	SetChildrenPositionDirty();
-	m_isScaleDirty = false;
+	
+	SetPositionDirty();
 }
 
-void CrTransform::SetLocalRotation(glm::vec3 var)
-{
+void CrTransform::SetLocalRotation(Vector3f var)
+{	
+	var = angle_limit(var);
+
 	if (m_v3LocalRotation == var)
-		return;
+		return;	
 
 	m_v3LocalRotation = var;
+	m_qLocalQuaternion = Quaternion(m_v3LocalRotation / 180.f * glm::pi<float>());
 
-	if (!m_pParent.expired())
-	{
-		glm::quat _quat = glm::quat(m_v3LocalRotation * glm::pi<float>() / 180.f);
-		m_qQuaternion = GetParent()->GetQuaternion() * _quat;
-		m_v3Rotation = glm::eulerAngles(m_qQuaternion) * 360.f;
-	}
-	else
-	{
-		m_v3Rotation = m_v3LocalRotation;
-		m_qQuaternion = glm::quat(m_v3LocalRotation * glm::pi<float>() / 180.f);
-	}
-
-	m_v3Forword = glm::vec3(m_qQuaternion * glm::vec4(0.f, 0.f, 1.f, 1.f));
-	m_v3Up = glm::vec3(m_qQuaternion * glm::vec4(0.f, 1.f, 0.f, 1.f));
-	m_v3Right = glm::vec3(m_qQuaternion * glm::vec4(1.f, 0.f, 0.f, 1.f));
-
-	SetChildrenRotationDirty();
+	SetRotationDirty();
 }
 
-void CrTransform::SetLocalScale(glm::vec3 var)
+void CrTransform::SetLocalScale(Vector3f var)
 {
 	if (m_v3LocalScale == var)
 		return;
 
 	m_v3LocalScale = var;
-	SetChildrenScaleDirty();
+	m_isScaleDirty = true;
+	
+	SetScaleDirty();
 }
 
 void CrTransform::_ExecuteMatrix()
 {
-	if (m_isDirty)
+	if (m_isMatrixDirty)
 	{
-		glm::mat4 rm = glm::mat4(GetQuaternion());
-		glm::mat4 sm = glm::scale(glm::mat4(1.f), GetScale());
-		glm::mat4 tm = glm::translate(glm::mat4(1.f), GetPosition());
+		Matrix4 rm = Matrix4(GetQuaternion());
+		//Vector3f r = glm::radians(GetLocalRotation());
+
+		//Matrix4 rm = glm::eulerAngleYXZ(r.y, r.x, r.z);
+		Matrix4 sm = glm::scale(Matrix4(1.f), GetScale());
+		Matrix4 tm = glm::translate(Matrix4(1.f), GetPosition());		
 
 		m_m4LocalToWorld = tm * sm * rm;
 		m_m4WorldToLocal = glm::inverse(m_m4LocalToWorld);
 
-		m_isDirty = false;
+		m_isMatrixDirty = false;
 	}
 }
 
-void CrTransform::SetParent(std::shared_ptr<CrTransform> pParent)
-{
-	std::shared_ptr<CrTransform> _parent = m_pParent.lock();
+void CrTransform::SetParent(SharedPtr<CrTransform> pParent)
+{	
+	SharedPtr<CrTransform> _parent = m_pParent.lock();
 	if (_parent == pParent)
 	{
 		return;
@@ -240,88 +263,112 @@ void CrTransform::SetParent(std::shared_ptr<CrTransform> pParent)
 		_parent->m_pChildren.push_back(shared_from_this());
 	}
 
-	m_pParent = std::weak_ptr<CrTransform>(_parent);
+	m_pParent = _parent->weak_from_this();
+
+	SetPositionDirty();
+	SetRotationDirty();
+	SetScaleDirty();
 }
 
-glm::quat CrTransform::GetQuaternion()
+Quaternion CrTransform::GetQuaternion()
 {
+	if (m_isRotationDirty)
+	{
+		m_isRotationDirty = false;
+
+		if (!m_pParent.expired())
+		{
+			m_qQuaternion = GetParent()->GetQuaternion() * m_qLocalQuaternion;
+			m_v3Rotation = glm::eulerAngles(m_qQuaternion) / glm::pi<float>() * 180.f;
+		}
+		else
+		{
+			m_v3Rotation = m_v3LocalRotation;
+			m_qQuaternion = m_qLocalQuaternion;
+		}
+
+		m_v3Forword = Vector3f(m_qQuaternion * Vector4f(0.f, 0.f, 1.f, 1.f));
+		m_v3Up = Vector3f(m_qQuaternion * Vector4f(0.f, 1.f, 0.f, 1.f));
+		m_v3Right = Vector3f(m_qQuaternion * Vector4f(1.f, 0.f, 0.f, 1.f));
+	}
+
 	return m_qQuaternion;
 }
 
-void CrTransform::LookAt(std::shared_ptr<CrGameObject> gameobject)
+void CrTransform::LookAt(SharedPtr<CrGameObject> gameobject)
 {
 	if (gameobject == NULL)
 		return;
 
 	LookAt(gameobject->get_transform()->GetPosition());
 }
-void CrTransform::LookAt(std::shared_ptr<CrTransform> transform)
+void CrTransform::LookAt(SharedPtr<CrTransform> transform)
 {
 	if (transform == NULL)
 		return;
 	LookAt(transform->GetPosition());
 }
-void CrTransform::LookAt(glm::vec3 position)
+void CrTransform::LookAt(Vector3f position)
 {
-	m_m4LocalToWorld = glm::lookAt(GetPosition(), position, glm::vec3(0.f, 1.f, 0.f));
-	glm::quat quat = glm::quat(m_m4LocalToWorld);
+	m_m4LocalToWorld = glm::lookAt(GetPosition(), position, Vector3f(0.f, 1.f, 0.f));
+	Quaternion quat = Quaternion(m_m4LocalToWorld);	
 
-	glm::vec3 r = glm::eulerAngles(quat) * 360.f;
+	Vector3f r = glm::eulerAngles(quat) / glm::pi<float>() * 180.f;
 
 	SetRotation(r);
 }
 
-void CrTransform::SetChildrenPositionDirty()
+void CrTransform::SetPositionDirty()
 {
 	m_isPositionDirty = true;
-	m_isDirty = true;
+	m_isMatrixDirty = true;
 
-	std::vector<std::shared_ptr<CrTransform>>::iterator iter = m_pChildren.begin();
-	std::vector<std::shared_ptr<CrTransform>>::iterator iterEnd = m_pChildren.end();
+	std::vector<SharedPtr<CrTransform>>::iterator iter = m_pChildren.begin();
+	std::vector<SharedPtr<CrTransform>>::iterator iterEnd = m_pChildren.end();
 
 	for (; iter != iterEnd; ++iter)
 	{
-		(*iter)->SetChildrenPositionDirty();
+		(*iter)->SetPositionDirty();
 	}
 }
 
-void CrTransform::SetChildrenRotationDirty()
+void CrTransform::SetRotationDirty()
 {
-	m_isPositionDirty = true;
-	m_isRotationDirty = true;
-	m_isDirty = true;
+	m_isRotationDirty = true;	
+	m_isMatrixDirty = true;
 
-	std::vector<std::shared_ptr<CrTransform>>::iterator iter = m_pChildren.begin();
-	std::vector<std::shared_ptr<CrTransform>>::iterator iterEnd = m_pChildren.end();
+	std::vector<SharedPtr<CrTransform>>::iterator iter = m_pChildren.begin();
+	std::vector<SharedPtr<CrTransform>>::iterator iterEnd = m_pChildren.end();
 
 	for (; iter != iterEnd; ++iter)
 	{
-		(*iter)->SetChildrenRotationDirty();
+		(*iter)->SetRotationDirty();
+		(*iter)->SetPositionDirty();
 	}
 }
 
-void CrTransform::SetChildrenScaleDirty()
+void CrTransform::SetScaleDirty()
 {
-	m_isPositionDirty = true;
 	m_isScaleDirty = true;
-	m_isDirty = true;
+	m_isMatrixDirty = true;
 
-	std::vector<std::shared_ptr<CrTransform>>::iterator iter = m_pChildren.begin();
-	std::vector<std::shared_ptr<CrTransform>>::iterator iterEnd = m_pChildren.end();
+	std::vector<SharedPtr<CrTransform>>::iterator iter = m_pChildren.begin();
+	std::vector<SharedPtr<CrTransform>>::iterator iterEnd = m_pChildren.end();
 
 	for (; iter != iterEnd; ++iter)
 	{
-		(*iter)->SetChildrenScaleDirty();
+		(*iter)->SetScaleDirty();
+		(*iter)->SetPositionDirty();
 	}
 }
 
-void CrTransform::RemoveChild(std::shared_ptr<CrTransform> pChild)
+void CrTransform::RemoveChild(SharedPtr<CrTransform> pChild)
 {
 	if (!pChild)
 		return;
 
-	std::vector<std::shared_ptr<CrTransform>>::iterator iter = m_pChildren.begin();
-	std::vector<std::shared_ptr<CrTransform>>::iterator iterEnd = m_pChildren.end();
+	std::vector<SharedPtr<CrTransform>>::iterator iter = m_pChildren.begin();
+	std::vector<SharedPtr<CrTransform>>::iterator iterEnd = m_pChildren.end();
 	for (; iter != iterEnd; ++iter)
 	{
 		if ((*iter) == pChild)

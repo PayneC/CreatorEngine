@@ -45,6 +45,8 @@ void testCamera::EventCallback(GLint64 msg, GLint64 wParam, GLint64 lParam)
 		glm::vec3 _move;
 		float _dt;
 
+		Vector3f rot;
+
 		switch (lParam)
 		{
 		case GLFW_MOUSE_BUTTON_1:
@@ -75,6 +77,30 @@ void testCamera::EventCallback(GLint64 msg, GLint64 wParam, GLint64 lParam)
 			GetGameObject()->get_transform()->SetPosition(_pos + _move  * _dt * _speed);
 			break;
 
+		case GLFW_KEY_UP:			
+			rot = GetGameObject()->get_transform()->GetLocalRotation();			
+			rot = rot + Vector3f(1, 0, 0);
+			GetGameObject()->get_transform()->SetLocalRotation(rot);
+			break;
+
+		case GLFW_KEY_DOWN:
+			rot = GetGameObject()->get_transform()->GetLocalRotation();
+			rot = rot - Vector3f(1, 0, 0);
+			GetGameObject()->get_transform()->SetLocalRotation(rot);
+			break;
+
+		case GLFW_KEY_LEFT:
+			rot = GetGameObject()->get_transform()->GetLocalRotation();
+			rot = rot - Vector3f(0, 1, 0);
+			GetGameObject()->get_transform()->SetLocalRotation(rot);
+			break;
+
+		case GLFW_KEY_RIGHT:
+			rot = GetGameObject()->get_transform()->GetLocalRotation();
+			rot = rot + Vector3f(0, 1, 0);
+			GetGameObject()->get_transform()->SetLocalRotation(rot);
+			break;
+
 		case GLFW_KEY_ESCAPE:
 			CrEngine::Stop();
 			break;
@@ -85,6 +111,10 @@ void testCamera::EventCallback(GLint64 msg, GLint64 wParam, GLint64 lParam)
 
 	if (msg == CR_EVENT_MOUSE_MOVE && mouseButton1Press)
 	{
-		GetGameObject()->get_transform()->SetLocalRotation(GetGameObject()->get_transform()->GetLocalRotation() - Vector3(lParam, wParam, 0) * CrTime::Instance()->GetDelateTime()* _speed);
+// 		Vector3f rotg = GetGameObject()->get_transform()->GetRotation();
+// 		Vector3f rot = GetGameObject()->get_transform()->GetLocalRotation();
+// 		Vector3f dt = Vector3f(lParam, wParam, 0) * CrTime::Instance()->GetDelateTime()* _speed;
+// 		rot = rot - dt;
+// 		GetGameObject()->get_transform()->SetLocalRotation(rot);
 	}
 }

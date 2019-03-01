@@ -123,8 +123,8 @@ void Scene2()
 	pCamera->get_transform()->SetParent(pScene->get_transform());
 	pCamera->get_transform()->SetPosition(glm::fvec3(0.f, 15.f, 3.0f));
 	pCamera->get_transform()->SetLocalScale(glm::vec3(1, 1, 1));
-	pCamera->get_transform()->SetLocalRotation(glm::vec3(1, 1, 1));
-	//pCamera->GetTransform()->LookAt(go2);
+	pCamera->get_transform()->SetLocalRotation(glm::vec3(0, 0, 0));
+	//pCamera->get_transform()->LookAt(go2);
 	pCamera->AddComponent<testCamera>();
 
 	CrCamera::m_pCameraList.push_back(pCamera);

@@ -10,15 +10,16 @@ Payne
 #include <CrObject.h>
 #include <CrTransform.h>
 
+//using namespace CreatorEngine;
 
 class DLL_ClASS CrGameObject : public CrObject, public std::enable_shared_from_this<CrGameObject>
 {
 public:
 	template<typename TReturnType>
-	static std::shared_ptr<TReturnType> CreateGameObject(std::string name = "gameobject");
+	static SharedPtr<TReturnType> CreateGameObject(std::string name = "gameobject");
 
 	template<typename TReturnType>
-	static std::shared_ptr<TReturnType> CreateGameObject(EPresetMeshType type, std::string name = "gameobject");
+	static SharedPtr<TReturnType> CreateGameObject(EPresetMeshType type, std::string name = "gameobject");
 
 public:
 	CrGameObject();
@@ -36,34 +37,34 @@ public:
 	EasyGetSet(uint64_t, m_ulLayer, Layer);
 
 	template<typename TReturnType>
-	std::shared_ptr<TReturnType> AddComponent();
+	SharedPtr<TReturnType> AddComponent();
 
 	template<typename TReturnType>
-	std::shared_ptr<TReturnType> GetComponent();
+	SharedPtr<TReturnType> GetComponent();
 
-	std::shared_ptr<CrTransform> get_transform() { return m_kTransform; }
+	SharedPtr<CrTransform> get_transform() { return m_kTransform; }
 private:
-	void _AddComponent(std::shared_ptr<CrComponent> Pointer);
+	void _AddComponent(SharedPtr<CrComponent> Pointer);
 
 protected:
-	std::shared_ptr<CrTransform> m_kTransform;
-	std::vector<std::shared_ptr<CrComponent>> m_pComponents;
+	SharedPtr<CrTransform> m_kTransform;
+	std::vector<SharedPtr<CrComponent>> m_pComponents;
 };
 
 template<typename TReturnType>
-std::shared_ptr<TReturnType> CrGameObject::AddComponent()
+SharedPtr<TReturnType> CrGameObject::AddComponent()
 {
 	static_assert(std::is_base_of<CrComponent, TReturnType>::value, "'T' template parameter to FindComponentByClass must be derived from CrComponent");
 
-	std::shared_ptr<TReturnType> _instance = std::make_shared<TReturnType>();
+	SharedPtr<TReturnType> _instance = std::make_shared<TReturnType>();
 	_AddComponent(_instance);
 	return _instance;
 }
 
 template<typename TReturnType>
-std::shared_ptr<TReturnType> CrGameObject::GetComponent()
+SharedPtr<TReturnType> CrGameObject::GetComponent()
 {
-	std::shared_ptr<TReturnType> _instance;
+	SharedPtr<TReturnType> _instance;
 	for (auto& component : m_pComponents)
 	{
 		if (component &&  typeid(*component) == typeid(TReturnType))
@@ -77,11 +78,11 @@ std::shared_ptr<TReturnType> CrGameObject::GetComponent()
 
 
 template<typename TReturnType>
-std::shared_ptr<TReturnType> CrGameObject::CreateGameObject(std::string name)
+SharedPtr<TReturnType> CrGameObject::CreateGameObject(std::string name)
 {
 	static_assert(std::is_base_of<CrGameObject, TReturnType>::value, "'T' template parameter to FindComponentByClass must be derived from CrGameObject");
 
-	std::shared_ptr<TReturnType> pRef = std::make_shared<TReturnType>();
+	SharedPtr<TReturnType> pRef = std::make_shared<TReturnType>();
 	if (pRef)
 	{		
 		pRef->m_kTransform = pRef->AddComponent<CrTransform>();
@@ -91,18 +92,18 @@ std::shared_ptr<TReturnType> CrGameObject::CreateGameObject(std::string name)
 }
 
 template<typename TReturnType>
-std::shared_ptr<TReturnType> CrGameObject::CreateGameObject(EPresetMeshType type, std::string name)
+SharedPtr<TReturnType> CrGameObject::CreateGameObject(EPresetMeshType type, std::string name)
 {
 	static_assert(std::is_base_of<CrGameObject, TReturnType>::value, "'T' template parameter to FindComponentByClass must be derived from CrGameObject");
 
-	std::shared_ptr<TReturnType> pRef = std::make_shared<TReturnType>();
+	SharedPtr<TReturnType> pRef = std::make_shared<TReturnType>();
 	if (pRef)
 	{
 		pRef->m_kTransform = pRef->AddComponent<CrTransform>();
 		pRef->set_name(name);
-		std::shared_ptr<CrMeshRender> meshRender = pRef->AddComponent<CrMeshRender>();
+		SharedPtr<CrMeshRender> meshRender = pRef->AddComponent<CrMeshRender>();
 		CrMaterial * material = CrMaterial::CreateCrMaterial();
-		std::shared_ptr<CrMesh> mesh = CrMeshUtility::CreateMesh(type);
+		SharedPtr<CrMesh> mesh = CrMeshUtility::CreateMesh(type);
 		CrShader * shader = CrShaderUtility::CreateShader("VertexLit.vert", "VertexLit.frag");
 		material->SetShader(shader);
 		meshRender->SetMaterial(material);

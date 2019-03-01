@@ -50,7 +50,7 @@ void CrGameObject::OnDestroy()
 
 }
 
-void CrGameObject::_AddComponent(std::shared_ptr<CrComponent> Pointer)
+void CrGameObject::_AddComponent(SharedPtr<CrComponent> Pointer)
 {
 	m_pComponents.push_back(Pointer);
 	Pointer->SetGameObject(shared_from_this());

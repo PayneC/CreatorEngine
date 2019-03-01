@@ -31,10 +31,10 @@ void CrMeshRender::Draw(glm::fmat4 & mvp, glm::vec3 & eye, glm::fmat4 & m, glm::
 
 	glm::vec3 _light(2, 2, 2);
 
-	glUseProgram(shader->GetShaderID());
+	glUseProgram(shader->GetShaderID());	
 
 	GLuint m_uMV = glGetUniformLocation(shader->GetShaderID(), "mModel");
-	glUniformMatrix4fv(m_uMV, 1, GL_FALSE, glm::value_ptr(m));
+	glUniformMatrix4fv(m_uMV, 1, GL_FALSE, glm::value_ptr(m));	
 
 	GLuint m_uMVP = glGetUniformLocation(shader->GetShaderID(), "mModelViewProjection");
 	glUniformMatrix4fv(m_uMVP, 1, GL_FALSE, glm::value_ptr(mvp));

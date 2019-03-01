@@ -40,6 +40,8 @@ Payne
 
 #include <CrSingleton.h>
 
+//namespace CreatorEngine
+//{
 #define EasyGetSet(varType, varName, funName)\
 protected: varType varName; \
 public: virtual varType Get##funName(void) const { return varName; }\
@@ -75,7 +77,7 @@ public: virtual void Set##funName(varType var);
 #define CR_THWORD(param)           ((__int16)((((__int64)(param)) >> 32) & 0xffff))
 #define CR_FOWORD(param)           ((__int16)((((__int64)(param)) >> 48) & 0xffff))
 
-//Event
+	//Event
 #define CR_EVENT_NONE						0	
 #define CR_EVENT_KEY						1
 #define CR_EVENT_MOUSE_BUTTON				2
@@ -84,26 +86,23 @@ public: virtual void Set##funName(varType var);
 
 #define LuaAPI_Register(l,f) lua_register(l, #f, f);	
 
-enum EPresetMeshType
-{
-	CR_MESH_TYPE_CUBE = 0,
-	CR_MESH_TYPE_QUAD = 1,
-};
+	enum EPresetMeshType
+	{
+		CR_MESH_TYPE_CUBE = 0,
+		CR_MESH_TYPE_QUAD = 1,
+	};
 #define CR_MESH_TYPE_COUNT					2	
 
 #define CAMERA_PROJECTION_PERSPECTIVE		1
 #define CAMERA_PROJECTION_ORTHOGRAPHIC		2
 
-#define Vector2 glm::vec2
-#define Vector3 glm::vec3
-
-struct Vertex
-{
-	glm::vec3 Position;
-	glm::vec3 Normal;
-	glm::vec2 TexCoords;
-	glm::vec3 Tangent;
-};
+	struct Vertex
+	{
+		glm::vec3 Position;
+		glm::vec3 Normal;
+		glm::vec2 TexCoords;
+		glm::vec3 Tangent;
+	};
 
 #ifdef DLL_EXPORT
 #define DLL_ClASS _declspec(dllexport)
@@ -111,5 +110,27 @@ struct Vertex
 #define DLL_ClASS _declspec(dllimport) 
 #endif // DLL_IMPORT
 
+
+	template <typename T> using SharedPtr = std::shared_ptr<T>;
+	template <typename T> using WeakPtr = std::weak_ptr<T>;
+	template <typename T> using EnableSharedFromThis = std::enable_shared_from_this<T>;
+
+	template <typename T> using CEVector = std::vector<T>;	
+	typedef std::string CEString;
+
+	typedef glm::int32 Int;
+	typedef glm::int64 Int64;
+	typedef glm::float32 Float;
+	typedef glm::float64 Float64;
+
+	typedef glm::vec2 Vector2f;
+	typedef glm::vec3 Vector3f;
+	typedef glm::vec4 Vector4f;
+
+	typedef glm::mat3 Matrix3;
+	typedef glm::mat4 Matrix4;
+
+	typedef glm::quat Quaternion;
+//}
 
 #endif
