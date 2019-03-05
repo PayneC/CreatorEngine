@@ -18,7 +18,7 @@ Payne
 class DLL_ClASS CrShaderUtility : public CrSingleton<CrShaderUtility>
 {
 public:
-	static CrShader * CreateShader(const char * vertexFile, const char * fragmentFile);
+	static SharedPtr<CrShader> CreateShader(const char * vertexFile, const char * fragmentFile);
 public:
 	CrShaderUtility();
 	~CrShaderUtility();
@@ -26,17 +26,16 @@ public:
 	bool Init();
 	void Destory();
 
-	bool Find(std::string name, GLuint *id);
-	GLuint Insert(std::string name, const char * vertexFile, const char * fragmentFile);
+	SharedPtr<CrShader> Find(std::string name);	
 	void Remove(std::string name);
 	void RemoveAll();
 
 private:
-	CrShader * _CreateShader(const char * vertexFile, const char * fragmentFile);
+	SharedPtr<CrShader> _CreateShader(const char * vertexFile, const char * fragmentFile);
 	GLuint CompileShader(const char * vertexFile, const char * fragmentFile);
 private:
-	std::map<std::string, GLuint> m_shaders;
-	std::map<std::string, GLuint>::iterator m_iterShader;
+	std::map<std::string, SharedPtr<CrShader>> m_shaders;
+	std::map<std::string, SharedPtr<CrShader>>::iterator m_iterShader;
 };
 
 #endif

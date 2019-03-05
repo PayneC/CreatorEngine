@@ -4,7 +4,8 @@ testCamera::testCamera()
 	: a(0.f)
 	, b(0.f)
 	, bb(1.f)
-	, mouseButton1Press(false)
+	, mouseButton3Press(false)
+	, mouseButton2Press(false)
 {
 	Event::AddListen(this, Func_Event(testCamera::EventCallback));
 }
@@ -31,8 +32,12 @@ void testCamera::EventCallback(GLint64 msg, GLint64 wParam, GLint64 lParam)
 	{
 		switch (lParam)
 		{
-		case GLFW_MOUSE_BUTTON_1:
-			mouseButton1Press = false;
+		case GLFW_MOUSE_BUTTON_3:
+			mouseButton3Press = false;
+			break;
+		case GLFW_MOUSE_BUTTON_2:
+			mouseButton2Press = false;
+			break;
 		default:
 			break;
 		}
@@ -49,8 +54,11 @@ void testCamera::EventCallback(GLint64 msg, GLint64 wParam, GLint64 lParam)
 
 		switch (lParam)
 		{
-		case GLFW_MOUSE_BUTTON_1:
-			mouseButton1Press = true;
+		case GLFW_MOUSE_BUTTON_3:
+			mouseButton3Press = true;
+			break;
+		case GLFW_MOUSE_BUTTON_2:
+			mouseButton2Press = true;
 			break;
 		case GLFW_KEY_W:
 			_pos = GetGameObject()->get_transform()->GetPosition();
@@ -109,12 +117,29 @@ void testCamera::EventCallback(GLint64 msg, GLint64 wParam, GLint64 lParam)
 		}
 	}
 
-	if (msg == CR_EVENT_MOUSE_MOVE && mouseButton1Press)
+	if (msg == CR_EVENT_MOUSE_MOVE && mouseButton2Press)
 	{
 		Vector3f rotg = GetGameObject()->get_transform()->GetRotation();
 		Vector3f rot = GetGameObject()->get_transform()->GetLocalRotation();
 		Vector3f dt = Vector3f(lParam, wParam, 0) * CrTime::Instance()->GetDelateTime()* _speed;
 		rot = rot - dt;
 		GetGameObject()->get_transform()->SetLocalRotation(rot);
+	}
+
+	if (msg == CR_EVENT_MOUSE_MOVE && mouseButton3Press)
+	{
+		Vector3f r = -(Float)wParam * GetGameObject()->get_transform()->GetRight() * 0.2f;
+		Vector3f u = (Float)lParam * GetGameObject()->get_transform()->GetUp() * 0.2f;
+
+		Vector3f p = GetGameObject()->get_transform()->GetPosition();
+		GetGameObject()->get_transform()->SetPosition(p + r + u);
+	}
+
+	if (msg == CR_EVENT_MOUSE_WHEEL)
+	{
+		Vector3f f = -(Float)lParam * GetGameObject()->get_transform()->GetForword() * 0.5f;
+
+		Vector3f p = GetGameObject()->get_transform()->GetPosition();
+		GetGameObject()->get_transform()->SetPosition(p + f);
 	}
 }

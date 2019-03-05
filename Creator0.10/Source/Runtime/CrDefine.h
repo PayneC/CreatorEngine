@@ -83,6 +83,7 @@ public: virtual void Set##funName(varType var);
 #define CR_EVENT_MOUSE_BUTTON				2
 #define CR_EVENT_MOUSE_MOVE					3
 #define CR_EVENT_JOYSTICK					4
+#define CR_EVENT_MOUSE_WHEEL				5
 
 #define LuaAPI_Register(l,f) lua_register(l, #f, f);	
 

@@ -280,6 +280,8 @@ void CrEngine::OnExit()
 
 void CrEngine::Destory()
 {
+	CrCamera::m_pCameraList.clear();
+	CrScene::SetCurrentScene(NULL);
 	Event::Clear();
 	glfwTerminate();
 }

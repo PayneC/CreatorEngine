@@ -8,16 +8,16 @@ CrTextureUtility::~CrTextureUtility()
 {
 }
 
-CrTexture * CrTextureUtility::LoadTexture(const char* filename, unsigned int hashCode, GLenum image_format, GLint internal_format, GLint level, GLint border)
+SharedPtr<CrTexture> CrTextureUtility::LoadTexture(const char* filename, unsigned int hashCode, GLenum image_format, GLint internal_format, GLint level, GLint border)
 {
 	return NULL;
 }
 
-CrTexture * CrTextureUtility::LoadTexture(const char* filename)
+SharedPtr<CrTexture> CrTextureUtility::LoadTexture(const char* filename)
 {
 	int width, height, channels;
 	unsigned char * image = SOIL_load_image(filename, &width, &height, &channels, SOIL_LOAD_AUTO);
-	CrTexture * instance = new CrTexture();
+	SharedPtr<CrTexture> instance = std::make_shared<CrTexture>();
 	instance->m_dWidth = width;
 	instance->m_dHeight = height;
 	instance->m_dTextureId;
@@ -41,7 +41,7 @@ CrTexture * CrTextureUtility::LoadTexture(const char* filename)
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	SOIL_free_image_data(image);
-	glBindTexture(GL_TEXTURE, 0);
+	glBindTexture(GL_TEXTURE, 0);	
 
 	return instance;
 }

@@ -17,13 +17,13 @@ void CrMeshRender::Draw(glm::fmat4 & mvp, glm::vec3 & eye, glm::fmat4 & m, glm::
 		return;
 	}
 
-	CrMaterial * material = m_pMaterials[0];
+	SharedPtr<CrMaterial> material = m_pMaterials[0];
 	if (material == NULL)
 	{
 		return;
 	}
 
-	CrShader * shader = material->GetShader();
+	SharedPtr<CrShader> shader = material->GetShader();
 	if (shader == NULL)
 	{
 		return;
@@ -31,16 +31,15 @@ void CrMeshRender::Draw(glm::fmat4 & mvp, glm::vec3 & eye, glm::fmat4 & m, glm::
 
 	glm::vec3 _light(2, 2, 2);
 
-	glUseProgram(shader->GetShaderID());	
+	glUseProgram(shader->GetShaderID());
+	
+	glBindVertexArray(m_pMesh->GetVAO());
 
 	GLuint m_uMV = glGetUniformLocation(shader->GetShaderID(), "mModel");
 	glUniformMatrix4fv(m_uMV, 1, GL_FALSE, glm::value_ptr(m));	
 
 	GLuint m_uMVP = glGetUniformLocation(shader->GetShaderID(), "mModelViewProjection");
-	glUniformMatrix4fv(m_uMVP, 1, GL_FALSE, glm::value_ptr(mvp));
-
-	GLuint m_uBaseColor = glGetUniformLocation(shader->GetShaderID(), "vBaseColor");
-	glUniform4fv(m_uBaseColor, 1, glm::value_ptr(material->GetColor()));
+	glUniformMatrix4fv(m_uMVP, 1, GL_FALSE, glm::value_ptr(mvp));	
 
 	GLuint vLightPos = glGetUniformLocation(shader->GetShaderID(), "vLightPos");
 	glUniform3fv(vLightPos, 1, glm::value_ptr(eye));
@@ -48,34 +47,37 @@ void CrMeshRender::Draw(glm::fmat4 & mvp, glm::vec3 & eye, glm::fmat4 & m, glm::
 	GLuint vEyePos = glGetUniformLocation(shader->GetShaderID(), "vEyePos");
 	glUniform3fv(vEyePos, 1, glm::value_ptr(eye));
 
-	glBindVertexArray(m_pMesh->GetVAO());
+	material->UploadUniform();
 
-	CrTexture * texture = material->GetpMainTexture();
-	if (texture != NULL)
-	{
-		GLuint tex0 = glGetUniformLocation(shader->GetShaderID(), "diffuse");		
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture->m_dTextureId);
-		glUniform1i(tex0, 0);
-	}
-
-	CrTexture * textureN = material->GetpNormalTexture();
-	if (textureN != NULL)
-	{
-		GLuint tex1 = glGetUniformLocation(shader->GetShaderID(), "normal");		
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, textureN->m_dTextureId);
-		glUniform1i(tex1, 1);
-	}
-
-	CrTexture * textureS = material->GetpSpecularTexture();
-	if (textureS != NULL)
-	{
-		GLuint tex2 = glGetUniformLocation(shader->GetShaderID(), "specular");
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, textureS->m_dTextureId);
-		glUniform1i(tex2, 2);
-	}
+// 	GLuint m_uBaseColor = glGetUniformLocation(shader->GetShaderID(), "vBaseColor");
+// 	glUniform4fv(m_uBaseColor, 1, glm::value_ptr(material->GetColor()));	
+// 
+// 	SharedPtr<CrTexture> texture = material->GetpMainTexture();
+// 	if (texture != NULL)
+// 	{
+// 		GLuint tex0 = glGetUniformLocation(shader->GetShaderID(), "diffuse");		
+// 		glActiveTexture(GL_TEXTURE0);
+// 		glBindTexture(GL_TEXTURE_2D, texture->m_dTextureId);
+// 		glUniform1i(tex0, 0);		
+// 	}
+// 
+// 	SharedPtr<CrTexture> textureN = material->GetpNormalTexture();
+// 	if (textureN != NULL)
+// 	{
+// 		GLuint tex1 = glGetUniformLocation(shader->GetShaderID(), "normal");		
+// 		glActiveTexture(GL_TEXTURE1);
+// 		glBindTexture(GL_TEXTURE_2D, textureN->m_dTextureId);
+// 		glUniform1i(tex1, 1);
+// 	}
+// 
+// 	SharedPtr<CrTexture> textureS = material->GetpSpecularTexture();
+// 	if (textureS != NULL)
+// 	{
+// 		GLuint tex2 = glGetUniformLocation(shader->GetShaderID(), "specular");
+// 		glActiveTexture(GL_TEXTURE2);
+// 		glBindTexture(GL_TEXTURE_2D, textureS->m_dTextureId);
+// 		glUniform1i(tex2, 2);
+// 	}
 
 	glDrawElements(GL_TRIANGLES, m_pMesh->GetElementCount(), GL_UNSIGNED_INT, NULL);//GL_TRIANGLE_STRIP
 
@@ -84,7 +86,7 @@ void CrMeshRender::Draw(glm::fmat4 & mvp, glm::vec3 & eye, glm::fmat4 & m, glm::
 	glUseProgram(0);
 }
 
-void CrMeshRender::SetMaterial(CrMaterial * material)
+void CrMeshRender::SetMaterial(SharedPtr<CrMaterial> material)
 {
 	if (m_pMaterials.empty())
 	{
@@ -96,7 +98,7 @@ void CrMeshRender::SetMaterial(CrMaterial * material)
 	}
 }
 
-CrMaterial * CrMeshRender::GetMaterial()
+SharedPtr<CrMaterial> CrMeshRender::GetMaterial()
 {
 	if (!m_pMaterials.empty())
 	{
@@ -105,12 +107,12 @@ CrMaterial * CrMeshRender::GetMaterial()
 	return NULL;
 }
 
-void CrMeshRender::SetMesh(std::shared_ptr<CrMesh> mesh)
+void CrMeshRender::SetMesh(SharedPtr<CrMesh> mesh)
 {
 	m_pMesh = mesh;
 }
 
-std::shared_ptr<CrMesh> CrMeshRender::GetMesh()
+SharedPtr<CrMesh> CrMeshRender::GetMesh()
 {
 	return m_pMesh;
 }

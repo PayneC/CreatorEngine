@@ -51,8 +51,7 @@ public:
 	CrShader();
 	~CrShader();
 
-public:
-	EasyGetSet(GLuint, m_uId, ID);
+public:	
 	EasyGetSet(GLuint, m_uShaderID, ShaderID);
 	//void SetUniformMatrix4fv(GLuint location, glm::fmat4x4 * var);
 private:	

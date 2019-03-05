@@ -10,34 +10,75 @@ Payne
 #include <CrShader.h>
 #include <CrTexture.h>
 
+enum EMaterialParameterType
+{
+	eInt,
+	eFloat,
+	eFloat2,
+	eFloat3,
+	eFloat4,
+	eTexture,
+};
+
+__interface IMaterialParameter
+{
+	void * GetPtr();
+	EMaterialParameterType GetType();
+};
+
+template<typename T>
+class MaterialParameter : public IMaterialParameter
+{
+public:
+	MaterialParameter(SharedPtr<T> ptr);
+	~MaterialParameter();
+
+	void * GetPtr();
+	EMaterialParameterType GetType() { return eType; }
+
+	EMaterialParameterType eType;
+private:
+	SharedPtr<T> _ptr;
+};
+
+class MatTextureParameter : public MaterialParameter<CrTexture>
+{
+public:
+	MatTextureParameter(SharedPtr<CrTexture> ptr);
+	~MatTextureParameter();
+
+	GLenum TexIndex;
+	Int Index;
+private:
+
+};
+
 class DLL_ClASS CrMaterial : public CrObject
 {
 public:
-	static CrMaterial * CreateCrMaterial();
+	static SharedPtr<CrMaterial> CreateCrMaterial();
 
 public:
 	CrMaterial();
 	~CrMaterial();	
+	
+	EasyGetSet(SharedPtr<CrShader>, m_pShader, Shader);
+// 	EasyGet(glm::vec4 , m_dColor, Color);
+// 	EasyGetSet(SharedPtr<CrTexture>, m_pMainTexture, pMainTexture);
+// 	EasyGetSet(SharedPtr<CrTexture>, m_pNormalTexture, pNormalTexture);
+// 	EasyGetSet(SharedPtr<CrTexture>, m_pSpecularTexture, pSpecularTexture);
+	
+	void SetInt(std::string name, Int value);
+	void SetFloat(std::string name, Float value);
+	void SetVector2(std::string name, Vector2f value);
+	void SetVector3(std::string name, Vector3f value);
+	void SetVector4(std::string name, Vector4f value);
+	void SetColor(std::string name, Vector4f value);
+	void SetTexture(std::string name, SharedPtr<CrTexture> value, GLenum e, Int index);
 
-	EasyGetSet(CrShader *, m_pShader, Shader);
-	EasyGet(glm::vec4 , m_dColor, Color);
-	EasyGetSet(CrTexture *, m_pMainTexture, pMainTexture);
-	EasyGetSet(CrTexture *, m_pNormalTexture, pNormalTexture);
-	EasyGetSet(CrTexture *, m_pSpecularTexture, pSpecularTexture);
-	EasyGetSet(glm::vec2, m_v2mainTextureOffset, mainTextureOffset);
-	EasyGetSet(glm::vec2, m_v2mainTextureScale, mainTextureScale);
-
-	void SetColor(glm::vec4 & color);	
-// 	void SetFloat(std::string name, float value);
-// 	void SetColor(std::string name, float value);
-// 	void SetVector(std::string name, glm::vec4 & color);
-// 	void SetTextureOffset(std::string name, glm::vec2 & color);
-// 	void SetTextureScale(std::string name, glm::vec2 & color);
-private:
 	void UploadUniform();
+private:	
 
-	std::map<std::string, void*> _parameter;
+	std::map<std::string, IMaterialParameter*> _parameters;	
 };
-
-
 #endif

@@ -9,7 +9,9 @@ private:
 	float b;
 	float bb;
 
-	bool mouseButton1Press;
+	bool mouseButton3Press;
+	bool mouseButton2Press;
+
 public:
 	testCamera();
 	~testCamera();

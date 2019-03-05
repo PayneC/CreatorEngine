@@ -4,7 +4,7 @@
 #include <string>
 #include <fstream>
 
-CrShader * CrShaderUtility::CreateShader(const char * vertexFile, const char * fragmentFile)
+SharedPtr<CrShader> CrShaderUtility::CreateShader(const char * vertexFile, const char * fragmentFile)
 {
 	return Instance()->_CreateShader(vertexFile, fragmentFile);
 }
@@ -119,31 +119,19 @@ GLuint CrShaderUtility::CompileShader(const char * vertexFile, const char * frag
 
 bool CrShaderUtility::Init()
 {
-	m_shaders = std::map<std::string, GLuint>();
-	//std::string shaderName = "testShader";
-	//GLuint shader = CompileShader("testShader.vert", "testShader.frag");
-	//m_shaders.insert(std::make_pair(shaderName, shader));
+	m_shaders = std::map<std::string, SharedPtr<CrShader>>();
 	return true;
 }
 
-bool CrShaderUtility::Find(std::string name, GLuint * id)
+SharedPtr<CrShader> CrShaderUtility::Find(std::string name)
 {
+	SharedPtr<CrShader> shader = NULL;
+
 	m_iterShader = m_shaders.find(name);
 	if (m_iterShader != m_shaders.end())
 	{
-		*id = m_iterShader->second;
-		return true;
-	}		
-	else
-	{
-		return false;
-	}	
-}
-
-GLuint CrShaderUtility::Insert(std::string name, const char * vertexFile, const char * fragmentFile)
-{
-	GLuint shader = CompileShader(vertexFile, fragmentFile);
-	m_shaders.insert(std::make_pair(name, shader));
+		shader = m_iterShader->second;
+	}
 	return shader;
 }
 
@@ -157,16 +145,19 @@ void CrShaderUtility::RemoveAll()
 	m_shaders.clear();
 }
 
-CrShader * CrShaderUtility::_CreateShader(const char * vertexFile, const char * fragmentFile)
+//TODO:shader name ¶¥µã_Æ¬Ôª
+SharedPtr<CrShader> CrShaderUtility::_CreateShader(const char * vertexFile, const char * fragmentFile)
 {
-	GLuint id = 0;
+	SharedPtr<CrShader> shader = Find(vertexFile);	
 
-	if (!Find(vertexFile, &id))
-		id = Insert(vertexFile, vertexFile, fragmentFile);
-
-	CrShader * ptr = new CrShader();
-	ptr->SetID(id);
-	ptr->SetShaderID(id);
-
-	return ptr;
+	if (!Find(vertexFile))
+	{
+		shader = std::make_shared<CrShader>();
+		GLuint shaderID = CompileShader(vertexFile, fragmentFile);
+		
+		shader->SetShaderID(shaderID);
+		m_shaders.insert(std::make_pair(vertexFile, shader));
+	}
+	
+	return shader;
 }

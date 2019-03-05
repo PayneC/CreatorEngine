@@ -12,7 +12,7 @@ CrMeshUtility::~CrMeshUtility()
 {
 }
 
-std::shared_ptr<CrMesh> CrMeshUtility::CreateMesh(EPresetMeshType meshType)
+SharedPtr<CrMesh> CrMeshUtility::CreateMesh(EPresetMeshType meshType)
 {
 	switch (meshType)
 	{
@@ -25,7 +25,7 @@ std::shared_ptr<CrMesh> CrMeshUtility::CreateMesh(EPresetMeshType meshType)
 	}
 }
 
-std::shared_ptr<CrMesh> CrMeshUtility::CreateMeshCube()
+SharedPtr<CrMesh> CrMeshUtility::CreateMeshCube()
 {
 	if (m_BuiltinMeshs[CR_MESH_TYPE_CUBE] != NULL)
 		return m_BuiltinMeshs[CR_MESH_TYPE_CUBE];
@@ -193,7 +193,7 @@ std::shared_ptr<CrMesh> CrMeshUtility::CreateMeshCube()
 	return m_BuiltinMeshs[CR_MESH_TYPE_CUBE];
 }
 
-std::shared_ptr<CrMesh> CrMeshUtility::CreateMeshQuad()
+SharedPtr<CrMesh> CrMeshUtility::CreateMeshQuad()
 {
 	if (m_BuiltinMeshs[CR_MESH_TYPE_QUAD] != NULL)
 		return m_BuiltinMeshs[CR_MESH_TYPE_QUAD];
@@ -297,22 +297,24 @@ std::shared_ptr<CrMesh> CrMeshUtility::CreateMeshQuad()
 	return m_BuiltinMeshs[CR_MESH_TYPE_QUAD];
 }
 
-std::shared_ptr<CrGameObject> CrMeshUtility::LoadModel(const char* filename)
+SharedPtr<CrGameObject> CrMeshUtility::LoadModel(const char* filename)
 {
 	Assimp::Importer _importer;
 	const aiScene* pScene = _importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
-	std::shared_ptr<CrGameObject> _go = processNode(pScene->mRootNode, pScene);
+	SharedPtr<CrGameObject> _go = processNode(pScene->mRootNode, pScene);
+	
+	_importer.FreeScene();
 	return _go;
 }
 
-std::shared_ptr<CrGameObject> CrMeshUtility::processNode(aiNode *node, const aiScene *scene)
+SharedPtr<CrGameObject> CrMeshUtility::processNode(aiNode *node, const aiScene *scene)
 {		
-	std::shared_ptr<CrGameObject> _go = CrGameObject::CreateGameObject<CrGameObject>(node->mName.C_Str());
+	SharedPtr<CrGameObject> _go = CrGameObject::CreateGameObject<CrGameObject>(node->mName.C_Str());
 	for (int i = 0; i < node->mNumMeshes; ++i)
 	{
 		aiMesh * mesh = scene->mMeshes[node->mMeshes[i]];
-		std::shared_ptr<CrGameObject> _goMesh = processMesh(mesh, scene);
+		SharedPtr<CrGameObject> _goMesh = processMesh(mesh, scene);
 		_goMesh->SetParent(_go);
 		_goMesh->get_transform()->SetPosition(glm::vec3(0, 1, 0));
 		_goMesh->get_transform()->SetLocalScale(glm::vec3(1, 1, 1));
@@ -321,7 +323,7 @@ std::shared_ptr<CrGameObject> CrMeshUtility::processNode(aiNode *node, const aiS
 
 	for (int i = 0; i < node->mNumChildren; ++i)
 	{
-		std::shared_ptr<CrGameObject> _goChild = processNode(node->mChildren[i], scene);
+		SharedPtr<CrGameObject> _goChild = processNode(node->mChildren[i], scene);
 		_goChild->SetParent(_go);
 		_goChild->get_transform()->SetPosition(glm::vec3(0, 1, 0));
 		_goChild->get_transform()->SetLocalScale(glm::vec3(1, 1, 1));
@@ -331,19 +333,19 @@ std::shared_ptr<CrGameObject> CrMeshUtility::processNode(aiNode *node, const aiS
 	return _go;
 }
 
-std::shared_ptr<CrGameObject> CrMeshUtility::processMesh(aiMesh *mesh, const aiScene *scene)
+SharedPtr<CrGameObject> CrMeshUtility::processMesh(aiMesh *mesh, const aiScene *scene)
 {	
-	std::shared_ptr<CrGameObject> _go = CrGameObject::CreateGameObject<CrGameObject>(mesh->mName.C_Str());
-	std::shared_ptr<CrMeshRender> meshRender = _go->AddComponent<CrMeshRender>();
+	SharedPtr<CrGameObject> _go = CrGameObject::CreateGameObject<CrGameObject>(mesh->mName.C_Str());
+	SharedPtr<CrMeshRender> meshRender = _go->AddComponent<CrMeshRender>();
 
-	std::shared_ptr<CrMesh>  _mesh = std::make_shared<CrMesh>();
-	CrMaterial * material = CrMaterial::CreateCrMaterial();	
-	CrShader * shader = CrShaderUtility::CreateShader("Blinn-Phong.vert", "Blinn-Phong.frag");
+	SharedPtr<CrMesh>  _mesh = std::make_shared<CrMesh>();
+	SharedPtr<CrMaterial> material = CrMaterial::CreateCrMaterial();
+	SharedPtr<CrShader> shader = CrShaderUtility::CreateShader("Blinn-Phong.vert", "Blinn-Phong.frag");
 	material->SetShader(shader);
 	meshRender->SetMaterial(material);
 	meshRender->SetMesh(_mesh);
 
-	material->SetColor(glm::vec4(1, 1, 1, 1));
+	material->SetColor("vBaseColor", glm::vec4(1, 1, 1, 1));
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
@@ -379,14 +381,15 @@ std::shared_ptr<CrGameObject> CrMeshUtility::processMesh(aiMesh *mesh, const aiS
 	{
 		aiMaterial* _material = scene->mMaterials[mesh->mMaterialIndex];
 		const char * path;
-		CrTexture * texture;
+		SharedPtr<CrTexture> texture;
 		aiString str;
 		_material->GetTexture(aiTextureType_DIFFUSE, 0, &str);
 		if (str.length > 0)
 		{
 			path = str.C_Str();
 			texture = CrTextureUtility::Instance()->LoadTexture(path);
-			material->SetpMainTexture(texture);
+			//material->SetpMainTexture(texture);
+			material->SetTexture("diffuse", texture, GL_TEXTURE0, 0);
 		}
 
 		str.Clear();
@@ -395,7 +398,8 @@ std::shared_ptr<CrGameObject> CrMeshUtility::processMesh(aiMesh *mesh, const aiS
 		{
 			path = str.C_Str();
 			texture = CrTextureUtility::Instance()->LoadTexture(path);
-			material->SetpSpecularTexture(texture);
+			//material->SetpSpecularTexture(texture);
+			material->SetTexture("specular", texture, GL_TEXTURE2, 2);
 		}
 				
 		str.Clear();
@@ -404,7 +408,8 @@ std::shared_ptr<CrGameObject> CrMeshUtility::processMesh(aiMesh *mesh, const aiS
 		{
 			path = str.C_Str();
 			texture = CrTextureUtility::Instance()->LoadTexture(path);
-			material->SetpNormalTexture(texture);
+			//material->SetpNormalTexture(texture);
+			material->SetTexture("normal", texture, GL_TEXTURE1, 1);
 		}
 
 		str.Clear();

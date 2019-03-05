@@ -110,9 +110,9 @@ SharedPtr<TReturnType> CrGameObject::CreateGameObject(EPresetMeshType type, std:
 		pRef->m_kTransform = pRef->AddComponent<CrTransform>();
 		pRef->set_name(name);
 		SharedPtr<CrMeshRender> meshRender = pRef->AddComponent<CrMeshRender>();
-		CrMaterial * material = CrMaterial::CreateCrMaterial();
+		SharedPtr<CrMaterial> material = CrMaterial::CreateCrMaterial();
 		SharedPtr<CrMesh> mesh = CrMeshUtility::CreateMesh(type);
-		CrShader * shader = CrShaderUtility::CreateShader("VertexLit.vert", "VertexLit.frag");
+		SharedPtr<CrShader> shader = CrShaderUtility::CreateShader("VertexLit.vert", "VertexLit.frag");
 		material->SetShader(shader);
 		meshRender->SetMaterial(material);
 		meshRender->SetMesh(mesh);		

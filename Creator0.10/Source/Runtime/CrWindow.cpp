@@ -22,10 +22,15 @@ void CursorPosCallback(GLFWwindow* pWindow, double xPos, double yPos)
 	Event::ProMessage(CR_EVENT_MOUSE_MOVE, a, b);// CrWindow::m_v2Mouse.x, CrWindow::m_v2Mouse.y);
 }
 
-void CruseButtonCallback(GLFWwindow* pWindow, int keyCode, int action, int Crds)
+void MouseButtonCallback(GLFWwindow* pWindow, int keyCode, int action, int Crds)
 {
 	printf("%d-%d-%d \n", keyCode, action, Crds);
 	Event::ProMessage(CR_EVENT_MOUSE_BUTTON, action, keyCode);
+}
+
+void ScrollCallback(GLFWwindow* pWindow, double xOffest, double yOffest)
+{	
+	Event::ProMessage(CR_EVENT_MOUSE_WHEEL, xOffest, yOffest);
 }
 
 glm::dvec2 CrWindow::m_v2Mouse(0, 0);
@@ -44,7 +49,8 @@ bool CrWindow::Create()
 		glfwSetInputMode(m_pEngineWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 		glfwSetKeyCallback(m_pEngineWindow, KeyCallBack);
 		glfwSetCursorPosCallback(m_pEngineWindow, CursorPosCallback);
-		glfwSetMouseButtonCallback(m_pEngineWindow, CruseButtonCallback);
+		glfwSetMouseButtonCallback(m_pEngineWindow, MouseButtonCallback);
+		glfwSetScrollCallback(m_pEngineWindow, ScrollCallback);
 
 		glm::uvec2 _pos = GetWindowSize();
 		m_v2Center.x = _pos.x * 0.5;
