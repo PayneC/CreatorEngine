@@ -91,8 +91,9 @@ public: virtual void Set##funName(varType var);
 	{
 		CR_MESH_TYPE_CUBE = 0,
 		CR_MESH_TYPE_QUAD = 1,
+		CR_MESH_TYPE_SKY_BOX = 2,
 	};
-#define CR_MESH_TYPE_COUNT					2	
+#define CR_MESH_TYPE_COUNT					3	
 
 #define CAMERA_PROJECTION_PERSPECTIVE		1
 #define CAMERA_PROJECTION_ORTHOGRAPHIC		2

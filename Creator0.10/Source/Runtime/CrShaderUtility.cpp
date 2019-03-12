@@ -155,7 +155,7 @@ SharedPtr<CrShader> CrShaderUtility::_CreateShader(const char * vertexFile, cons
 		shader = std::make_shared<CrShader>();
 		GLuint shaderID = CompileShader(vertexFile, fragmentFile);
 		
-		shader->SetShaderID(shaderID);
+		shader->SetShaderID(shaderID);				
 		m_shaders.insert(std::make_pair(vertexFile, shader));
 	}
 	

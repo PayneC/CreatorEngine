@@ -30,13 +30,13 @@ void main()
 	vec3 _vAmbient = lightAmbient * _vDiffuseColor;
 
 	vec3 _vLightDir = vLightDir;
-	float _fDiffuse = max(dot(oNormal, _vLightDir), 0.0);
+	float _fDiffuse = dot(oNormal, _vLightDir) * 0.5 + 0.5;//max(dot(oNormal, _vLightDir), 0.0);
 	vec3 _vDiffuse =  lightDiffuse * _fDiffuse * _vDiffuseColor;
 
     vec3 _vEyeDir = vEyeDir;
 	vec3 _vReflectDir = reflect(-_vLightDir, oNormal);
 	float _fSpec = pow(max(dot(_vEyeDir, _vReflectDir), 0.0), shininess);
-	vec3 _vSpecular = lightSpecular * _fSpec * _vSpecularColor;
+	vec3 _vSpecular = lightSpecular * _fSpec * _vSpecularColor;	
 
 	fragColor = vec4(_vSpecular + _vDiffuse + _vAmbient, _vSurfaceColor.a);	
 }

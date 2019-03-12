@@ -29,7 +29,6 @@
     <ClCompile Include="..\..\..\Source\Runtime\Core\Private\CrTransform.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\Core\Private\Event.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrCamera.cpp" />
-    <ClCompile Include="..\..\..\Source\Runtime\CrCubemap.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CreatorEngine.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrEngine.cpp" />
     <ClCompile Include="..\..\..\Source\Runtime\CrLight.cpp" />
@@ -58,7 +57,6 @@
     <ClInclude Include="..\..\..\Source\Runtime\Core\Public\CrTransform.h" />
     <ClInclude Include="..\..\..\Source\Runtime\Core\Public\Event.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrCamera.h" />
-    <ClInclude Include="..\..\..\Source\Runtime\CrCubemap.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrDefine.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CreatorEngine.h" />
     <ClInclude Include="..\..\..\Source\Runtime\CrEngine.h" />

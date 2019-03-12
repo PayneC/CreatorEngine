@@ -2,7 +2,6 @@
 #include <imgui.h>
 #include <imgui_impl_glfw_gl3.h>
 
-
 void _Render(SharedPtr<CrGameObject> pGameObject, SharedPtr<CrCamera> pCamera)
 {
 	if (pGameObject == NULL || !pGameObject->GetActive())
@@ -12,11 +11,13 @@ void _Render(SharedPtr<CrGameObject> pGameObject, SharedPtr<CrCamera> pCamera)
 	SharedPtr <CrTransform> transform = pGameObject->get_transform();
 	if (meshRender != NULL && transform != NULL)
 	{
-		glm::mat4 mvp = pCamera->GetVP() * transform->GetLocalToWorldMatrix();
+		//glm::mat4 mvp = pCamera->GetVP() * transform->GetLocalToWorldMatrix();
+
+		glm::mat4 p = pCamera->GetP();
 		glm::mat4 v = pCamera->get_transform()->GetWorldToLocalMatrix();
 		glm::mat4 m = transform->GetLocalToWorldMatrix();
 
-		meshRender->Draw(mvp, pCamera->get_transform()->GetPosition(), m, v);
+		meshRender->Draw(pCamera->GetP(), pCamera->get_transform()->GetPosition(), m, v);
 	}
 
 	std::vector<SharedPtr<CrTransform>> transforms = transform->get_children();

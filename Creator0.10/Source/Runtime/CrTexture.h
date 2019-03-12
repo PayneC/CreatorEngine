@@ -18,13 +18,18 @@ public:
 	~CrTexture();
 
 public:
-	//EasyGet(GLuint, m_dTextureId, TextureId)
-		GLuint m_dTextureId;
+	GLuint m_dTextureId;
+	int GetWidth() { return m_dWidth; }
+	int GetHeight() { return m_dHeight; }
+	GLenum GetTextureType() { return eTextureType; }
+	GLenum GetTextureFormat() { return eTextureFormat; }
+
 private:
-	
 	int m_dAnisoLevel;
 	int m_dWidth;
 	int m_dHeight;
+	GLenum eTextureType;
+	GLenum eTextureFormat;
 };
 
 #endif

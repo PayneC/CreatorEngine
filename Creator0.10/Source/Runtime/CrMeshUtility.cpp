@@ -20,9 +20,146 @@ SharedPtr<CrMesh> CrMeshUtility::CreateMesh(EPresetMeshType meshType)
 		return CrMeshUtility::Instance()->CreateMeshCube();
 	case CR_MESH_TYPE_QUAD:
 		return CrMeshUtility::Instance()->CreateMeshQuad();
+	case CR_MESH_TYPE_SKY_BOX:
+		return CrMeshUtility::Instance()->CreateSkyBox();
 	default:
 		return NULL;
 	}
+}
+
+SharedPtr<CrMesh> CrMeshUtility::CreateSkyBox()
+{
+	if (m_BuiltinMeshs[CR_MESH_TYPE_SKY_BOX] != NULL)
+		return m_BuiltinMeshs[CR_MESH_TYPE_SKY_BOX];
+
+	m_BuiltinMeshs[CR_MESH_TYPE_SKY_BOX] = std::make_shared<CrMesh>();
+
+// 	float skyboxVertices[] = 
+// 	{
+// 		// positions          
+// 		-1.0f,  1.0f, -1.0f,
+// 		-1.0f, -1.0f, -1.0f,
+// 		 1.0f, -1.0f, -1.0f,
+// 		 1.0f, -1.0f, -1.0f,
+// 		 1.0f,  1.0f, -1.0f,
+// 		-1.0f,  1.0f, -1.0f,
+// 
+// 		-1.0f, -1.0f,  1.0f,
+// 		-1.0f, -1.0f, -1.0f,
+// 		-1.0f,  1.0f, -1.0f,
+// 		-1.0f,  1.0f, -1.0f,
+// 		-1.0f,  1.0f,  1.0f,
+// 		-1.0f, -1.0f,  1.0f,
+// 
+// 		 1.0f, -1.0f, -1.0f,
+// 		 1.0f, -1.0f,  1.0f,
+// 		 1.0f,  1.0f,  1.0f,
+// 		 1.0f,  1.0f,  1.0f,
+// 		 1.0f,  1.0f, -1.0f,
+// 		 1.0f, -1.0f, -1.0f,
+// 
+// 		-1.0f, -1.0f,  1.0f,
+// 		-1.0f,  1.0f,  1.0f,
+// 		 1.0f,  1.0f,  1.0f,
+// 		 1.0f,  1.0f,  1.0f,
+// 		 1.0f, -1.0f,  1.0f,
+// 		-1.0f, -1.0f,  1.0f,
+// 
+// 		-1.0f,  1.0f, -1.0f,
+// 		 1.0f,  1.0f, -1.0f,
+// 		 1.0f,  1.0f,  1.0f,
+// 		 1.0f,  1.0f,  1.0f,
+// 		-1.0f,  1.0f,  1.0f,
+// 		-1.0f,  1.0f, -1.0f,
+// 
+// 		-1.0f, -1.0f, -1.0f,
+// 		-1.0f, -1.0f,  1.0f,
+// 		 1.0f, -1.0f, -1.0f,
+// 		 1.0f, -1.0f, -1.0f,
+// 		-1.0f, -1.0f,  1.0f,
+// 		 1.0f, -1.0f,  1.0f
+// 	};
+
+	GLfloat skyboxVertices[] =
+	{
+		0.5, -0.5, 0.5,
+		-0.5, -0.5, 0.5,
+		0.5, 0.5, 0.5,
+		-0.5, 0.5, 0.5,
+		0.5, 0.5, -0.5,
+		-0.5, 0.5, -0.5,
+		0.5, -0.5, -0.5,
+		-0.5, -0.5, -0.5,
+		0.5, 0.5, 0.5,
+		-0.5, 0.5, 0.5,
+		0.5, 0.5, -0.5,
+		-0.5, 0.5, -0.5,
+		0.5, -0.5, -0.5,
+		0.5, -0.5, 0.5,
+		-0.5, -0.5, 0.5,
+		-0.5, -0.5, -0.5,
+		-0.5, -0.5, 0.5,
+		-0.5, 0.5, 0.5,
+		-0.5, 0.5, -0.5,
+		-0.5, -0.5, -0.5,
+		0.5, -0.5, -0.5,
+		0.5, 0.5, -0.5,
+		0.5, 0.5, 0.5,
+		0.5, -0.5, 0.5,
+	};
+
+	GLuint triangles[] =
+	{
+		0, 2, 3, 0, 3, 1, 
+		8, 4, 5, 8, 5, 9, 
+		10, 6, 7, 10, 7, 11, 
+		12, 13, 14, 12, 14, 15, 
+		16, 17, 18, 16, 18, 19, 
+		20, 21, 22, 20, 22, 23,
+	};
+
+	GLuint VAO = 0;
+	GLuint VBO = 0;
+	GLuint EBO = 0;
+
+	size_t verticeSize = sizeof(skyboxVertices);
+	size_t triangleSize = sizeof(triangles);
+
+	//VertexBufferObject
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, verticeSize, &skyboxVertices, GL_STATIC_DRAW);
+
+	//ElementBufferObject
+	glGenBuffers(1, &EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, triangleSize, triangles, GL_STATIC_DRAW);
+
+	//VertexArrayObject
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glEnableVertexAttribArray(0); //attribute 0. No particular reason for 0, but must match the layout in the shader.
+	glVertexAttribPointer(
+		0,		  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+		3,		  // size
+		GL_FLOAT, // type
+		GL_FALSE, // normalized?
+		0,		  // stride
+		(void *)0 // array buffer offset
+	);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+
+	glBindVertexArray(0);
+
+	m_BuiltinMeshs[CR_MESH_TYPE_SKY_BOX]->SetVAO(VAO);
+	m_BuiltinMeshs[CR_MESH_TYPE_SKY_BOX]->SetVBO(VBO);
+	m_BuiltinMeshs[CR_MESH_TYPE_SKY_BOX]->SetEBO(EBO);
+	m_BuiltinMeshs[CR_MESH_TYPE_SKY_BOX]->SetElementCount(triangleSize);
+	m_BuiltinMeshs[CR_MESH_TYPE_SKY_BOX]->SetName("skybox");
+
+	return m_BuiltinMeshs[CR_MESH_TYPE_SKY_BOX];
 }
 
 SharedPtr<CrMesh> CrMeshUtility::CreateMeshCube()

@@ -24,6 +24,7 @@ public:
 public:
 	SharedPtr<CrTexture> LoadTexture(const char* filename, unsigned int hashCode, GLenum image_format, GLint internal_format, GLint level, GLint border);
 	SharedPtr<CrTexture> LoadTexture(const char* filename);
+	SharedPtr<CrTexture> LoadCubMap(const char* _forward, const char* _back, const char* _up, const char* _down, const char* _left, const char* _right);
 private:
 	std::map<unsigned int, SharedPtr<CrTexture>> m_mapTexture;
 };

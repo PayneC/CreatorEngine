@@ -20,8 +20,9 @@ public:
 	~CrCamera();
 
 	glm::mat4 GetVP();
+	glm::mat4 GetP() { return m_m4Projection; }
+	EasyGetSet(GLshort, m_sProjection, Projection);		
 
-	EasyGetSet(GLshort, m_sProjection, Projection);
 private:
 	glm::fmat4 m_m4Projection;
 	glm::fmat4 m_m4VP;	

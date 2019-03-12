@@ -18,6 +18,7 @@ enum EMaterialParameterType
 	eFloat3,
 	eFloat4,
 	eTexture,
+	eCubMap,
 };
 
 __interface IMaterialParameter
@@ -75,6 +76,8 @@ public:
 	void SetVector4(std::string name, Vector4f value);
 	void SetColor(std::string name, Vector4f value);
 	void SetTexture(std::string name, SharedPtr<CrTexture> value, GLenum e, Int index);
+
+	void SetCubMap(std::string name, SharedPtr<CrTexture> value, GLenum e, Int index);
 
 	void UploadUniform();
 private:	

@@ -90,10 +90,18 @@ void CrMaterial::UploadUniform()
 			glUniform1i(uniformID, tex->Index);
 		}
 			break;
+		case eCubMap:
+		{
+			MatTextureParameter* tex = (MatTextureParameter*)(beginIt->second);
+			glActiveTexture(tex->TexIndex);
+			CrTexture * texture = (CrTexture *)beginIt->second->GetPtr();
+			glBindTexture(GL_TEXTURE_CUBE_MAP, texture->m_dTextureId);
+			glUniform1i(uniformID, tex->Index);
+		}
+			break;
 		default:
 			break;
-		}
-		
+		}		
 		++beginIt;
 	}
 }
@@ -144,6 +152,15 @@ void CrMaterial::SetTexture(std::string name, SharedPtr<CrTexture> value, GLenum
 {
 	MatTextureParameter * v = new MatTextureParameter(value);
 	v->eType = EMaterialParameterType::eTexture;
+	v->TexIndex = e;
+	v->Index = index;
+	_parameters.insert(std::make_pair(name, (IMaterialParameter *)v));
+}
+
+void CrMaterial::SetCubMap(std::string name, SharedPtr<CrTexture> value, GLenum e, Int index)
+{
+	MatTextureParameter * v = new MatTextureParameter(value);
+	v->eType = EMaterialParameterType::eCubMap;
 	v->TexIndex = e;
 	v->Index = index;
 	_parameters.insert(std::make_pair(name, (IMaterialParameter *)v));

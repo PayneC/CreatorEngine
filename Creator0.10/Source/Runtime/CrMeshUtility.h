@@ -32,6 +32,7 @@ public:
 	static std::shared_ptr<CrGameObject>  processNode(aiNode *node, const aiScene *scene);
 	static std::shared_ptr<CrGameObject>  processMesh(aiMesh *mesh, const aiScene *scene);
 private:
+	std::shared_ptr<CrMesh>  CreateSkyBox();
 	std::shared_ptr<CrMesh>  CreateMeshCube();
 	std::shared_ptr<CrMesh>  CreateMeshQuad();
 	std::shared_ptr<CrMesh>  m_BuiltinMeshs[CR_MESH_TYPE_COUNT];

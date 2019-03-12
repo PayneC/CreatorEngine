@@ -107,18 +107,22 @@ void Scene2()
 	//meshRender->GetMaterial()->SetpMainTexture(texture2);
 	meshRender->GetMaterial()->SetTexture("diffuse", texture2, GL_TEXTURE0, 0);
 
-	SharedPtr<CrGameObject>  go2 = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_CUBE, "cube");
+	SharedPtr<CrGameObject>  go2 = CrGameObject::CreateGameObject<CrGameObject>(EPresetMeshType::CR_MESH_TYPE_SKY_BOX, "skybox");
 	go2->SetParent(pScene);
 
-	go2->get_transform()->SetPosition(glm::vec3(0, 1, 0));
+	go2->get_transform()->SetPosition(glm::vec3(0, 0, 0));
 	go2->get_transform()->SetLocalScale(glm::vec3(1, 1, 1));
 	go2->get_transform()->SetRotation(glm::vec3(0, 0, 0));
 	go2->AddComponent<test>();
 	meshRender = go2->GetComponent<CrMeshRender>();
 	//meshRender->GetMaterial()->SetpMainTexture(texture2);
 	//meshRender->GetMaterial()->SetpNormalTexture(textureN);
-	meshRender->GetMaterial()->SetTexture("diffuse", texture2, GL_TEXTURE0, 0);
-	meshRender->GetMaterial()->SetTexture("normal", textureN, GL_TEXTURE1, 1);
+
+	SharedPtr<CrTexture> cubMap = CrTextureUtility::Instance()->LoadCubMap("right.jpg", "left.jpg", "top.jpg", "bottom.jpg", "front.jpg", "back.jpg");
+
+ 	SharedPtr<CrShader> shader = CrShaderUtility::CreateShader("VertexSkyBox.vert", "VertexSkyBox.frag");
+ 	meshRender->GetMaterial()->SetShader(shader);
+	meshRender->GetMaterial()->SetCubMap("skybox", cubMap, GL_TEXTURE0, 0);	
 
 	SharedPtr<CrGameObject>  go3 = CrMeshUtility::LoadModel("nanosuit.obj");
 	go3->SetParent(pScene);

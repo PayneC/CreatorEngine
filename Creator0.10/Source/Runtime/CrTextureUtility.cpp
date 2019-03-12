@@ -46,74 +46,39 @@ SharedPtr<CrTexture> CrTextureUtility::LoadTexture(const char* filename)
 	return instance;
 }
 
-/*
-CrTexture * CrTextureUtility::LoadTexture(const char* filename, unsigned int hashCode, GLenum image_format, GLint internal_format, GLint level, GLint border)
+SharedPtr<CrTexture> CrTextureUtility::LoadCubMap(const char* _right, const char* _left, const char* _up, const char* _down, const char* _back, const char* _forward)
 {
-	std::map<unsigned int, CrTexture*>::iterator iter = m_mapTexture.find(hashCode);
-	//if this texture ID is in use, unload the current texture
-	if (iter != m_mapTexture.end())
+	int width, height, nrChannels;
+	unsigned char *data;
+
+	std::vector<const char *> texs;
+	texs.push_back(_right);
+	texs.push_back(_left);
+	texs.push_back(_up);
+	texs.push_back(_down);
+	texs.push_back(_back);
+	texs.push_back(_forward);
+
+	SharedPtr<CrTexture> instance = std::make_shared<CrTexture>();
+
+	glGenTextures(1, &(instance->m_dTextureId));
+	glBindTexture(GL_TEXTURE_CUBE_MAP, instance->m_dTextureId);
+
+	for (unsigned int i = 0; i < texs.size(); i++)
 	{
-		return (iter->second);
+		data = SOIL_load_image(texs[i], &width, &height, &nrChannels, SOIL_LOAD_AUTO);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		SOIL_free_image_data(data);
 	}
 
-	//image format
-	FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
-	//pointer to the image, once loaded
-	FIBITMAP *dib(0);
-	//pointer to the image data
-	BYTE* bits(0);
-	//image width and height
-	unsigned int width(0), height(0);
-	//OpenGL's image ID to map to
-	GLuint gl_texID;
+	//设置纹理放大时的过滤方式 线性过滤
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//设置纹理缩小时的过滤方式 邻近过滤
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	//设置纹理环绕方式 为重复
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_MIRRORED_REPEAT);
 
-	//check the file signature and deduce its format
-	fif = FreeImage_GetFileType(filename, 0);
-	//if still unknown, try to guess the file format from the file extension
-	if (fif == FIF_UNKNOWN)
-		fif = FreeImage_GetFIFFromFilename(filename);
-	//if still unkown, return failure
-	if (fif == FIF_UNKNOWN)
-		return NULL;
-
-	//check that the plugin has reading capabilities and load the file
-	if (FreeImage_FIFSupportsReading(fif))
-		dib = FreeImage_Load(fif, filename);
-	//if the image failed to load, return failure
-	if (!dib)
-		return NULL;
-
-	//retrieve the image data
-	bits = FreeImage_GetBits(dib);
-	//get the image width and height
-	width = FreeImage_GetWidth(dib);
-	height = FreeImage_GetHeight(dib);
-	//if this somehow one of these failed (they shouldn't), return failure
-	if ((bits == 0) || (width == 0) || (height == 0))
-	{
-		return NULL;
-	}
-
-	//generate an OpenGL texture ID for this texture
-	glGenTextures(1, &gl_texID);
-	//bind to the new texture ID
-	glBindTexture(GL_TEXTURE_2D, gl_texID);
-	//store the texture data for OpenGL use
-	glTexImage2D(GL_TEXTURE_2D, level, internal_format, width, height,
-		border, image_format, GL_UNSIGNED_BYTE, bits);
-
-	//Free FreeImage's copy of the data
-	FreeImage_Unload(dib);
-
-	CrTexture * texture = new CrTexture();
-	texture->Retain();
-
-	texture->m_dAnisoLevel = level;
-	texture->m_dWidth = width;
-	texture->m_dHeight = height;
-	texture->m_dTextureId = gl_texID;
-
-	//return success
-	return texture;
+	return instance;
 }
-*/

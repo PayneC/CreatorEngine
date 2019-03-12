@@ -8,6 +8,9 @@ uniform vec3 vLightPos;
 uniform vec3 vEyePos;
 
 uniform mat4 mModel;
+uniform mat4 mView;
+uniform mat4 mProjection;
+
 uniform mat4 mModelViewProjection;
 
 out vec2 texCoord;
