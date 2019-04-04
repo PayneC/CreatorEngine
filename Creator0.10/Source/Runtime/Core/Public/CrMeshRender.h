@@ -14,6 +14,10 @@ Payne
 class DLL_ClASS CrMeshRender : public CrComponent
 {
 public:
+	static std::list<std::shared_ptr<CrMeshRender>> m_pRenders;
+	static std::list<std::shared_ptr<CrMeshRender>> AllRenders();
+
+public:
 	CrMeshRender();
 	~CrMeshRender();
 
@@ -28,9 +32,11 @@ public:
 	SharedPtr<CrMesh>  GetMesh();
 
 	void SetMaterial(SharedPtr<CrMaterial> material);
-	SharedPtr<CrMaterial> GetMaterial();
+	SharedPtr<CrMaterial> GetMaterial();	
 
 	void Draw(glm::fmat4 & mvp, glm::vec3 & eye, glm::fmat4 & mv, glm::fmat4 & v);
+
+	void Awake();
 protected:
 	std::vector<SharedPtr<CrMaterial>> m_pMaterials;
 	SharedPtr<CrMesh>  m_pMesh;

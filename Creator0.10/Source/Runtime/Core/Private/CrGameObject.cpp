@@ -115,4 +115,5 @@ void CrGameObject::_AddComponent(SharedPtr<CrComponent> Pointer)
 {
 	m_pComponents.push_back(Pointer);
 	Pointer->SetGameObject(shared_from_this());
+	Pointer->Awake();
 }

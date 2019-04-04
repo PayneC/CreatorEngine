@@ -1,13 +1,23 @@
 #include <CrMeshRender.h>
 #include <CrGameObject.h>
 
+std::list<std::shared_ptr<CrMeshRender>> CrMeshRender::m_pRenders;
+
+std::list<std::shared_ptr<CrMeshRender>> CrMeshRender::AllRenders()
+{
+	return m_pRenders;
+}
+
 CrMeshRender::CrMeshRender()
 {
 }
 
 CrMeshRender::~CrMeshRender()
 {
-
+	if (m_pRenders.size() > 0)
+	{
+		m_pRenders.remove(std::dynamic_pointer_cast<CrMeshRender>(shared_from_this()));
+	}
 }
 
 void CrMeshRender::Draw(glm::fmat4 & p, glm::vec3 & eye, glm::fmat4 & m, glm::fmat4 & v)
@@ -44,17 +54,8 @@ void CrMeshRender::Draw(glm::fmat4 & p, glm::vec3 & eye, glm::fmat4 & m, glm::fm
 	GLuint m_Model = glGetUniformLocation(shader->GetShaderID(), "mModel");
 	glUniformMatrix4fv(m_Model, 1, GL_FALSE, glm::value_ptr(m));	
 
-	if (GetGameObject()->get_name() == "skybox")
-	{
-		GLuint m_View = glGetUniformLocation(shader->GetShaderID(), "mView");
-		glm::mat4 v2 = glm::mat4(glm::mat3(v));
-		glUniformMatrix4fv(m_View, 1, GL_FALSE, glm::value_ptr(v2));
-	}
-	else
-	{
-		GLuint m_View = glGetUniformLocation(shader->GetShaderID(), "mView");
-		glUniformMatrix4fv(m_View, 1, GL_FALSE, glm::value_ptr(v));
-	}	
+	GLuint m_View = glGetUniformLocation(shader->GetShaderID(), "mView");
+	glUniformMatrix4fv(m_View, 1, GL_FALSE, glm::value_ptr(v));
 
 	GLuint m_Projection = glGetUniformLocation(shader->GetShaderID(), "mProjection");
 	glUniformMatrix4fv(m_Projection, 1, GL_FALSE, glm::value_ptr(p));
@@ -66,7 +67,7 @@ void CrMeshRender::Draw(glm::fmat4 & p, glm::vec3 & eye, glm::fmat4 & m, glm::fm
 	glUniform3fv(vLightPos, 1, glm::value_ptr(eye));
 
 	GLuint vEyePos = glGetUniformLocation(shader->GetShaderID(), "vEyePos");
-	glUniform3fv(vEyePos, 1, glm::value_ptr(eye));
+	glUniform3fv(vEyePos, 1, glm::value_ptr(eye));	
 
 	material->UploadUniform();
 
@@ -81,6 +82,11 @@ void CrMeshRender::Draw(glm::fmat4 & p, glm::vec3 & eye, glm::fmat4 & m, glm::fm
 		glDepthMask(GL_TRUE);
 	}
 	glUseProgram(0);
+}
+
+void CrMeshRender::Awake()
+{
+	m_pRenders.push_back(std::dynamic_pointer_cast<CrMeshRender>(shared_from_this()));
 }
 
 void CrMeshRender::SetMaterial(SharedPtr<CrMaterial> material)

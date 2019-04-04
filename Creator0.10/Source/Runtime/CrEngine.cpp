@@ -2,6 +2,99 @@
 #include <imgui.h>
 #include <imgui_impl_glfw_gl3.h>
 
+std::list<SharedPtr<CrCamera>> cameras;
+std::list<SharedPtr<CrMeshRender>> renders;
+
+
+
+void _RenderCamera(SharedPtr<CrCamera> camera)
+{
+	glm::mat4 p = camera->ProjectionMatrix();
+	glm::mat4 v = camera->get_transform()->WorldToLocalMatrix();
+	glm::vec3 cameraPos = camera->get_transform()->GetPosition();
+	glm::vec3 lightPos = camera->get_transform()->GetPosition();
+
+	std::list<SharedPtr<CrMeshRender>>::iterator iter = renders.begin();
+	std::list<SharedPtr<CrMeshRender>>::iterator iterEnd =renders.end();
+
+	for (; iter != iterEnd; ++iter)
+	{				
+		SharedPtr<CrMeshRender> render = (*iter);
+		SharedPtr <CrTransform> transform = render->GetGameObject()->get_transform();
+		if (transform == NULL)
+		{
+			continue;
+		}
+
+		SharedPtr<CrMaterial> material = render->GetMaterial();
+		if (material == NULL)
+		{
+			continue;
+		}
+
+		SharedPtr<CrShader> shader = material->GetShader();
+		if (shader == NULL)
+		{
+			continue;
+		}
+
+		SharedPtr<CrMesh> mesh = render->GetMesh();
+		if (mesh == NULL)
+		{
+			continue;
+		}
+
+		glm::vec3 _light(2, 2, 2);
+		glm::mat4 m = transform->LocalToWorldMatrix();
+
+		shader->BeginUse();				
+		GLuint m_Model = glGetUniformLocation(shader->GetShaderID(), "mModel");
+		glUniformMatrix4fv(m_Model, 1, GL_FALSE, glm::value_ptr(m));
+
+		GLuint m_View = glGetUniformLocation(shader->GetShaderID(), "mView");
+		glUniformMatrix4fv(m_View, 1, GL_FALSE, glm::value_ptr(v));
+
+		GLuint m_Projection = glGetUniformLocation(shader->GetShaderID(), "mProjection");
+		glUniformMatrix4fv(m_Projection, 1, GL_FALSE, glm::value_ptr(p));
+
+		GLuint m_uMVP = glGetUniformLocation(shader->GetShaderID(), "mModelViewProjection");
+		glUniformMatrix4fv(m_uMVP, 1, GL_FALSE, glm::value_ptr(p * v * m));
+
+		GLuint vLightPos = glGetUniformLocation(shader->GetShaderID(), "vLightPos");
+		glUniform3fv(vLightPos, 1, glm::value_ptr(lightPos));
+
+		GLuint vEyePos = glGetUniformLocation(shader->GetShaderID(), "vEyePos");
+		glUniform3fv(vEyePos, 1, glm::value_ptr(cameraPos));
+
+		material->UploadUniform();	
+		mesh->UploadVextex();
+
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		shader->EndUse();
+	}
+}
+
+void _RenderPipeline()
+{
+	cameras = CrCamera::AllCamera();
+	renders = CrMeshRender::AllRenders();
+
+	std::list<SharedPtr<CrCamera>>::iterator iter = cameras.begin();
+	std::list<SharedPtr<CrCamera>>::iterator iterEnd = cameras.end();
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0, 0, 0, 1);
+
+	glEnable(GL_DEPTH_TEST);
+	for (; iter != iterEnd; ++iter)
+	{
+		SharedPtr<CrCamera> camera = (*iter);
+		_RenderCamera(camera);
+	}
+	glDisable(GL_DEPTH_TEST);
+}
+
 void _Render(SharedPtr<CrGameObject> pGameObject, SharedPtr<CrCamera> pCamera)
 {
 	if (pGameObject == NULL || !pGameObject->GetActive())
@@ -13,11 +106,11 @@ void _Render(SharedPtr<CrGameObject> pGameObject, SharedPtr<CrCamera> pCamera)
 	{
 		//glm::mat4 mvp = pCamera->GetVP() * transform->GetLocalToWorldMatrix();
 
-		glm::mat4 p = pCamera->GetP();
-		glm::mat4 v = pCamera->get_transform()->GetWorldToLocalMatrix();
-		glm::mat4 m = transform->GetLocalToWorldMatrix();
+		glm::mat4 p = pCamera->ProjectionMatrix();
+		glm::mat4 v = pCamera->get_transform()->WorldToLocalMatrix();
+		glm::mat4 m = transform->LocalToWorldMatrix();
 
-		meshRender->Draw(pCamera->GetP(), pCamera->get_transform()->GetPosition(), m, v);
+		meshRender->Draw(pCamera->ProjectionMatrix(), pCamera->get_transform()->GetPosition(), m, v);
 	}
 
 	std::vector<SharedPtr<CrTransform>> transforms = transform->get_children();
@@ -187,7 +280,8 @@ int CrEngine::MainLoop()
 		if (scene)
 		{
 			scene->Update(CrTime::Instance()->GetDelateTimeLF());
-
+			_RenderPipeline();
+/*
 			std::list<SharedPtr<CrCamera>> cameras = CrCamera::AllCamera();
 			if (cameras.size() > 0)
 			{
@@ -243,8 +337,9 @@ int CrEngine::MainLoop()
 				}
 
 				glDisable(GL_DEPTH_TEST);
-			}
 
+			}
+			*/
 			unsigned int _fps = CrTime::Instance()->GetFramesPerSecond();
 		}
 

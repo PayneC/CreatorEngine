@@ -13,6 +13,6 @@ uniform mat4 mModelViewProjection;
 void main()
 {
     TexCoords = vVertex;
-    vec4 pos = mProjection * mView * vec4(vVertex, 1.0);
+    vec4 pos = mProjection * mat4(mat3(mView)) * vec4(vVertex, 1.0);
     gl_Position = pos.xyww;
 }

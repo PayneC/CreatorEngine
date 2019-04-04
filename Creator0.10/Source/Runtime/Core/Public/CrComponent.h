@@ -23,13 +23,14 @@ public:
 };
 
 class CrGameObject;
-class DLL_ClASS CrComponent : public CrObject, public IBehaviour
+class DLL_ClASS CrComponent : public CrObject, public IBehaviour, public std::enable_shared_from_this<CrComponent>
 {
 protected:
 	CrComponent();
 	~CrComponent();
 
 public:
+	virtual void Awake();
 	virtual void Start();
 	virtual void Update(double dt);
 	virtual void LateUpdate(double dt);

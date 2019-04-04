@@ -123,6 +123,8 @@ void Scene2()
  	SharedPtr<CrShader> shader = CrShaderUtility::CreateShader("VertexSkyBox.vert", "VertexSkyBox.frag");
  	meshRender->GetMaterial()->SetShader(shader);
 	meshRender->GetMaterial()->SetCubMap("skybox", cubMap, GL_TEXTURE0, 0);	
+	shader->SetUseDepth(GL_FALSE);
+	shader->SetDepthFunc(GL_LEQUAL);
 
 	SharedPtr<CrGameObject>  go3 = CrMeshUtility::LoadModel("nanosuit.obj");
 	go3->SetParent(pScene);

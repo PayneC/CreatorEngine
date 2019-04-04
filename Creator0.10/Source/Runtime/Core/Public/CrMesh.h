@@ -25,6 +25,7 @@ public:
 	EasyGetSet(GLuint, m_uElementCount, ElementCount);
 
 	void SetupMesh();
+	void UploadVextex();
 private:
 	std::vector<Vertex> vertices;
 	std::vector<GLuint> indices;

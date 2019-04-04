@@ -60,7 +60,7 @@ Vector3f CrTransform::GetPosition()
 	{
 		if (!m_pParent.expired())
 		{
-			m_v3Position = Vector3f(GetParent()->GetLocalToWorldMatrix() * Vector4f(m_v3LocalPosition, 1.f));
+			m_v3Position = Vector3f(GetParent()->LocalToWorldMatrix() * Vector4f(m_v3LocalPosition, 1.f));
 		}
 		else
 		{
@@ -133,13 +133,13 @@ Vector3f CrTransform::GetUp()
 	return m_v3Up;
 }
 
-Matrix4 CrTransform::GetLocalToWorldMatrix()
+Matrix4 CrTransform::LocalToWorldMatrix()
 {
 	_ExecuteMatrix();
 	return m_m4LocalToWorld;
 }
 
-Matrix4 CrTransform::GetWorldToLocalMatrix()
+Matrix4 CrTransform::WorldToLocalMatrix()
 {
 	_ExecuteMatrix();
 	return m_m4WorldToLocal;
@@ -153,7 +153,7 @@ void CrTransform::SetPosition(Vector3f var)
 	m_v3Position = var;
 	if (!m_pParent.expired())
 	{
-		m_v3LocalPosition = Vector3f(GetParent()->GetWorldToLocalMatrix() * Vector4f(m_v3Position, 1.f));
+		m_v3LocalPosition = Vector3f(GetParent()->WorldToLocalMatrix() * Vector4f(m_v3Position, 1.f));
 	}
 	else
 	{
@@ -250,17 +250,17 @@ void CrTransform::SetParent(SharedPtr<CrTransform> pParent)
 
 	if (_parent != nullptr)
 	{
-		_parent->RemoveChild(shared_from_this());
+		_parent->RemoveChild(std::dynamic_pointer_cast<CrTransform>(shared_from_this()));
 	}
 
 	_parent = pParent;
 
 	if (_parent != nullptr)
 	{
-		_parent->m_pChildren.push_back(shared_from_this());
+		_parent->m_pChildren.push_back(std::dynamic_pointer_cast<CrTransform>(shared_from_this()));
 	}
 
-	m_pParent = _parent->weak_from_this();
+	m_pParent = _parent;
 
 	SetPositionDirty();
 	SetRotationDirty();

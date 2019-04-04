@@ -9,7 +9,7 @@ Payne
 
 #include <CrComponent.h>
 
-class DLL_ClASS CrTransform : public CrComponent, public EnableSharedFromThis<CrTransform>
+class DLL_ClASS CrTransform : public CrComponent
 {
 	friend class CrGameObject;
 public:
@@ -26,8 +26,9 @@ public:
 	EasyGetFuncOnly(Vector3f, m_v3Right, Right);
 	EasyGetFuncOnly(Vector3f, m_v3Up, Up);
 
-	EasyGetFuncOnly(Matrix4, m_m4LocalToWorld, LocalToWorldMatrix);
-	EasyGetFuncOnly(Matrix4, m_m4WorldToLocal, WorldToLocalMatrix);
+	
+	Matrix4 LocalToWorldMatrix();	
+	Matrix4 WorldToLocalMatrix();
 
 	EasyGetFuncOnly(Quaternion, m_qQuaternion, Quaternion);
 	EasyGetFuncOnly(Quaternion, m_qLocalQuaternion, LocalQuaternion);
@@ -49,6 +50,8 @@ private:
 	void RemoveChild(SharedPtr<CrTransform> pChild);
 	void RemoveAllChild();
 private:
+	Matrix4 m_m4WorldToLocal;
+	Matrix4 m_m4LocalToWorld;
 
 	Vector3f m_v3Position;
 	Vector3f m_v3Rotation;

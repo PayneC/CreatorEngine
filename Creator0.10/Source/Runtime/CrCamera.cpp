@@ -10,12 +10,16 @@ CrCamera::CrCamera()
 
 CrCamera::~CrCamera()
 {
-	m_pCameraList.remove(std::dynamic_pointer_cast<CrCamera>(shared_from_this()));
+	this->get_name();
+	if (m_pCameraList.size() > 0)
+	{
+		m_pCameraList.remove(std::dynamic_pointer_cast<CrCamera>(shared_from_this()));
+	}	
 }
 
 glm::mat4 CrCamera::GetVP()
 {
-	m_m4VP = m_m4Projection * get_transform()->GetWorldToLocalMatrix();
+	m_m4VP = m_m4Projection * get_transform()->WorldToLocalMatrix();
 	return m_m4VP;
 }
 

@@ -9,6 +9,10 @@ CrComponent::~CrComponent()
 {
 }
 
+void CrComponent::Awake()
+{
+}
+
 void CrComponent::Start()
 {
 

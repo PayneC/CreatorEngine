@@ -46,3 +46,10 @@ void CrMesh::SetupMesh()
 
 	m_uElementCount = this->indices.size();
 }
+
+void CrMesh::UploadVextex()
+{
+	glBindVertexArray(m_uVAO);
+	glDrawElements(GL_TRIANGLES, m_uElementCount, GL_UNSIGNED_INT, NULL);//GL_TRIANGLE_STRIP
+	glBindVertexArray(0);
+}
